@@ -1,0 +1,176 @@
+/* Estilos generales y de fondo */
+body {
+    /* Color de fondo: #384454 */
+    background-color: #5B6C8F;
+    /* Usamos Flexbox para centrar todo el contenido vertical y horizontalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Ocupar toda la altura de la ventana */
+    min-height: 100vh; 
+    /* Para que el contenido se apile verticalmente */
+    flex-direction: column; 
+    /* Color de texto base para que sea visible */
+    color: white; 
+    /* Fuente sencilla */
+    font-family: Arial, sans-serif; 
+    /* Quitamos márgenes por defecto del body */
+    margin: 0;
+}
+
+
+.fade-element {
+    opacity: 0; /* Empieza invisible */
+    animation-name: fadeInUp;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards; /* Mantiene el estado final (visible) */
+}
+
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar elementos dentro del contenedor */
+    padding: 20px;
+}
+
+/* Contenedor para apilar las dos imágenes */
+.image-stack {
+    position: relative; /* Clave para posicionar la imagen superior */
+    display: flex; /* Para que el gif sea el centro */
+    justify-content: center;
+    margin-bottom: 34px; /* Espacio antes del texto */
+}
+
+/* Estilo para el GIF central */
+#gif-center {
+    width: 130px; /* Ajusta el tamaño del gif */
+    height: auto;
+    border-radius: 10px; 
+    margin-top: 10px;
+
+    /* Aplicar animación y retraso */
+    animation-delay: 0.5s;
+}
+
+/* Estilo para la imagen encima del GIF */
+#image-top {
+    position: absolute; 
+    /* Posiciona la imagen absolutamente en relación al .image-stack */
+    top: -19px; /* mover hacia arriba */
+    width: 200px; /* Tamaño de la imagen superior */
+    height: auto;
+    left: -13px; /*hacia la derecha */
+
+    /* Aplicar animación y retraso */
+    animation-delay: 1.0s; /* 0.5s + 0.5s = 1.0s */
+   
+}
+
+/* Estilos de los textos */
+.text-group {
+    text-align: center;
+}
+
+.text-group p {
+    margin: 35px 0; 
+    font-size: .8em;
+}
+
+/* ------------------------------------------------------------- */
+/* MODIFICACIÓN PARA EL PRIMER TEXTO: TIPOGRAFÍA OUTFIT */
+#text-main {
+    font-size: 1.0em; 
+    font-weight: regular;
+    font-family: 'Urbanist', sans-serif; /* <-- Tipografía chida: Outfit */
+    /* Aplicar animación y retraso */
+    animation-delay: 1.5s; /* 1.0s + 0.5s = 1.5s */
+}
+
+/* MODIFICACIÓN PARA EL SEGUNDO TEXTO: TIPOGRAFÍA URBANIST Y COLOR ESPECÍFICO */
+#text-secondary {
+    /* Color #E91E63 */
+    color: #E91E63; /* color */
+    font-family: 'Outfit', sans-serif; /* <-- Tipografía secundaria: Urbanist */
+    font-weight: 1000;
+    /* ------------------------------------------- */
+  text-transform: uppercase;
+    
+    /* Conserva el pulso, pero añadimos el retraso de la entrada */
+    animation-name: fadeInUp, pulse; /* Aplica ambas animaciones */
+    animation-duration: 0.8s, 2s; /* Duración para entrada y pulso */
+    animation-timing-function: ease-out, ease-in-out; 
+    animation-iteration-count: 1, infinite; /* Entrada (1 vez), Pulso (infinito) */
+    animation-fill-mode: forwards;
+    
+    /* Retraso solo para la animación de entrada (la primera) */
+    animation-delay: 2.0s, 2.8s; /* Entrada (2.0s). Pulso comienza DESPUÉS de la entrada (2.0s + 0.8s = 2.8s) */
+    
+    /* Necesitas que el texto comience invisible */
+    opacity: 0;
+}
+.text-group a {
+    text-decoration: none; /* Elimina el subrayado por defecto del enlace */
+    color: inherit;        /* Asegura que el color se herede del texto interior */
+}
+
+#text-secondary:hover {
+    color: white; /* Cambia el a blanco */
+    cursor: pointer; /*  clickeable */
+}
+/* MEDIA QUERY para hacer el diseño responsivo */
+@media (max-width: 600px) {
+    #gif-center {
+        width: 80vw; /* El GIF ocupa un eso de espacio */
+    }
+    #image-top {
+        width: 80px;
+        top: -30px; 
+    }
+    .text-group p {
+        font-size: 1em;
+    }
+}
+
+
+/* Definición de la animación de pulsación (Pulse) */
+@keyframes pulse {
+    0% {
+        transform: scale(1); /* Tamaño normal */
+        opacity: 1;       /* Ligeramente transparente */
+    }
+    50% {
+        transform: scale(1.05); /* Se agranda ligeramente (el "pulso") */
+        opacity: 1;             /* Opacidad total */
+    }
+    100% {
+        transform: scale(1); /* Vuelve al tamaño normal */
+        opacity: 1;
+    }
+}
+
+
+
+
+
+
+/* Definición de la animación de Aparecer y Subir (Fade In Up) */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        /* Mueve el texto 20px hacia abajo */
+        transform: translateY(40px); 
+    }
+    100% {
+        opacity: 1;
+        /* Vuelve a su posición original */
+        transform: translateY(0);
+    }
+}
+
+
+
+
+
