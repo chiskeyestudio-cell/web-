@@ -3,26 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página Web Simple</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Urbanist:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>Segunda Página</title>
+    <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
-    <div class="container">
-        <div class="image-stack">
-            <img id="gif-center" class="fade-element"src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763142584/Adobe_Express_-_V%C3%ADdeo_sin_t%C3%ADtfhissssssslo_Hecho_con_Microsoft_Clipchamp_ctpn0x.gif" alt="GIF principal">
-
-            <img id="image-top"class="fade-element" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763128742/chiskey_sombra_nhezxq.png" alt="Imagen superior">
-        </div>
-
-        <div class="text-group">
-            <p id="text-main"class="fade-element">Esto no es un restaurante, pero sí cocinamos.</p>
-            
-            <a href="incio.html">
-                <p id="text-secondary"class="fade-element">Entra para descubrirlo</p>
-        </div>
     </div>
+    
+    <header class="navbar">
+        
+        <div class="logo">
+            <a href="index.html"> 
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo de la Empresa">
+            </a>
+        </div>
+        <nav class="menu">
+            <a href="#" id="menu-toggle" data-content="menu">MENU</a>
+
+        </nav>
+        <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+    </header>
+
+    <div class="content-body">
+        
+        <div class="left-column">
+            <h1 class="title-lg" id="main-title1">No, no es cheesecake.</h1>
+            <h1 class="title-lg2" id="main-title2">Es chiskey:</h1>
+
+            <p class="info-sm" id="main-info">
+                La cocina digital donde horneamos y damos forma a tus ideas, diseñamos y perfeccionamos cada ingrediente de tu imagen y branding.
+            </p>
+          <div class="scrolling-text-container">
+    <div class="scrolling-track">
+        <span>LOGOS | BRANDING | NAMING | IDENTIDAD VISUAL | CARTELERÍA | ILUSTRACIÓN | FOTOGRAFÍA | WEB | APPS | AUTOMATIZACIÓN | 3D | AUDIOVISUAL | </span>
+
+        <span>LOGOS | BRANDING | NAMING | IDENTIDAD VISUAL | CARTELERÍA | ILUSTRACIÓN | FOTOGRAFÍA | WEB | APPS | AUTOMATIZACIÓN | 3D | AUDIOVISUAL | </span>
+    </div>
+</div>
+
+        <div class="right-column">
+            <img id="main-image" src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto:good,w_auto:100,fl_progressive/v1763471467/tarta1nuevo_tama%C3%B1o_ojsuy2.png" alt="Imagen Grande de la Página">
+        </div>
+
+    </div>
+
+    <div class="bottom-right-element">
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>¡Haz tu reserva!</h2>
+    <form action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="movil">Móvil:</label>
+        <input type="tel" id="movil" name="movil" required>
+
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" name="correo" required>
+
+        <label for="ciudad">Ciudad:</label>
+        <input type="text" id="ciudad" name="ciudad">
+
+        <label for="idea">Cuéntanos tu idea:</label>
+        <textarea id="idea" name="idea" rows="4" required></textarea>
+
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+    </div>
+
+    <footer class="footer">
+    ©2025
+</footer>
+
+    <script src="main.js"></script> 
+    
+
 </body>
 </html>
