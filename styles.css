@@ -676,3 +676,134 @@ body {
     pointer-events: auto;
     opacity: 1;
 }
+
+/*Luzamora*/
+/* Estilos de las dos columnas de miembros */
+.contenedor-equipo {
+    display: flex; 
+    justify-content: center;
+    gap: 40px; 
+    flex-wrap: wrap; 
+}
+
+/*Luzamora*/
+.columna-miembro {
+    width: 50%; 
+    max-width: 500px; 
+    text-align: center;
+}
+
+/*Luzamora*/
+.cookie-container {
+    position: relative;
+    width: 100%;
+    height: 500px; 
+    cursor: pointer; 
+    margin-bottom: 20px;
+}
+
+/*Luzamora*/
+.cookie-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1;
+}
+
+/*Luzamora*/
+.cookie-img.rota {
+    opacity: 0; 
+}
+
+/*Luzamora*/
+.cookie-container.clicked .cookie-img.entera {
+    opacity: 0; 
+}
+
+/*Luzamora*/
+.cookie-container.clicked .cookie-img.rota {
+    opacity: 1; 
+}
+
+/*Luzamora*/
+.cookie-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0; 
+    transform: translateY(20px); 
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    pointer-events: none; 
+}
+
+/*Luzamora*/
+/* Clase para el texto grande y acotado debajo de las galletas */
+.texto-inferior-grande {
+    font-size: 3em; /* Tamaño grande, similar a title-lg */
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.0;
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    max-width: 200px; /* Ancho máximo para mejor legibilidad */
+    text-align: justify; /* Centrar el texto dentro de su contenedor */
+}
+/*Luzamora*/
+.cookie-container.clicked .cookie-content {
+    opacity: 1; 
+    transform: translateY(0); 
+    pointer-events: auto; 
+}
+
+/*Luzamora*/
+.cookie-content h2,
+.cookie-content p {
+    color: #ffffff; /* Color principal del index */
+}
+
+/*Luzamora*/
+.btn-portfolio {
+    background-color: #E91E63; /* Rosa (color del botón Reservas) */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+/*Luzamora*/
+.btn-portfolio:hover {
+    background-color: #ff1493; 
+}
+
+/*Luzamora*/
+.texto-inferior {
+    font-size: 0.9em;
+    color: white; /* Texto blanco sobre fondo azul */
+    margin-top: 10px;
+}
+
+/*Luzamora*/
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .columna-miembro {
+        width: 90%; 
+    }
+    .contenedor-equipo {
+        padding-top: 50px; /* Reducir padding en móviles */
+    }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Equipo</title>
+    
+    <link rel="stylesheet" href="styles.css"> 
+    
+</head>
+<body>
+    
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html"> 
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo de la Empresa">
+            </a>
+        </div>
+        <nav class="menu">
+            <a href="#" id="menu-toggle" data-content="menu">MENU</a>
+        </nav>
+        <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+    </header>
+
+    <main class="contenedor-equipo">
+        <div class="columna-miembro">
+            <div class="cookie-container" id="cookieXavi">
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763750731/4_jkj5io.png" alt="Galleta de Xavi" class="cookie-img entera">
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763750731/5_xwsqye.png" alt="Galleta de xavi rota" class="cookie-img rota">
+                <div class="cookie-content">
+                    <h1 class="texto-inferior-grande">Soy diseñadora gráfica, artista y buena gente</h1>
+                    <button class="btn-portfolio">Ver Portfolio</button>
+                </div>
+            </div>
+            <p>Un poco más sobre mi...</p>
+        </div>
+
+        <div class="columna-miembro">
+            <div class="cookie-container" id="cookieLuzamora">
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763750731/2_b2dbzv.png" alt="Galleta de Lucia" class="cookie-img entera">
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763750730/3_xzu14n.png" alt="Galleta de Lucia rota" class="cookie-img rota">
+                <div class="cookie-content">
+                    <h1 class="texto-inferior-grande">Soy diseñadora gráfica, artista y buena gente</h1>
+                    <button class="btn-portfolio">Ver Portfolio</button>
+                </div>
+            </div>
+            <p>Un poco más sobre Xavi...</p>
+        </div>
+    </main>
+    
+    <audio id="cookieBreakSound" src="ruta/a/tu/sonido/cookie-break.mp3" preload="auto"></audio>
+    
+    <footer class="footer">
+        ©2025
+    </footer>
+    
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>¡Haz tu reserva!</h2>
+            <form action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="movil">Móvil:</label>
+                <input type="tel" id="movil" name="movil" required>
+
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" name="correo" required>
+
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad">
+
+                <label for="idea">Cuéntanos tu idea:</label>
+                <textarea id="idea" name="idea" rows="4" required></textarea>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="main.js"></script> 
+    <script src="equipo.js"></script>
+</body>
+</html>
