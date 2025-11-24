@@ -669,6 +669,7 @@ body {
 }
 
 
+<<<<<<< HEAD
 /* --- MEDIA QUERY para hacerlo responsivo en móviles --- */
 @media (max-width: 850px) {
     .navbar {
@@ -1312,3 +1313,157 @@ body.maintenance-page {
         z-index: 5;
     }
 }
+=======
+
+/* --- EFECTO DE TEXTO DESLIZANTE (CINTA) PARA EL OVERLAY --- */
+.overlay-content a {
+    position: relative;
+    display: inline-block;
+    overflow: hidden; /* evita que se vea el texto fuera */
+}
+
+.overlay-content a span {
+    display: block;
+    transform: translateY(0);
+    transition: transform 0.4s ease;
+}
+
+/* al pasar el mouse */
+.overlay-content a:hover span {
+    animation: slideUpOnce 0.45s ease forwards;
+}
+
+@keyframes slideUpOnce {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    40% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    41% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Evita el corte de letras con descendentes (p, q, g, y, j) */
+.overlay-content a {
+    line-height: 0.8em;   /* más espacio vertical */
+    padding-bottom: 10px;  /* evita que la cola se corte */
+}
+
+
+
+
+
+/* Redes sociales abajo a la derecha (en fila) */
+.social-icons {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: flex;
+    flex-direction: row;      /* 🔥 ahora en fila */
+    gap: 15px;
+    z-index: 100001;
+}
+
+.social-icons img {
+    width: 20px;
+    height: 30px;
+    filter: invert(1);        /* 🔥 los vuelve blancos */
+    opacity: 0.85;
+    transition: transform 0.2s ease, opacity 0.2s ease, filter 0.3s ease; /* 🔥 delay */
+}
+
+
+.social-icons img:hover {
+    transform: translateY(-3px) scale(1.1); /* hover elegante */
+    opacity: 1;
+}
+
+
+/* Móvil */
+@media (max-width: 768px) {
+    .social-icons {
+        bottom: 15px;
+        right: 15px;
+    }
+    .social-icons img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+
+/* color blanco por defecto */
+.social-icons img {
+    filter: invert(1); /* blanco */
+    transition: filter 0.3s ease;
+}
+
+/* cuando el overlay está abierto, se pone rojo #E91E63 */
+.overlay-open .overlay-social-icons img {
+    filter: invert(27%) sepia(93%) saturate(4536%) hue-rotate(315deg) brightness(93%) contrast(87%);
+}
+
+
+
+
+
+/* Logo animación: baja desde arriba */
+.overlay-logo {
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Footer animación: sube desde abajo */
+.overlay-footer {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Social icons: suben desde abajo */
+.overlay-social-icons {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Cuando overlay está abierto, activamos animación con retrasos */
+.overlay.open .overlay-logo {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s;
+}
+
+.overlay.open .overlay-footer {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.7s;
+}
+
+.overlay.open .overlay-social-icons {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.9s;
+}
+
+
+.overlay-logo,
+.overlay-footer,
+.overlay-social-icons {
+    opacity: 1;        /* visibles por defecto */
+    transform: translateY(0); /* posición normal */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+
+>>>>>>> d7078fe (Trabajo local antes de actualizar)

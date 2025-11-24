@@ -87,45 +87,57 @@ if (!overlay) {
 
     const text1 = document.createElement('a');
     text1.href = 'servicios.html';
-    text1.textContent = 'Servicios';
+    text1.innerHTML = '<span>Servicios</span>';
 
     const text2 = document.createElement('a');
     text2.href = 'proyectos.html';
-    text2.textContent = 'Proyectos';
+    text2.innerHTML = '<span>Proyectos</span>';
 
     const text3 = document.createElement('a');
     text3.href = 'sobreck.html';
-    text3.textContent = 'Sobre ck';
+    text3.innerHTML = '<span>Sobre ck</span>';
 
     const text4 = document.createElement('a');
     text4.href = 'equipo.html';
-    text4.textContent = 'Equipo';
+    text4.innerHTML = '<span>Equipo</span>';
 
     overlayContent.append(text1, text2, text3, text4);
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 }
 
+// ============================
+// Seleccionamos los iconos de redes
+const socialIcons = document.querySelectorAll('.social-icons img');
+
 // ==========================================================
 // PARTE 6: TOGGLE DEL MENÚ + CAMBIO DE LOGO
 // ==========================================================
+// TOGGLE DEL MENÚ + CAMBIO DE LOGO + ICONOS
 menuToggle.addEventListener('click', (e) => {
     e.preventDefault();
 
     const isOpen = overlay.classList.contains('open');
 
-    if (!isOpen) {
-        overlay.classList.add('open');
-        menuToggle.textContent = 'X';
-        menuToggle.classList.add('active');
-        logo.src = logoBlanco;
-    } else {
-        overlay.classList.remove('open');
-        menuToggle.textContent = 'MENU';
-        menuToggle.classList.remove('active');
-        logo.src = logoOriginal;
-    }
+    // Toggle overlay
+    overlay.classList.toggle('open');
+
+    // Toggle clase global
+    document.body.classList.toggle('overlay-open', !isOpen);
+
+    // Cambiar texto del botón
+    menuToggle.textContent = isOpen ? 'MENU' : 'X';
+    menuToggle.classList.toggle('active');
+
+    // Cambiar logo
+    logo.src = isOpen ? logoOriginal : logoBlanco;
+
+    // Cambiar iconos usando la clase del body
+    socialIcons.forEach(icon => {
+        icon.style.filter = !isOpen ? 'invert(0)' : 'invert(1)'; // negro si abierto, blanco si cerrado
+    });
 });
+
 
 // Footer en overlay
 let overlayFooter = document.createElement('div');
@@ -134,15 +146,31 @@ overlayFooter.textContent = '©2025 chiskey | Base en Valencia Esp';
 overlay.appendChild(overlayFooter);
 
 // ==========================================================
-// PARTE 7: LINKS DEL OVERLAY (CIERRAN Y NAVEGAN SIN FLASH DE INICIO)
-// ==========================================================
-// LINKS DEL OVERLAY (CIERRAN Y NAVEGAN CON TRANSICIÓN SUAVE)
+// PARTE 7: LINKS DEL OVERLAY
 // ==========================================================
 const overlayLinks = overlay.querySelectorAll('.overlay-content a');
 
 overlayLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
-        window.location.href = link.href; // Navega inmediatamente
+        window.location.href = link.href;
     });
 });
+
+// ============================
+// 🔥 NUEVO: sincronización de iconos con overlay en tiempo real
+// ============================
+function syncIconColors() {
+    const overlayRect = overlay.getBoundingClientRect();
+    socialIcons.forEach(icon => {
+        const iconRect = icon.getBoundingClientRect();
+        if (overlayRect.top <= iconRect.bottom && overlayRect.bottom >= iconRect.top) {
+            icon.style.filter = 'invert(0)'; // negro cuando overlay los cubre
+        } else {
+            icon.style.filter = 'invert(1)'; // blanco cuando overlay no los cubre
+        }
+    });
+    requestAnimationFrame(syncIconColors);
+}
+
+requestAnimationFrame(syncIconColors);
