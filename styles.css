@@ -499,15 +499,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
 /* --- NUEVO KEYFRAME para aparecer desde arriba --- */
 @keyframes fadeInDown {
     0% {
@@ -677,133 +668,259 @@ body {
     opacity: 1;
 }
 
-/*Luzamora*/
-/* Estilos de las dos columnas de miembros */
-.contenedor-equipo {
-    display: flex; 
-    justify-content: center;
-    gap: 40px; 
-    flex-wrap: wrap; 
+/* ==========================================================================
+/* ==========================================================================
+   NUEVOS ESTILOS EQUIPO (REDISEÑO)
+   ========================================================================== */
+
+/* Ajuste general del body para esta página */
+body.team-page {
+    background-color: #5B6C8F;
+    margin: 0;
+    padding: 0;
+    
+    /* ESTO ES LA CLAVE: */
+    height: 100vh;       /* Fuerza la altura exacta de la ventana */
+    width: 100vw;
+    overflow: hidden;    /* ¡Prohibido el scroll! */
+    
+    display: flex;       /* Usamos flex para organizar verticalmente */
+    flex-direction: column;
 }
 
-/*Luzamora*/
-.columna-miembro {
-    width: 50%; 
-    max-width: 500px; 
+.contenedor-principal {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- 1. ENCABEZADO (TITULO Y SUBTITULO) --- */
+.team-intro {
     text-align: center;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 10;
+    
+    /* ANIMACIÓN: */
+    opacity: 0; /* Invisible al principio */
+    /* Aparece desde abajo suavemente. Delay corto (0.3s) */
+    animation: fadeInUp 1.5s ease-out 0.3s forwards; 
 }
 
-/*Luzamora*/
+.team-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.5em; /* Grande como en la foto */
+    font-weight: 800;
+    color: white;
+    margin: 0;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+.team-subtitle {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 1.1em;
+    color: white;
+    margin-top: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+/* --- 2. GRID DE LOS MIEMBROS --- */
+.equipo-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alineados verticalmente al centro */
+    gap: 200px; /* Separación entre Xavi y Lucía */
+    width: 100%;
+    margin-top: -120px;
+}
+
+.bloque-miembro {
+    display: flex;
+    align-items: center; /* Centrar nombre verticalmente con galleta */
+    gap: 0px; /* Distancia entre nombre y galleta */
+    position: relative;
+}
+
+/* --- 3. NOMBRES LATERALES (XAVI / LU) --- */
+.nombre-lateral {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2em; /* Tamaño ajustado a la foto Xavio.jpg */
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    white-space: nowrap;
+}
+.nombre-lateral.izquierda {
+    margin-right: -100px; /* Valor negativo para meterse hacia la galleta */
+    z-index: 5;          /* Asegura que el texto no quede tapado por error */
+    text-align: right;   /* Asegura alineación correcta */
+}
+
+/* Pegar nombre de Lucía (derecha) hacia la izquierda */
+.nombre-lateral.derecha {
+    margin-left: -100px;  /* Valor negativo para meterse hacia la galleta */
+    z-index: 5;
+    text-align: left;
+}
+
+/* Cuando se rompe la galleta, ocultamos el nombre */
+.nombre-lateral.oculto {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+}
+
+/* --- 4. CONTENEDOR GALLETA --- */
 .cookie-container {
     position: relative;
-    width: 100%;
-    height: 500px; 
-    cursor: pointer; 
-    margin-bottom: 20px;
+    width: 450px;   
+    height: 540px;  
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    
+    /* ANIMACIÓN: */
+    opacity: 0; /* Invisible al principio */
+    /* Delay medio (0.6s) para que salgan después del texto */
+    animation: fadeInUp 1.5s ease-out 0.6s forwards; 
 }
 
-/*Luzamora*/
+.cookie-container:hover {
+    transform: scale(1.02);
+}
+
 .cookie-img {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
     height: 100%;
-    object-fit: contain; 
-    transition: opacity 0.5s ease-in-out;
-    z-index: 1;
+    object-fit: contain; /* Asegura que la galleta se vea entera */
+    transition: opacity 0.4s ease-in-out;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); /* Sombra realista */
 }
 
-/*Luzamora*/
-.cookie-img.rota {
-    opacity: 0; 
+.cookie-img.rota { opacity: 0; transform: scale(1.05); }
+
+/* Estados al hacer click */
+.cookie-container.clicked .cookie-img.entera { opacity: 0; }
+.cookie-container.clicked .cookie-img.rota { opacity: 1; }
+
+/* --- 5. MENSAJE "¡ROMPE LA GALLETA!" (HOVER) --- */
+.click-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.5em;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px 20px;;
+    opacity: 0; /* Invisible por defecto */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 20; /* Por encima de la galleta entera */
+    pointer-events: none; /* Que el click pase a la galleta */
 }
 
-/*Luzamora*/
-.cookie-container.clicked .cookie-img.entera {
-    opacity: 0; 
+/* Mostrar solo al pasar mouse y SI NO está rota */
+.cookie-container:hover .click-hint {
+    opacity: 1;
+    transform: translate(-50%, -60%); /* Pequeño movimiento hacia arriba */
 }
 
-/*Luzamora*/
-.cookie-container.clicked .cookie-img.rota {
-    opacity: 1; 
+/* Si ya está rota (clase clicked), no mostramos el mensaje */
+.cookie-container.clicked:hover .click-hint {
+    opacity: 0 !important;
 }
 
-/*Luzamora*/
+/* --- 6. CONTENIDO INTERNO (ROLES Y BOTÓN) --- */
 .cookie-content {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     padding: 20px;
     box-sizing: border-box;
-    opacity: 0; 
-    transform: translateY(20px); 
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    pointer-events: none; 
+    
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.5s ease-in-out;
+    pointer-events: none;
+    z-index: 30;
 }
 
-/*Luzamora*/
-/* Clase para el texto grande y acotado debajo de las galletas */
-.texto-inferior-grande {
-    font-size: 3em; /* Tamaño grande, similar a title-lg */
-    font-weight: 800;
-    text-transform: uppercase;
-    line-height: 1.0;
-    color: #ffffff;
+/* Estilo del texto "DISEÑADOR GRÁFICO..." */
+.rol-titulo {
     font-family: 'Outfit', sans-serif;
-    max-width: 200px; /* Ancho máximo para mejor legibilidad */
-    text-align: justify; /* Centrar el texto dentro de su contenedor */
-}
-/*Luzamora*/
-.cookie-container.clicked .cookie-content {
-    opacity: 1; 
-    transform: translateY(0); 
-    pointer-events: auto; 
-}
-
-/*Luzamora*/
-.cookie-content h2,
-.cookie-content p {
-    color: #ffffff; /* Color principal del index */
-}
-
-/*Luzamora*/
-.btn-portfolio {
-    background-color: #E91E63; /* Rosa (color del botón Reservas) */
+    font-size: 2.2em; /* Texto grande y potente */
+    font-weight: 900;
+    line-height: 0.95;
     color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
 }
 
-/*Luzamora*/
-.btn-portfolio:hover {
-    background-color: #ff1493; 
-}
-
-/*Luzamora*/
-.texto-inferior {
+.btn-portfolio {
+    background-color: #E91E63;
+    color: white;
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 700;
     font-size: 0.9em;
-    color: white; /* Texto blanco sobre fondo azul */
-    margin-top: 10px;
+    text-transform: uppercase;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    letter-spacing: 1px;
 }
 
-/*Luzamora*/
-/* Media Queries para responsividad */
-@media (max-width: 768px) {
-    .columna-miembro {
-        width: 90%; 
+.btn-portfolio:hover {
+    background-color: #c2185b;
+    transform: scale(1.05);
+}
+
+/* Mostrar contenido cuando está clickeado */
+.cookie-container.clicked .cookie-content {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+    .equipo-grid {
+        flex-direction: column;
+        gap: 80px;
     }
-    .contenedor-equipo {
-        padding-top: 50px; /* Reducir padding en móviles */
+    
+    .bloque-miembro {
+        flex-direction: column; /* Nombre arriba/abajo en móvil */
+    }
+    
+    .nombre-lateral {
+        order: -1; /* Poner nombre encima de la galleta en móvil */
+        margin-bottom: 10px;
+    }
+    
+    .team-title {
+        font-size: 2.5em;
     }
 }
+
