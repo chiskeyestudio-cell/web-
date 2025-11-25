@@ -763,7 +763,7 @@ body.team-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8vw; 
+    gap: 11vw; 
     width: 100%;
     margin-top: -6vw; 
     margin-right: -1.5vw; 
@@ -826,7 +826,7 @@ body.team-page {
 .nombre-lateral {
     content: '';
     display: block;
-    line-height: 0.8;
+    line-height: 1;
 }
 
 /* 3c. ESTILO DE HOVER: Cuando el cookie es sobrevolado, afecta al hermano (~) .nombre-lateral */
@@ -846,14 +846,14 @@ body.team-page {
 /* 2. Posicionamiento específico para XAVI (Izquierda) */
 /* El texto se alinea a la derecha para que la envoltura comience cerca de la galleta */
 .nombre-lateral.izquierda {
-    right: 110%; /* CAMBIO: De 350px a 110% (relativo al padre) */
+    right: 100%; /* CAMBIO: De 350px a 110% (relativo al padre) */
     text-align: right; 
 }
 
 /* 3. Posicionamiento específico para LU (Derecha) */
 /* El texto se alinea a la izquierda para que la envoltura comience cerca de la galleta */
 .nombre-lateral.derecha {
-    left: 110%; /* CAMBIO: De 350px a 110% (relativo al padre) */
+    left: 100%; /* CAMBIO: De 350px a 110% (relativo al padre) */
     text-align: left; 
 }
 /* Cuando se rompe la galleta, ocultamos el nombre */
@@ -1123,4 +1123,192 @@ body.team-page {
         font-size: 1.4rem;
     }
     
+}
+
+/* ==========================================================================
+/* ==========================================================================
+   ESTILOS DE LA PÁGINA DE MANTENIMIENTO (PÁGINA PUENTE) - AJUSTADOS
+   ========================================================================== */
+
+/* Ajuste general del body para esta página */
+body.maintenance-page {
+    /* Mantenemos el mismo fondo que las otras páginas */
+    background-color: #5B6C8F; 
+    /* Forzamos el layout para que el GIF ocupe toda la altura */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Ocultar el scroll en desktop */
+    overflow: hidden; 
+}
+
+
+.maintenance-content {
+    display: flex;
+    flex: 1; /* Ocupa el espacio restante entre el header y el footer */
+    max-width: 1600px;
+    width: 100%;
+    margin: auto; /* Centrar horizontalmente */
+    /* Se mantiene padding vertical reducido para maximizar el espacio */
+    padding: 0 140px; 
+    position: relative;
+    box-sizing: border-box; 
+    align-items: stretch;
+}
+
+.left-section {
+    /* 🚨 CAMBIO DE DISTRIBUCIÓN: Le damos mucho más espacio al texto (75% del ancho disponible) */
+    flex: 1.5; 
+    display: flex;
+    flex-direction: column;
+    /* Se añadió padding vertical para evitar que el texto toque el header/footer */
+    padding-top: 50px;
+    padding-bottom: 50px;
+    justify-content: center; /* Centrar verticalmente el texto */
+    align-items: flex-start;
+    padding-right: 5vw;
+    /* CRÍTICO: Bajamos el z-index para que el GIF lo cubra */
+    z-index: 5;
+}
+
+.bridge-title {
+    font-family: 'Outfit', sans-serif;
+    /* Tamaño ajustado para que quepa en el viewport (mantenido) */
+    font-size: 4.5vw; 
+    font-weight: 900;
+    color: white;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.bridge-subtitle {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    max-width: 400px; /* Limitar el ancho del texto */
+}
+
+.social-links {
+    margin-top: 30px;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    /* 💥 CAMBIO CLAVE: Usamos 'gap' para la separación horizontal sin divisores */
+    gap: 25px; 
+    
+    margin-bottom: 20px;
+}
+
+.social-links a {
+    /* Color inicial BLANCO */
+    color: white; 
+    text-decoration: none;
+    transition: color 0.3s;
+    /* 💥 CAMBIO CLAVE: Aumentamos el tamaño (de 1.5em a 2em) */
+    font-size: 2em; 
+    line-height: 1; 
+}
+
+.social-links a:hover {
+    /* Color rosa en hover */
+    color: #E91E63;
+}
+
+.right-section {
+    /* 🚨 CAMBIO DE DISTRIBUCIÓN: Le damos menos espacio al contenedor del GIF (25% del ancho disponible) */
+    flex: 0.5; 
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end; /* Alinear el GIF a la parte inferior */
+    position: relative; /* Contexto de posicionamiento */
+    /* 🚨 CAMBIO: Permite que el GIF se desborde fuera del contenedor para moverlo a la derecha */
+    overflow: visible; 
+}
+
+.maintenance-gif {
+    /* Posicionamiento absoluto */
+    position: absolute;
+    bottom: 0; 
+    /* 💥 CAMBIO CLAVE: Mover el GIF mucho más a la derecha (10vw fuera del contenedor) */
+    right: -25vw; 
+    
+    /* Mantiene la altura al 100% de la sección derecha */
+    height: 100%; 
+    width: auto;
+    max-width: none;
+    
+    /* 💥 CAMBIO CLAVE: Aumentamos la escala para una presencia dominante */
+    transform: scale(1.3); 
+    transform-origin: bottom right;
+
+    object-fit: contain;
+    pointer-events: none;
+    /* CRÍTICO: El GIF va por encima de todo */
+    z-index: 15; 
+}
+
+
+/* --- MEDIA QUERY para hacerlo responsivo en móviles (Mantenido) --- */
+
+@media (max-width: 900px) {
+    
+    /* ... estilos de móvil sin cambios ... */
+    body.maintenance-page {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto; 
+        min-height: 100vh;
+    }
+    
+    .maintenance-content {
+        flex-direction: column-reverse; 
+        padding: 20px 5vw;
+        align-items: center;
+    }
+
+    .left-section {
+        flex: 1; 
+        padding-right: 0;
+        padding-top: 10px;
+        padding-bottom: 30px; 
+        width: 100%;
+        align-items: center; 
+        text-align: center;
+    }
+    .bridge-subtitle {
+        text-align: center;
+        max-width: 90vw;
+    }
+    .social-links {
+        justify-content: center;
+    }
+
+    
+    .bridge-title {
+        font-size: 8vw; 
+    }
+
+    .right-section {
+        flex: 1; 
+        min-height: 350px; 
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        overflow: hidden; 
+    }
+    
+    .maintenance-gif {
+        position: static; 
+        transform: none;
+        transform-origin: right;
+        width: 100%; 
+        max-width: 400px;
+        height: auto;
+        z-index: 5;
+    }
 }

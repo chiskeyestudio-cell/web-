@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Segunda Página</title>
+    <title>¡Estamos Horneando!</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
     <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-<body>
-    </div>
+<body class="maintenance-page">
     
     <header class="navbar">
         <div class="logo">
@@ -17,31 +18,63 @@
         </div>
         <nav class="menu">
             <a href="#" id="menu-toggle" data-content="menu">MENU</a>
-
         </nav>
         <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
     </header>
 
+    <main class="maintenance-content">
+        
+        <div class="left-section">
+            <h1 class="bridge-title">HORNEANDO LA PRÓXIMA CAPA.</h1>
+            
+            <p class="bridge-subtitle">
+                Estamos amasando el diseño de esta sección para ofrecerle una experiencia exquisita. Si tienes una idea que no puede esperar, ¡haz una reserva!
+            </p>
+            <p class="bridge-subtitle">
+                Síguenos en nuestras redes para ser el primero en probar las novedades:
+            </p>
+                <div class="social-links">
+                    <a href="https://www.tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin-in"></i></a> 
+                    <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                </div>
+        </div>
+
+        <div class="right-section">
+            <!-- Su GIF de la masa, ajustado para ser grande -->
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764072691/amasando_s4piqi.gif" alt="Manos amasando masa rosa" class="maintenance-gif">
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        ©2025
+    </footer>
     
-
-    <div class="bottom-right-element">
-    </div>
-
+    <!-- El modal de reservas y el JS principal (para el modal y overlay) seguirán funcionando -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h2>¡Modal de Información!</h2>
-            <p>Esta es la misma ventana modal que se abre al hacer clic en cualquiera de las opciones del menú.</p>
-            <p>Aquí puedes poner detalles de contacto o un formulario de reservas.</p>
+            <h2>¡Haz tu reserva!</h2>
+            <form action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                <label for="movil">Móvil:</label>
+                <input type="tel" id="movil" name="movil" required>
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" name="correo" required>
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad">
+                <label for="idea">Cuéntanos tu idea:</label>
+                <textarea id="idea" name="idea" rows="4" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
         </div>
     </div>
-
-    <footer class="footer">
-    ©2025
-</footer>
-
-    <script src="main.js"></script> 
     
-
+    <!-- Incluimos el main.js para que el modal y el overlay del menú funcionen -->
+    <script src="main.js"></script> 
 </body>
+
 </html>
