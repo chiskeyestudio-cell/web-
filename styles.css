@@ -668,9 +668,32 @@ body {
     opacity: 1;
 }
 
+
+/* --- MEDIA QUERY para hacerlo responsivo en móviles --- */
+@media (max-width: 850px) {
+    .navbar {
+        flex-direction: column;
+        padding: 20px;
+    }
+    .menu {
+        margin-top: 15px;
+        flex-wrap: wrap; 
+        justify-content: center;
+    }
+    .content-body {
+        flex-direction: column; 
+        padding: 20px;
+    }
+    .left-column {
+        padding-right: 0;
+        margin-bottom: 30px;
+    }
+}
+
+
 /* ==========================================================================
 /* ==========================================================================
-   NUEVOS ESTILOS EQUIPO (REDISEÑO)
+   NUEVOS ESTILOS EQUIPO (REDISEÑO) - CORREGIDO Y RESPONSIVE
    ========================================================================== */
 
 /* Ajuste general del body para esta página */
@@ -678,24 +701,31 @@ body.team-page {
     background-color: #5B6C8F;
     margin: 0;
     padding: 0;
+    /* CAMBIO CLAVE PARA PORTÁTIL/ESCRITORIO: Ocultar el scroll */
+    overflow: hidden; 
+    
+    /* Altura total y ANCHO total del viewport */
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    
     display: flex;
     flex-direction: column;
 }
 
 .contenedor-principal {
-    width: 100%;
+    width: 90vw; 
     max-width: 1400px;
     margin: 0 auto;
     padding-top: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Para que el footer se mantenga al final sin interferir con el posicionamiento absoluto */
+    /* Ocupar el espacio restante en el layout flex */
     flex-grow: 1; 
-    position: relative; /* Necesario para que los elementos absolutos se posicionen con respecto a él */
+    position: relative;
+    padding-bottom: 50px;
+    /* ELIMINAMOS EL SCROLL INTERNO EN ESCRITORIO */
+    /* overflow-y: auto; */ 
 }
 
 /* --- 1. ENCABEZADO (TITULO Y SUBTITULO) --- */
@@ -710,7 +740,7 @@ body.team-page {
 
 .team-title {
     font-family: 'Outfit', sans-serif;
-    font-size: 3.5em;
+    font-size: 3.5vw;
     font-weight: 800;
     color: white;
     margin: 0;
@@ -720,7 +750,7 @@ body.team-page {
 
 .team-subtitle {
     font-family: 'Urbanist', sans-serif;
-    font-size: 1.1em;
+    font-size: 1.1rem; 
     color: white;
     margin-top: 15px;
     font-weight: 400;
@@ -733,26 +763,41 @@ body.team-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 150px;
+    gap: 8vw; 
     width: 100%;
-    margin-top: -100px;
-    margin-right: 20px; /* Mantener este ajuste si es necesario para el diseño general */
-    position: relative; /* Asegura que los hijos absolutos se posicionen con respecto a este */
+    margin-top: -6vw; 
+    margin-right: -1.5vw; 
+    position: relative; 
 }
 
+/* ESTILO POR DEFECTO PARA AMBAS GALLETAS (Lucía) */
 .bloque-miembro {
     position: relative; 
-    width: 400px; 
-    height: 510px; 
+    /* Dimensiones responsivas sin padding-bottom (Lucía) */
+    width: 30vw; 
+    height: 38.25vw; /* 30vw * (510/400) = 38.25vw */
+    max-width: 400px; 
+    max-height: 510px;
+    
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* ESTILO ESPECÍFICO PARA XAVI (bloque-miembro:first-child) */
+.equipo-grid > .bloque-miembro:first-child {
+    /* Galleta de Xavi más pequeña: 25vw (max 333px) */
+    width: 25vw; 
+    height: 31.875vw; /* 25vw * (510/400) = 31.875vw */
+    max-width: 333px;
+    max-height: 424px;
+}
+
+
 /* --- 3. NOMBRES LATERALES (XAVI / LU) --- */
 .nombre-lateral {
     font-family: 'Outfit', sans-serif;
-    font-size: 2em; /* TAMAÑO BASE GRANDE PARA XAVI/LU */
+    font-size: 2vw; 
     font-weight: 800;
     color: white;
     text-transform: uppercase;
@@ -760,7 +805,8 @@ body.team-page {
     
     white-space: normal; 
     display: block;      
-    width: 200px;        
+    width: 15vw; 
+    max-width: 200px;
     
     position: absolute; 
     z-index: 5;
@@ -800,14 +846,14 @@ body.team-page {
 /* 2. Posicionamiento específico para XAVI (Izquierda) */
 /* El texto se alinea a la derecha para que la envoltura comience cerca de la galleta */
 .nombre-lateral.izquierda {
-    right: 350px;
+    right: 110%; /* CAMBIO: De 350px a 110% (relativo al padre) */
     text-align: right; 
 }
 
 /* 3. Posicionamiento específico para LU (Derecha) */
 /* El texto se alinea a la izquierda para que la envoltura comience cerca de la galleta */
 .nombre-lateral.derecha {
-    left: 350px; 
+    left: 110%; /* CAMBIO: De 350px a 110% (relativo al padre) */
     text-align: left; 
 }
 /* Cuando se rompe la galleta, ocultamos el nombre */
@@ -819,7 +865,9 @@ body.team-page {
 
 /* --- 4. CONTENEDOR GALLETA --- */
 .cookie-container {
-    position: relative;
+    position: relative; 
+    top: 0; 
+    left: 0; 
     width: 100%;   
     height: 100%;  
     cursor: pointer;
@@ -840,18 +888,45 @@ body.team-page {
     width: 100%; 
     height: 100%;
     object-fit: contain; 
-    transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; /* Añadida transición para transform */
     z-index: 10; 
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); 
 }
 
+/* Mantenemos la galleta entera más pequeña */
+.cookie-img.entera { 
+    transform: scale(0.85); 
+}
 
-.cookie-img.rota { opacity: 0; transform: scale(1.05); }
+/* Hacemos la galleta rota más grande (para Lu) */
+.cookie-img.rota { 
+    opacity: 0; 
+    transform: scale(1.2); 
+}
+
+/* ESTILO ESPECÍFICO PARA XAVI - GALLETA ROTA MÁS GRANDE */
+.equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
+    /* Aumentamos el factor de escala para compensar el contenedor más pequeño de Xavi (1.2 / (25/30) = 1.44) */
+    transform: scale(1.44); 
+}
+
 
 /* Estados al hacer click */
-.cookie-container.clicked .cookie-img.entera { opacity: 0; }
-.cookie-container.clicked .cookie-img.rota { opacity: 1; }
+.cookie-container.clicked .cookie-img.entera { 
+    opacity: 0; 
+    transform: scale(0.85); /* Mantenemos la escala mientras desaparece */
+}
 
+.cookie-container.clicked .cookie-img.rota { 
+    opacity: 1; 
+    transform: scale(1.2); /* Mantenemos la escala por defecto para Lu */
+}
+
+/* ESTADO CLICKED ESPECÍFICO PARA XAVI - GALLETA ROTA MÁS GRANDE */
+.equipo-grid > .bloque-miembro:first-child .cookie-container.clicked .cookie-img.rota {
+    opacity: 1;
+    transform: scale(1.44); /* Mantenemos el escalado compensado */
+}
 
 
 /* Mostrar solo al pasar mouse y SI NO está rota */
@@ -885,14 +960,12 @@ body.team-page {
     transition: all 0.5s ease-in-out;
     pointer-events: none;
      z-index: 12; 
-    /* CAMBIO: Z-index más bajo que la galleta (10) para que quede detrás */
-  
 }
 
 /* Estilo del texto "DISEÑADOR GRÁFICO..." */
 .rol-titulo {
     font-family: 'Outfit', sans-serif;
-    font-size: 1.9em; 
+    font-size: 1.9rem; /* CAMBIO: De em a rem (más controlable) */
     font-weight: 900;
     line-height: 0.95;
     color: white;
@@ -930,39 +1003,124 @@ body.team-page {
     pointer-events: auto;
 }
 
-/* --- RESPONSIVE --- */
+/* --- RESPONSIVE ESPECÍFICO EQUIPO (Móvil) --- */
 @media (max-width: 900px) {
-    .equipo-grid {
-        flex-direction: column;
-        gap: 80px;
-        margin-right: 0; 
+    
+    /* CAMBIO CLAVE PARA MÓVIL: Habilitar el scroll en el body */
+    body.team-page {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto; /* Permitir que el body se expanda con el contenido */
+        min-height: 100vh;
     }
     
+    /* -------------------------------------------------------------------
+       Header Horizontal y Pequeño (Solicitado)
+       ------------------------------------------------------------------- */
+    body.team-page .navbar {
+        flex-direction: row; /* Horizontal */
+        padding: 15px 5vw; /* Más pequeño */
+        align-items: center;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    
+    body.team-page .logo {
+        order: 1;
+    }
+    
+    body.team-page .logo img {
+        height: 50px; /* Logo más pequeño */
+        margin-right: 2vw;
+    }
+    
+    body.team-page .menu {
+        position: static;
+        transform: none;
+        margin-top: 0;
+        gap: 15px; /* Gap reducido */
+        width: auto;
+        order: 2; /* Para moverlo al medio */
+    }
+    
+    body.team-page .reservas-btn {
+        margin-left: auto;
+        order: 3;
+        font-size: 0.8em;
+    }
+    
+    body.team-page .menu a {
+        font-size: 0.9em;
+    }
+
+
+    /* -------------------------------------------------------------------
+       Ajustes del Contenido de Equipo (Cookies más pequeñas y apiladas)
+       ------------------------------------------------------------------- */
+    
+    .team-title {
+        font-size: 6vw;
+    }
+    
+    .team-subtitle {
+        font-size: 1rem;
+    }
+
+    .equipo-grid {
+        flex-direction: column;
+        gap: 5vw; /* Espacio reducido entre galletas */
+        margin-right: 0; 
+        margin-top: 5vw;
+    }
+    
+    /* ESTILO POR DEFECTO MÓVIL (Lucía) */
     .bloque-miembro {
-        width: 300px; 
-        height: 380px;
+        /* Dimensiones sin padding-bottom */
+        width: 55vw; 
+        height: 70.125vw; /* 55vw * (510/400) = 70.125vw */
+        max-width: 380px; 
+    }
+    
+    /* ESTILO ESPECÍFICO MÓVIL PARA XAVI */
+    .equipo-grid > .bloque-miembro:first-child {
+        /* Galleta de Xavi más pequeña: 45vw */
+        width: 45vw; 
+        height: 57.375vw; /* 45vw * (510/400) = 57.375vw */
+        max-width: 333px;
+    }
+    
+    /* ESTILO ESPECÍFICO MÓVIL PARA XAVI - GALLETA ROTA MÁS GRANDE */
+    .equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
+        /* Aumentamos el factor de escala para compensar el contenedor más pequeño de Xavi (1.2 / (45/55) ~= 1.47) */
+        transform: scale(1.47); 
+    }
+    .equipo-grid > .bloque-miembro:first-child .cookie-container.clicked .cookie-img.rota {
+        opacity: 1;
+        transform: scale(1.47); /* Mantenemos el escalado compensado */
     }
     
     .nombre-lateral {
+        /* Posición estática, alineada al centro y movida arriba */
         position: static; 
         transform: none; 
-        margin-bottom: 10px;
         order: -1; 
-        width: auto; 
+        width: 100%; 
+        text-align: center !important; 
+        margin-bottom: 5px; 
+        font-size: 5vw; 
+        max-width: none;
     }
+    
+    /* Reseteando la alineación para que se centren en la columna */
     .nombre-lateral.izquierda,
     .nombre-lateral.derecha {
         right: auto;
         left: auto;
         text-align: center; 
-        margin-right: 0;
-        margin-left: 0;
     }
     
-    .team-title {
-        font-size: 2.5em;
-    }
     .rol-titulo {
-        font-size: 1.8em; 
+        font-size: 1.4rem;
     }
+    
 }
