@@ -790,7 +790,7 @@ body.team-page {
     width: 25vw; 
     height: 31.875vw; /* 25vw * (510/400) = 31.875vw */
     max-width: 333px;
-    max-height: 424px;
+    max-height: 409px;
 }
 
 
