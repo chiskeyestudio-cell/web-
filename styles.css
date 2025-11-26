@@ -1197,127 +1197,6 @@ body.team-page {
     pointer-events: auto;
 }
 
-/* --- RESPONSIVE ESPECÍFICO EQUIPO (Móvil) --- */
-@media (max-width: 900px) {
-    
-    /* CAMBIO CLAVE PARA MÓVIL: Habilitar el scroll en el body */
-    body.team-page {
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: auto; /* Permitir que el body se expanda con el contenido */
-        min-height: 100vh;
-    }
-    
-    /* -------------------------------------------------------------------
-       Header Horizontal y Pequeño (Solicitado)
-       ------------------------------------------------------------------- */
-    body.team-page .navbar {
-        flex-direction: row; /* Horizontal */
-        padding: 15px 5vw; /* Más pequeño */
-        align-items: center;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-    }
-    
-    body.team-page .logo {
-        order: 1;
-    }
-    
-    body.team-page .logo img {
-        height: 50px; /* Logo más pequeño */
-        margin-right: 2vw;
-    }
-    
-    body.team-page .menu {
-        position: static;
-        transform: none;
-        margin-top: 0;
-        gap: 15px; /* Gap reducido */
-        width: auto;
-        order: 2; /* Para moverlo al medio */
-    }
-    
-    body.team-page .reservas-btn {
-        margin-left: auto;
-        order: 3;
-        font-size: 0.8em;
-    }
-    
-    body.team-page .menu a {
-        font-size: 0.9em;
-    }
-
-
-    /* -------------------------------------------------------------------
-       Ajustes del Contenido de Equipo (Cookies más pequeñas y apiladas)
-       ------------------------------------------------------------------- */
-    
-    .team-title {
-        font-size: 6vw;
-    }
-    
-    .team-subtitle {
-        font-size: 1rem;
-    }
-
-    .equipo-grid {
-        flex-direction: column;
-        gap: 5vw; /* Espacio reducido entre galletas */
-        margin-right: 0; 
-        margin-top: 5vw;
-    }
-    
-    /* ESTILO POR DEFECTO MÓVIL (Lucía) */
-    .bloque-miembro {
-        /* Dimensiones sin padding-bottom */
-        width: 55vw; 
-        height: 70.125vw; /* 55vw * (510/400) = 70.125vw */
-        max-width: 380px; 
-    }
-    
-    /* ESTILO ESPECÍFICO MÓVIL PARA XAVI */
-    .equipo-grid > .bloque-miembro:first-child {
-        /* Galleta de Xavi más pequeña: 45vw */
-        width: 45vw; 
-        height: 57.375vw; /* 45vw * (510/400) = 57.375vw */
-        max-width: 333px;
-    }
-    
-    /* ESTILO ESPECÍFICO MÓVIL PARA XAVI - GALLETA ROTA MÁS GRANDE */
-    .equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
-        /* Aumentamos el factor de escala para compensar el contenedor más pequeño de Xavi (1.2 / (45/55) ~= 1.47) */
-        transform: scale(1.47); 
-    }
-    .equipo-grid > .bloque-miembro:first-child .cookie-container.clicked .cookie-img.rota {
-        opacity: 1;
-        transform: scale(1.47); /* Mantenemos el escalado compensado */
-    }
-    
-    .nombre-lateral {
-        /* Posición estática, alineada al centro y movida arriba */
-        position: static; 
-        transform: none; 
-        order: -1; 
-        width: 100%; 
-        text-align: center !important; 
-        margin-bottom: 5px; 
-        font-size: 5vw; 
-        max-width: none;
-    }
-    
-    /* Reseteando la alineación para que se centren en la columna */
-    .nombre-lateral.izquierda,
-    .nombre-lateral.derecha {
-        right: auto;
-        left: auto;
-        text-align: center; 
-    }
-    
-    .rol-titulo {
-        font-size: 1.4rem;
-    }
-    
-}
 
 /* ==========================================================================
 /* ==========================================================================
@@ -1449,64 +1328,6 @@ body.maintenance-page {
 
 /* --- MEDIA QUERY para hacerlo responsivo en móviles (Mantenido) --- */
 
-@media (max-width: 900px) {
-    
-    /* ... estilos de móvil sin cambios ... */
-    body.maintenance-page {
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: auto; 
-        min-height: 100vh;
-    }
-    
-    .maintenance-content {
-        flex-direction: column-reverse; 
-        padding: 20px 5vw;
-        align-items: center;
-    }
-
-    .left-section {
-        flex: 1; 
-        padding-right: 0;
-        padding-top: 10px;
-        padding-bottom: 30px; 
-        width: 100%;
-        align-items: center; 
-        text-align: center;
-    }
-    .bridge-subtitle {
-        text-align: center;
-        max-width: 90vw;
-    }
-    .social-links {
-        justify-content: center;
-    }
-
-    
-    .bridge-title {
-        font-size: 8vw; 
-    }
-
-    .right-section {
-        flex: 1; 
-        min-height: 350px; 
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        overflow: hidden; 
-    }
-    
-    .maintenance-gif {
-        position: static; 
-        transform: none;
-        transform-origin: right;
-        width: 100%; 
-        max-width: 400px;
-        height: auto;
-        z-index: 5;
-    }
-}
-
 
 /* --- EFECTO DE TEXTO DESLIZANTE (CINTA) PARA EL OVERLAY --- */
 .overlay-content a {
@@ -1581,19 +1402,6 @@ body.maintenance-page {
 }
 
 
-/* Móvil */
-@media (max-width: 768px) {
-    .social-icons {
-        bottom: 15px;
-        right: 15px;
-    }
-    .social-icons img {
-        width: 26px;
-        height: 26px;
-    }
-}
-
-
 /* color blanco por defecto */
 .social-icons img {
     filter: invert(1); /* blanco */
@@ -1656,5 +1464,409 @@ body.maintenance-page {
     opacity: 1;        /* visibles por defecto */
     transform: translateY(0); /* posición normal */
     transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+
+
+/* ==========================================================================
+// --- SECCION DE MEDIA QUERIES ---
+// ========================================================================== */
+
+
+/* --- MEDIA QUERY para hacerlo responsivo en móviles (General 850px) --- */
+@media (max-width: 850px) {
+    .navbar {
+        flex-direction: column;
+        padding: 20px;
+    }
+    .menu {
+        margin-top: 15px;
+        flex-wrap: wrap; 
+        justify-content: center;
+    }
+    .content-body {
+        flex-direction: column; 
+        padding: 20px;
+    }
+    .left-column {
+        padding-right: 0;
+        margin-bottom: 30px;
+    }
+}
+
+
+/* ------------------------------
+   TABLET Y MÓVIL GENERAL (<=768px) - Navbar, Overlay Menu/Footer, Modal, Social Icons
+   ------------------------------ */
+@media (max-width: 768px) {
+    
+    /* Navbar: Disposición horizontal Logo | Menu | Reservas */
+    .navbar { 
+        flex-direction: row; 
+        padding: 20px 20px; 
+        align-items: center; 
+        justify-content: space-between; 
+    }
+    .logo img { 
+        height: 80px; /* Tamaño del logo en tablet/móvil */
+    }
+    .menu {
+        flex-grow: 1; /* Permite que el menú se centre */
+        text-align: center;
+        position: static;
+        transform: none;
+        gap: 10px;
+        padding: 0 10px;
+    }
+    .reservas-btn { 
+        font-size: 0.85em; 
+        margin-left: 0; 
+    }
+    
+    /* Overlay Menu: Tamaño de fuente fluido reducido */
+    .overlay-content {
+        gap: 15px;
+    }
+    .overlay-content a {
+        font-size: 7vw; /* Se ajusta el tamaño de fuente usando Viewport Width (7vw) */
+        line-height: 1.0; 
+    }
+    
+    /* Overlay Footer: Centrado y más pequeño */
+    .overlay-footer {
+        left: 50%;
+        transform: translateX(-50%); 
+        width: 90%;
+        text-align: center;
+        font-size: 0.8em;
+    }
+    
+    /* Modal: Ajuste de padding para tablet */
+    .modal-content {
+      padding: 40px 30px; 
+      max-width: 90%;
+      margin: 20px auto;
+    }
+    
+    /* Social Icons: Posición y tamaño ajustados */
+    .social-icons {
+        bottom: 15px;
+        right: 15px;
+    }
+    .social-icons img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+/* ------------------------------
+   C) TABLETS (>=481 && <=768)
+   ------------------------------ */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* Página Principal: Flujo vertical */
+  .content-body { padding: 40px; flex-direction: column; }
+  .left-column { flex-basis: 100%; margin-left: 0; text-align: left; }
+  .title-lg { font-size: 2.4em; }
+  .title-lg2 { font-size: 10em; margin-left: 0; }
+  
+   /* Imagen de la tarta relativa y más grande que en móvil */
+  #main-image { 
+      position: relative !important; 
+      max-width: 75%; 
+      height: auto; 
+      margin: 30px auto; 
+      display: block; 
+      left: auto !important; 
+      right: auto !important; 
+      top: auto !important; 
+      transform: none; 
+  }
+  .scrolling-text-container { position: relative; margin-top: 40px; width: 90%; left: 50%; transform: translateX(-50%); }
+  
+}
+
+
+/* ------------------------------
+   B) MÓVILES PEQUEÑOS (<=480)
+   ------------------------------ */
+@media (max-width: 480px) {
+  
+  /* Modal Ajuste Extremo */
+  .modal-content {
+      padding: 30px 15px; 
+  }
+  
+  /* Navbar: Ajustes de tamaño */
+  .logo img { height: 45px; }
+  .menu a { font-size: 0.75em; padding: 6px 10px; }
+  
+  /* Overlay Menu: Usar un valor un poco más grande en móviles muy pequeños para impacto */
+  .overlay-content a {
+      font-size: 8vw; /* Ajustado a 8vw */
+  }
+
+  /* Página Principal: Flujo vertical */
+  .content-body { padding: 15px; }
+  .left-column { margin-left: 0; text-align: center; }
+  .title-lg { font-size: 2em; text-align: center; }
+  .title-lg2 { font-size: 6.5em; white-space: normal; overflow: visible; margin-left: 0; }
+  .info-sm { text-align: center; }
+  
+  /* INDEX IMAGE FIX: Tarta más pequeña y ajustada */
+  #main-image { 
+      position: relative !important; 
+      max-width: 65% !important; /* Reducido a 65% para un tamaño más pequeño y forzado */
+      width: 65% !important; /* Forzar el ancho */
+      height: auto; 
+      margin: 20px auto; 
+      display: block; 
+      left: auto !important; 
+      right: auto !important; 
+      top: auto !important; 
+      transform: none; 
+  }
+  
+  .reservas-btn { font-size: 0.75em; }
+}
+
+
+/* ------------------------------
+   D) IPAD PRO / TABLET GRANDE (>=769 && <=1024)
+   ------------------------------ */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar { padding: 30px 80px; }
+  .logo img { height: 90px; margin-right: 40px; }
+  .menu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    gap: 40px;
+  }
+  .menu a { font-size: 1em; }
+  .content-body { padding: 40px; flex-direction: row; }
+  .left-column { flex-basis: 45%; margin-left: -10px; text-align: left; }
+  .title-lg { font-size: 2.8em; }
+  .title-lg2 { font-size: 12em; }
+  #main-image { max-width: 70%; top: 8%; right: 6%; }
+  .scrolling-text-container { margin-top: 350px; width: 80%; }
+  .reservas-btn { font-size: 0.85em; padding: 6px 8px; }
+}
+
+/* Opcional: refuerza escritorio si alguna regla móvil te la rompió */
+@media (min-width: 1025px) {
+  /* estilos escritorio "garantizados" */
+  .menu { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); gap: 55px; }
+  .logo img { height: 100px; margin-right: 90px; }
+  .title-lg2 { font-size: 16em; }
+  .content-body { padding: 65px 30px; flex-direction: row; }
+}
+
+/* -------------------------------------------------------
+   💻 TABLETS GRANDES — iPad Pro 11 y 12.9
+------------------------------------------------------- */
+@media (min-width: 769px) and (max-width: 1180px) {
+    /* ajustes aquí */
+     .navbar {
+        padding: 40px 60px;
+    }
+
+    .menu {
+        gap: 40px;
+        transform: translate(-50%, -40%);
+    }
+
+    .title-lg {
+        font-size: 2.5em;
+    }
+
+    .title-lg2 {
+        font-size: 10em;
+    }
+
+    #main-image {
+        width: 65%;
+        right: 30px;
+        top: 180px;
+    }
+
+}
+
+/* -------------------------------------------------------
+   💻 iPad Pro 12.9 vertical (1366px de alto, 1024px ancho)
+------------------------------------------------------- */
+@media (min-width: 1024px) and (max-width: 1366px) {
+    /* ajustes aquí */
+      #main-image {
+        width: 55%;
+        top: 200px;
+        right: 50px;
+    }
+
+    .title-lg2 {
+        font-size: 12em;
+    }
+}
+
+/* --- RESPONSIVE ESPECÍFICO EQUIPO (Móvil/Tablet) --- */
+@media (max-width: 900px) {
+    
+    /* Habilitar el scroll en el body de la página de equipo */
+    body.team-page {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto; 
+        min-height: 100vh;
+    }
+    
+    /* Header Horizontal y Pequeño (Asegura el navbar ajustado) */
+    body.team-page .navbar {
+        flex-direction: row; 
+        padding: 15px 5vw; 
+        align-items: center;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    
+    body.team-page .logo img {
+        height: 50px; 
+        margin-right: 2vw;
+    }
+    
+    body.team-page .menu {
+        position: static;
+        transform: none;
+        margin-top: 0;
+        gap: 15px; 
+        width: auto;
+        flex-grow: 1;
+        text-align: center;
+    }
+    
+    body.team-page .reservas-btn {
+        margin-left: 0;
+        font-size: 0.8em;
+    }
+    
+    /* Contenido de Equipo */
+    .team-title {
+        font-size: 6vw;
+    }
+    
+    .team-subtitle {
+        font-size: 1rem;
+    }
+
+    .equipo-grid {
+        flex-direction: column;
+        gap: 5vw; 
+        margin-right: 0; 
+        margin-top: 5vw;
+    }
+    
+    /* 🔥 Galletas: Aumentar el tamaño de las galletas (Lucía) */
+    .bloque-miembro {
+        width: 90vw; 
+        height: 114.75vw; 
+        max-width: 600px; 
+        max-height: 765px;
+    }
+    
+    /* 🔥 Galletas: Ajuste proporcional para Xavi */
+    .equipo-grid > .bloque-miembro:first-child {
+        width: 74.7vw; 
+        height: 95.2vw;
+        max-width: 500px; 
+        max-height: 612px;
+    }
+
+    /* Galletas: Imagen rota de Xavi ajustada */
+    .equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
+        transform: scale(1.25); 
+    }
+    .equipo-grid > .bloque-miembro:first-child .cookie-container.clicked .cookie-img.rota {
+        opacity: 1;
+        transform: scale(1.25); 
+    }
+    
+    /* 🔥 Nombre debajo de la galleta (más pequeño) */
+    .nombre-lateral {
+        position: static; 
+        transform: none; 
+        order: 2; 
+        width: 100%; 
+        text-align: center !important; 
+        margin-top: 5px; /* Reducido a 5px */
+        margin-bottom: 5px; /* Reducido a 5px */
+        font-size: 4vw; /* REDUCIDO a 4vw */
+        max-width: none;
+    }
+    
+    .nombre-lateral.izquierda,
+    .nombre-lateral.derecha {
+        right: auto;
+        left: auto;
+        text-align: center; 
+    }
+    
+    .rol-titulo {
+        font-size: 1.4rem;
+    }
+    
+    /* --- PÁGINAS PUENTE (Mantenimiento) --- */
+    body.maintenance-page {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto; 
+        min-height: 100vh;
+    }
+    
+    .maintenance-content {
+        /* Texto primero, luego GIF */
+        flex-direction: column; 
+        padding: 20px 5vw;
+        align-items: center;
+    }
+
+    .left-section {
+        flex: 1; 
+        padding-right: 0;
+        padding-top: 10px;
+        padding-bottom: 30px; 
+        width: 100%;
+        align-items: center; 
+        text-align: center;
+    }
+    .bridge-subtitle {
+        text-align: center;
+        max-width: 90vw;
+    }
+    .social-links {
+        justify-content: center;
+    }
+
+    
+    .bridge-title {
+        font-size: 8vw; 
+    }
+
+    .right-section {
+        flex: 1; 
+        min-height: 350px; 
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        overflow: hidden; 
+    }
+    
+    .maintenance-gif {
+        position: static; 
+        transform: none;
+        transform-origin: right;
+        width: 100%; 
+        max-width: 400px;
+        height: auto;
+        z-index: 5;
+    }
 }
 
