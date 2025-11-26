@@ -1532,12 +1532,12 @@ body.maintenance-page {
         line-height: 1.0; 
     }
     
-    /* Overlay Footer: Centrado y más pequeño */
+    /* MODIFICACIÓN: Overlay Footer: Alineado a la izquierda para móvil/tablet */
     .overlay-footer {
-        left: 50%;
-        transform: translateX(-50%); 
-        width: 90%;
-        text-align: center;
+        left: 20px; /* Alineado a la izquierda */
+        transform: none; /* Quitar el centrado */
+        width: auto;
+        text-align: left;
         font-size: 0.8em;
     }
     
@@ -1564,12 +1564,14 @@ body.maintenance-page {
    ------------------------------ */
 @media (min-width: 481px) and (max-width: 768px) {
   /* Página Principal: Flujo vertical */
-  .content-body { padding: 40px; flex-direction: column; }
+    /* MODIFICACIÓN: Aumentar Padding en Tablets */
+  .content-body { padding: 60px 40px; flex-direction: column; }
   .left-column { flex-basis: 100%; margin-left: 0; text-align: left; }
   .title-lg { font-size: 2.4em; }
   .title-lg2 { font-size: 10em; margin-left: 0; }
   
    /* Imagen de la tarta relativa y más grande que en móvil */
+    /* MODIFICACIÓN: Posicionamiento de la Tarta */
   #main-image { 
       position: relative !important; 
       max-width: 75%; 
@@ -1580,8 +1582,17 @@ body.maintenance-page {
       right: auto !important; 
       top: auto !important; 
       transform: none; 
+      margin-top: -80px !important; /* Mueve la imagen hacia arriba */
+      z-index: 1;
   }
-  .scrolling-text-container { position: relative; margin-top: 40px; width: 90%; left: 50%; transform: translateX(-50%); }
+    .info-sm { 
+        margin-top: -50px; /* Mueve el info-sm hacia arriba */
+        padding-top: 80px; /* Compensación para empujar el texto hacia abajo */
+        position: relative;
+        z-index: 10;
+    }
+  
+  .scrolling-text-container { position: absolute; margin-top: 300px; width: 100%; left: 50%; transform: translateX(-50%); }
   
 }
 
@@ -1593,11 +1604,11 @@ body.maintenance-page {
   
   /* Modal Ajuste Extremo */
   .modal-content {
-      padding: 30px 15px; 
+      padding: 30px; 
   }
   
   /* Navbar: Ajustes de tamaño */
-  .logo img { height: 45px; }
+  .logo img { height: 70px; }
   .menu a { font-size: 0.75em; padding: 6px 10px; }
   
   /* Overlay Menu: Usar un valor un poco más grande en móviles muy pequeños para impacto */
@@ -1606,25 +1617,32 @@ body.maintenance-page {
   }
 
   /* Página Principal: Flujo vertical */
-  .content-body { padding: 15px; }
-  .left-column { margin-left: 0; text-align: center; }
-  .title-lg { font-size: 2em; text-align: center; }
-  .title-lg2 { font-size: 6.5em; white-space: normal; overflow: visible; margin-left: 0; }
+    /* MODIFICACIÓN: Aumentar Padding en Móviles */
+  .content-body { flex-direction: column; padding: 30px; }
+  .left-column { margin-left: 0; }
+  .title-lg { font-size: 1em; margin-bottom:1rem ;text-align: left; }
+  .title-lg2 { font-size: 4em; white-space: normal; overflow: visible; margin-left: 0; text-align: left;}
   .info-sm { text-align: center; }
   
   /* INDEX IMAGE FIX: Tarta más pequeña y ajustada */
+    /* MODIFICACIÓN: Posicionamiento de la Tarta */
   #main-image { 
-      position: relative !important; 
-      max-width: 65% !important; /* Reducido a 65% para un tamaño más pequeño y forzado */
-      width: 65% !important; /* Forzar el ancho */
+     /* position: relative !important; 
+      max-width: 75% !important; /* Reducido a 65% para un tamaño más pequeño y forzado */
+      width: 80% !important; /* Forzar el ancho */
       height: auto; 
-      margin: 20px auto; 
+      margin: 90px auto; 
+      left: 35%;
       display: block; 
-      left: auto !important; 
-      right: auto !important; 
-      top: auto !important; 
-      transform: none; 
+      z-index: 10;
   }
+    .info-sm { 
+        text-align: center; 
+        margin-top: -60px; /* Mueve el info-sm hacia arriba */
+        padding-top: 80px; /* Compensación para empujar el texto hacia abajo */
+        position: relative;
+        z-index: 10;
+    }
   
   .reservas-btn { font-size: 0.75em; }
 }
@@ -1720,18 +1738,6 @@ body.maintenance-page {
     }
     
     /* Header Horizontal y Pequeño (Asegura el navbar ajustado) */
-    body.team-page .navbar {
-        flex-direction: row; 
-        padding: 15px 5vw; 
-        align-items: center;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-    }
-    
-    body.team-page .logo img {
-        height: 50px; 
-        margin-right: 2vw;
-    }
     
     body.team-page .menu {
         position: static;
@@ -1757,48 +1763,44 @@ body.maintenance-page {
         font-size: 1rem;
     }
 
+    /* MODIFICACIÓN: Reducir separación */
     .equipo-grid {
         flex-direction: column;
-        gap: 5vw; 
-        margin-right: 0; 
-        margin-top: 5vw;
     }
     
-    /* 🔥 Galletas: Aumentar el tamaño de las galletas (Lucía) */
+    /* MODIFICACIÓN: Aumentar el tamaño de las galletas (Lucía) */
     .bloque-miembro {
-        width: 90vw; 
+        width: 200vw; 
         height: 114.75vw; 
-        max-width: 600px; 
-        max-height: 765px;
+        max-width: 700px; /* Galleta más grande */
+        max-height: 892.5px;
     }
     
-    /* 🔥 Galletas: Ajuste proporcional para Xavi */
+    /* MODIFICACIÓN: Ajuste proporcional para Xavi */
     .equipo-grid > .bloque-miembro:first-child {
-        width: 74.7vw; 
+        width: 200vw; 
         height: 95.2vw;
-        max-width: 500px; 
-        max-height: 612px;
+        max-width: 583px; /* Galleta más grande */
+        max-height: 743.325px;
     }
 
-    /* Galletas: Imagen rota de Xavi ajustada */
-    .equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
-        transform: scale(1.25); 
-    }
-    .equipo-grid > .bloque-miembro:first-child .cookie-container.clicked .cookie-img.rota {
-        opacity: 1;
-        transform: scale(1.25); 
-    }
+    /* Ajustar escalas de galletas para reducir sensación de separación */
+    .cookie-img.entera { transform: scale(0.9); }
+    .cookie-img.rota { transform: scale(1.1); }
+    .equipo-grid > .bloque-miembro:first-child .cookie-img.rota { transform: scale(1.3); }
+    .equipo-grid > .bloque-miembro:first-child .cookie-container.clicked .cookie-img.rota { transform: scale(1.3); }
+    .cookie-container.clicked .cookie-img.rota { transform: scale(1.1); } 
     
-    /* 🔥 Nombre debajo de la galleta (más pequeño) */
+    /* MODIFICACIÓN: Nombre debajo de la galleta (fijo y sin hover) */
     .nombre-lateral {
         position: static; 
         transform: none; 
         order: 2; 
         width: 100%; 
         text-align: center !important; 
-        margin-top: 5px; /* Reducido a 5px */
-        margin-bottom: 5px; /* Reducido a 5px */
-        font-size: 4vw; /* REDUCIDO a 4vw */
+        margin-top: 2px; 
+        margin-bottom: 2px; 
+        font-size: 4vw; 
         max-width: none;
     }
     
@@ -1807,6 +1809,22 @@ body.maintenance-page {
         right: auto;
         left: auto;
         text-align: center; 
+    }
+    
+    /* Ocultar el texto de hover y forzar la visibilidad del nombre original */
+    .nombre-lateral .name-hover-sm { 
+        display: none !important; /* Force hide hover text */
+    }
+    .nombre-lateral .name-original {
+        display: block !important; /* Force show original text */
+    }
+    
+    /* Anular el efecto de hover en el media query (sin cambio de texto) */
+    .cookie-container:hover ~ .nombre-lateral .name-original {
+        display: block !important; 
+    }
+    .cookie-container:hover ~ .nombre-lateral .name-hover-sm {
+        display: none !important; 
     }
     
     .rol-titulo {
@@ -1869,4 +1887,3 @@ body.maintenance-page {
         z-index: 5;
     }
 }
-
