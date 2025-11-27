@@ -49,12 +49,15 @@
 
     <div class="bottom-right-element">
     </div>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
+<div id="myModal" class="modal">
+  <div class="modal-content">
     <span class="close-btn">&times;</span>
-    <h2>¡Haz tu reserva!</h2>
-    <form action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
+
+    <!-- Contenedor original del formulario -->
+    <div id="formContainer">
+      <h2>¡Haz tu reserva!</h2>
+      <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
+      <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -71,10 +74,18 @@
         <textarea id="idea" name="idea" rows="4" required></textarea>
 
         <button type="submit">Enviar</button>
-    </form>
+      </form>
+    </div>
+
+    <!-- Contenedor del mensaje de gracias -->
+    <div id="mensajeGracias" class="gracias-box" style="display:none;">
+  <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="Gracias" class="gracias-img">
+  <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
 </div>
 
-    </div>
+  </div>
+</div>
+
 
     <footer class="footer">
     ©2025

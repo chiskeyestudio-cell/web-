@@ -73,25 +73,66 @@
     <footer class="footer">©2025</footer>
     
     <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>¡Haz tu reserva!</h2>
-            <form action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-                <label for="movil">Móvil:</label>
-                <input type="tel" id="movil" name="movil" required>
-                <label for="correo">Correo:</label>
-                <input type="email" id="correo" name="correo" required>
-                <label for="ciudad">Ciudad:</label>
-                <input type="text" id="ciudad" name="ciudad">
-                <label for="idea">Cuéntanos tu idea:</label>
-                <textarea id="idea" name="idea" rows="4" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+
+    <!-- Contenedor original del formulario -->
+    <div id="formContainer">
+      <h2>¡Haz tu reserva!</h2>
+      <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
+      <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="movil">Móvil:</label>
+        <input type="tel" id="movil" name="movil" required>
+
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" name="correo" required>
+
+        <label for="ciudad">Ciudad:</label>
+        <input type="text" id="ciudad" name="ciudad">
+
+        <label for="idea">Cuéntanos tu idea:</label>
+        <textarea id="idea" name="idea" rows="4" required></textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
     </div>
+
+    <!-- Contenedor del mensaje de gracias -->
+    <div id="mensajeGracias" class="gracias-box" style="display:none;">
+  <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="Gracias" class="gracias-img">
+  <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
+</div>
+
+  </div>
+</div>
+
+ 
     
     <script src="main.js"></script> 
-    <script src="equipo.js"></script> </body>
+    <script src="equipo.js"></script> 
+ <!-- Redes sociales abajo a la derecha -->
+
+<div class="social-icons overlay-social-icons">
+    <a href="https://instagram.com/tu_instagram" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+
+    <a href="https://facebook.com/tu_facebook" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+
+    <a href="https://www.tiktok.com/@tu_tiktok" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok">
+    </a>
+
+    <a href="https://www.linkedin.com/in/tu_linkedin" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
+    </a>
+    
+</div>
+
+</body>
 </html>

@@ -174,3 +174,41 @@ function syncIconColors() {
 }
 
 requestAnimationFrame(syncIconColors);
+
+
+// ==========================================================
+// FORMULARIO SIN REDIRECCIÓN (FORMSPREE AJAX)
+// ==========================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const formReserva = document.getElementById("reservaForm");
+    const mensajeGracias = document.getElementById("mensajeGracias");
+    const formContainer = document.getElementById("formContainer");
+
+    if (!formReserva || !mensajeGracias || !formContainer) return;
+
+    formReserva.addEventListener("submit", async (e) => {
+        e.preventDefault(); // evita redirección
+
+        const formData = new FormData(formReserva);
+
+        try {
+            const respuesta = await fetch(formReserva.action, {
+                method: "POST",
+                body: formData,
+                headers: { "Accept": "application/json" }
+            });
+
+            if (respuesta.ok) {
+                // Oculta TODO lo del formulario (incluyendo h2 y tiempo)
+                formContainer.style.display = "none";
+
+                // Muestra solo el mensaje de gracias
+                mensajeGracias.style.display = "block";
+            } else {
+                alert("Ocurrió un error al enviar. Intenta otra vez.");
+            }
+        } catch (err) {
+            alert("Error al enviar. Revisa tu conexión.");
+        }
+    });
+});
