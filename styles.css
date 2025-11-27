@@ -659,6 +659,9 @@ body {
     font-family: 'Urbanist', sans-serif;
     font-weight: 600;
     font-size: 1em;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 
@@ -1402,11 +1405,6 @@ body.maintenance-page {
 }
 
 
-/* color blanco por defecto */
-.social-icons img {
-    filter: invert(1); /* blanco */
-    transition: filter 0.3s ease;
-}
 
 /* cuando el overlay está abierto, se pone rojo #E91E63 */
 .overlay-open .overlay-social-icons img {
@@ -1425,11 +1423,7 @@ body.maintenance-page {
 }
 
 /* Footer animación: sube desde abajo */
-.overlay-footer {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
+
 
 /* Social icons: suben desde abajo */
 .overlay-social-icons {
@@ -1532,15 +1526,19 @@ body.maintenance-page {
         line-height: 1.0; 
     }
     
-    /* MODIFICACIÓN: Overlay Footer: Alineado a la izquierda para móvil/tablet */
-    .overlay-footer {
-        left: 20px; /* Alineado a la izquierda */
-        transform: none; /* Quitar el centrado */
-        width: auto;
-        text-align: left;
-        font-size: 0.8em;
+    .overlay-footer{
+    text-align: center;            /* Centra el texto */
+    padding: 20px 0;               /* Espacio arriba y abajo */
+    font-family: 'Urbanist', sans-serif;
+    font-size: 1em;
+    color: #5B6C8F;                  /* Cambia según tu fondo */
+    background-color: transparent; /* O un color si quieres */
+    position: absolute;               /* Fijo en la ventana */
+    bottom: 0;                     /* Siempre abajo */
+    left: 0;
+    width: 100%;  
     }
-    
+
     /* Modal: Ajuste de padding para tablet */
     .modal-content {
       padding: 40px 30px; 
@@ -1549,9 +1547,13 @@ body.maintenance-page {
     }
     
     /* Social Icons: Posición y tamaño ajustados */
-    .social-icons {
-        bottom: 15px;
-        right: 15px;
+.social-icons {
+        bottom: 50px; /* Posición vertical: 50px desde abajo */
+        right: auto; /* Anular la posición fija a la derecha */
+        left: 50%; /* Colocar el punto de anclaje al 50% del ancho */
+        transform: translateX(-50%); /* Mover hacia atrás el 50% de su propio ancho para centrar */
+        justify-content: center; /* Asegura que los iconos se centren internamente */
+        width: auto; /* Permite que el contenedor solo mida el ancho de los iconos */
     }
     .social-icons img {
         width: 26px;
@@ -1616,32 +1618,44 @@ body.maintenance-page {
       font-size: 8vw; /* Ajustado a 8vw */
   }
 
+.social-icons {
+        bottom: 50px; /* Posición vertical: 50px desde abajo */
+        right: auto; /* Anular la posición fija a la derecha */
+        left: 50%; /* Colocar el punto de anclaje al 50% del ancho */
+        transform: translateX(-50%); /* Mover hacia atrás el 50% de su propio ancho para centrar */
+        justify-content: center; /* Asegura que los iconos se centren internamente */
+        width: auto; /* Permite que el contenedor solo mida el ancho de los iconos */
+    }
+    .social-icons img {
+        width: 26px;
+        height: 26px;
+    }
   /* Página Principal: Flujo vertical */
     /* MODIFICACIÓN: Aumentar Padding en Móviles */
-  .content-body { flex-direction: column; padding: 30px; }
-  .left-column { margin-left: 0; }
-  .title-lg { font-size: 1em; margin-bottom:1rem ;text-align: left; }
-  .title-lg2 { font-size: 4em; white-space: normal; overflow: visible; margin-left: 0; text-align: left;}
-  .info-sm { text-align: center; }
+  .content-body { flex-direction: column; padding: 40px; padding-top: 20%;}
+  .title-lg { font-size: 2em; margin-bottom:1.2rem ;text-align: left; }
+  .title-lg2 { font-size: 6em; white-space: normal; overflow: visible; text-align: left;}
   
   /* INDEX IMAGE FIX: Tarta más pequeña y ajustada */
     /* MODIFICACIÓN: Posicionamiento de la Tarta */
   #main-image { 
      /* position: relative !important; 
       max-width: 75% !important; /* Reducido a 65% para un tamaño más pequeño y forzado */
-      width: 80% !important; /* Forzar el ancho */
+      width: 140% !important; /* Forzar el ancho */
       height: auto; 
-      margin: 90px auto; 
-      left: 35%;
+      margin: 165px auto; 
+      left: -5%;
       display: block; 
       z-index: 10;
   }
     .info-sm { 
         text-align: center; 
-        margin-top: -60px; /* Mueve el info-sm hacia arriba */
-        padding-top: 80px; /* Compensación para empujar el texto hacia abajo */
+        margin-top: 0px; /* Mueve el info-sm hacia arriba */
+        padding-top: 40px; /* Compensación para empujar el texto hacia abajo */
         position: relative;
         z-index: 10;
+        font-size: 1em; 
+        text-align: center;
     }
   
   .reservas-btn { font-size: 0.75em; }
@@ -1733,6 +1747,7 @@ body.maintenance-page {
     body.team-page {
         height: auto; 
         min-height: 0vh;
+        overflow: scroll;
     }
     
     /* Header Horizontal y Pequeño (Asegura el navbar ajustado) */
@@ -1775,7 +1790,7 @@ body.maintenance-page {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 8vw; 
+    margin-top: 6.5vw; 
     margin-right: 0vw; 
     position: relative; 
 }
@@ -1831,7 +1846,7 @@ body.maintenance-page {
 /* Imagen rota CONFIGURACION específica para LU */
 .equipo-grid > .bloque-miembro:nth-child(2) .cookie-img.rota {
     top: 0%;
-    left: ;
+    left: 8%;
     transform: scale(1.1);
 }
 
