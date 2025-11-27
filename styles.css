@@ -1784,12 +1784,7 @@ body.maintenance-page {
         max-height: 743.325px;
     }
 
-    /* Ajustar escalas de galletas para reducir sensación de separación */
-    .cookie-img.entera { transform: scale(0.9); }
-    .cookie-img.rota { transform: scale(1.1); }
-    .equipo-grid > .bloque-miembro:first-child .cookie-img.rota { transform: scale(1.3); }
-    .equipo-grid > .bloque-miembro:first-child .cookie-container.clicked .cookie-img.rota { transform: scale(1.3); }
-    .cookie-container.clicked .cookie-img.rota { transform: scale(1.1); } 
+    
     
     /* MODIFICACIÓN: Nombre debajo de la galleta (fijo y sin hover) */
     .nombre-lateral {
