@@ -1535,7 +1535,12 @@ body.maintenance-page {
         padding-right: 0;
         margin-bottom: 30px;
     }
+    .body {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
 }
+
 
 
 /* ------------------------------
@@ -1681,9 +1686,9 @@ body.maintenance-page {
     }
   /* Página Principal: Flujo vertical */
     /* MODIFICACIÓN: Aumentar Padding en Móviles */
-  .content-body { flex-direction: column; padding: 40px; padding-top: 20%;}
-  .title-lg { font-size: 2em; margin-bottom:1.2rem ;text-align: left; }
-  .title-lg2 { font-size: 6em; white-space: normal; overflow: visible; text-align: left;}
+  .content-body { flex-direction: column; padding: 40px; padding-top: 15%;}
+  .title-lg { font-size: 2em; margin-bottom:1.2rem ;text-align: left; padding-right: 40px;}
+  .title-lg2 { font-size: 6em; white-space: normal; text-align: left; padding-right: 40px;}
   
   /* INDEX IMAGE FIX: Tarta más pequeña y ajustada */
     /* MODIFICACIÓN: Posicionamiento de la Tarta */
@@ -1822,11 +1827,10 @@ body.maintenance-page {
     }
     /* Contenido de Equipo */
     .team-title {
-        font-size: 6vw;
+        font-size: 8vw;
     }
     
     .team-subtitle {
-        font-size: 1rem;
         padding-right: 40px;
         padding-left: 40px;
     }
@@ -1839,7 +1843,7 @@ body.maintenance-page {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 6.5vw; 
+    margin-top: 0vw; 
     margin-right: 0vw; 
     position: relative; 
 }
@@ -1851,6 +1855,7 @@ body.maintenance-page {
         height: 50vw; 
         max-width: 90%; /* Galleta más grande */
         max-height: 50%;
+        margin-top: -10px;
     }
     
     /* MODIFICACIÓN: Ajuste proporcional para Xavi */
@@ -1938,14 +1943,20 @@ body.maintenance-page {
         flex: 1; 
         padding-right: 0;
         padding-top: 10px;
-        padding-bottom: 30px; 
+        padding-bottom: 10px; 
         width: 100%;
         align-items: center; 
         text-align: center;
+        display: contents;
     }
     .bridge-subtitle {
         text-align: center;
-        max-width: 90vw;
+        max-width: auto;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-top: 0;
+        order: 3;
+        margin: 0;
     }
     .social-links {
         justify-content: center;
@@ -1954,15 +1965,20 @@ body.maintenance-page {
     
     .bridge-title {
         font-size: 8vw; 
+        order:1;
+        margin: 0;
+        padding-top: 40px;
     }
 
     .right-section {
-        flex: 1; 
-        min-height: 350px; 
+        order: 2; 
         justify-content: center;
         align-items: center;
         width: 100%;
-        overflow: hidden; 
+        margin-bottom: -90px;
+        overflow: scroll; 
+        padding: 0px;
+        margin-top: 0;
     }
     
     .maintenance-gif {
@@ -1973,5 +1989,6 @@ body.maintenance-page {
         max-width: 400px;
         height: auto;
         z-index: 5;
+        margin-top:-100px;
     }
 }
