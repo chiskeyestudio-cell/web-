@@ -1731,10 +1731,8 @@ body.maintenance-page {
     
     /* Habilitar el scroll en el body de la página de equipo */
     body.team-page {
-        overflow-y: auto;
-        overflow-x: hidden;
         height: auto; 
-        min-height: 100vh;
+        min-height: 0vh;
     }
     
     /* Header Horizontal y Pequeño (Asegura el navbar ajustado) */
@@ -1754,6 +1752,10 @@ body.maintenance-page {
         font-size: 0.8em;
     }
     
+    .contenedor-principal{
+        width: 100%;
+        padding-top: 40px;
+    }
     /* Contenido de Equipo */
     .team-title {
         font-size: 6vw;
@@ -1761,51 +1763,78 @@ body.maintenance-page {
     
     .team-subtitle {
         font-size: 1rem;
+        padding-right: 40px;
+        padding-left: 40px;
     }
 
+
     /* MODIFICACIÓN: Reducir separación */
-    .equipo-grid {
-        flex-direction: column;
-    }
+ .equipo-grid {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 8vw; 
+    margin-right: 0vw; 
+    position: relative; 
+}
+
     
     /* MODIFICACIÓN: Aumentar el tamaño de las galletas (Lucía) */
     .bloque-miembro {
-        width: 200vw; 
-        height: 114.75vw; 
-        max-width: 700px; /* Galleta más grande */
-        max-height: 892.5px;
+        width: 100%; 
+        height: 50vw; 
+        max-width: 90%; /* Galleta más grande */
+        max-height: 50%;
     }
     
     /* MODIFICACIÓN: Ajuste proporcional para Xavi */
     .equipo-grid > .bloque-miembro:first-child {
-        width: 200vw; 
-        height: 95.2vw;
-        max-width: 583px; /* Galleta más grande */
-        max-height: 743.325px;
+        width: 80%; 
+        height: 50vw;
+        max-width: 80%; /* Galleta más grande */
+        max-height: 50%;
     }
 
     
     
     /* MODIFICACIÓN: Nombre debajo de la galleta (fijo y sin hover) */
     .nombre-lateral {
-        position: static; 
         transform: none; 
         order: 2; 
-        width: 100%; 
+        width: 20%; 
         text-align: center !important; 
-        margin-top: 2px; 
-        margin-bottom: 2px; 
+        margin-top: 0x; 
+        margin-bottom: 0px; 
+        margin-right: 100px;
         font-size: 4vw; 
         max-width: none;
     }
     
-    .nombre-lateral.izquierda,
-    .nombre-lateral.derecha {
-        right: auto;
-        left: auto;
-        text-align: center; 
+    #nombreXavi {
+        left: 60%;
+        top: 50%;
+    }
+
+    #nombreLucia {
+        left: 25%;
+        top: 50%;
     }
     
+    /* Imagen rota CONFIGURACION específica para Xavi */
+.equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
+    top: -3%;
+    left: 9%;
+    transform: scale(1.15);
+}
+/* Imagen rota CONFIGURACION específica para LU */
+.equipo-grid > .bloque-miembro:nth-child(2) .cookie-img.rota {
+    top: 0%;
+    left: ;
+    transform: scale(1.1);
+}
+
     /* Ocultar el texto de hover y forzar la visibilidad del nombre original */
     .nombre-lateral .name-hover-sm { 
         display: none !important; /* Force hide hover text */
