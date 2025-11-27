@@ -1660,8 +1660,10 @@ body.maintenance-page {
   
   /* Modal Ajuste Extremo */
   .modal-content {
-      padding: 30px; 
+      overflow: hidden;
+
   }
+
   
   /* Navbar: Ajustes de tamaño */
   .logo img { height: 70px; }
@@ -1678,7 +1680,9 @@ body.maintenance-page {
         left: 50%; /* Colocar el punto de anclaje al 50% del ancho */
         transform: translateX(-50%); /* Mover hacia atrás el 50% de su propio ancho para centrar */
         justify-content: center; /* Asegura que los iconos se centren internamente */
-        width: auto; /* Permite que el contenedor solo mida el ancho de los iconos */
+        width: auto;
+         padding-bottom: 0%;
+         margin-bottom: 0; /* Permite que el contenedor solo mida el ancho de los iconos */
     }
     .social-icons img {
         width: 26px;
@@ -1687,7 +1691,7 @@ body.maintenance-page {
   /* Página Principal: Flujo vertical */
     /* MODIFICACIÓN: Aumentar Padding en Móviles */
   .content-body { flex-direction: column; padding: 40px; padding-top: 15%;}
-  .title-lg { font-size: 2em; margin-bottom:1.2rem ;text-align: left; padding-right: 40px;}
+  .title-lg { font-size: 2em; margin-bottom:1.2rem ;text-align: left; padding-right: 40px; }
   .title-lg2 { font-size: 6em; white-space: normal; text-align: left; padding-right: 40px;}
   
   /* INDEX IMAGE FIX: Tarta más pequeña y ajustada */
@@ -1802,6 +1806,7 @@ body.maintenance-page {
         height: auto; 
         min-height: 0vh;
         overflow: scroll;
+        padding-bottom: 0%;
     }
     
     /* Header Horizontal y Pequeño (Asegura el navbar ajustado) */
