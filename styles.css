@@ -1621,6 +1621,12 @@ body.maintenance-page {
 @media (min-width: 481px) and (max-width: 768px) {
   /* Página Principal: Flujo vertical */
     /* MODIFICACIÓN: Aumentar Padding en Tablets */
+  .html {
+    overflow-x: hidden;
+  }  
+  .body{
+    min-width: 100%;
+  }
   .content-body { padding: 60px 40px; flex-direction: column; }
   .left-column { flex-basis: 100%; margin-left: 0; text-align: left; }
   .title-lg { font-size: 2.4em; }
@@ -1653,6 +1659,7 @@ body.maintenance-page {
 }
 
 
+
 /* ------------------------------
    B) MÓVILES PEQUEÑOS (<=480)
    ------------------------------ */
@@ -1661,8 +1668,11 @@ body.maintenance-page {
   /* Modal Ajuste Extremo */
   .modal-content {
       overflow: hidden;
+      overflow-y: hidden;
+      overflow-x: hidden;
 
   }
+
 
   
   /* Navbar: Ajustes de tamaño */
@@ -1690,9 +1700,9 @@ body.maintenance-page {
     }
   /* Página Principal: Flujo vertical */
     /* MODIFICACIÓN: Aumentar Padding en Móviles */
-  .content-body { flex-direction: column; padding: 40px; padding-top: 15%;}
+  .content-body { flex-direction: column; padding: 40px; padding-top: 15%;padding-right: 40px;}
   .title-lg { font-size: 2em; margin-bottom:1.2rem ;text-align: left; padding-right: 40px; }
-  .title-lg2 { font-size: 6em; white-space: normal; text-align: left; padding-right: 40px;}
+  .title-lg2 { font-size: 5.8em; white-space: normal; text-align: left;}
   
   /* INDEX IMAGE FIX: Tarta más pequeña y ajustada */
     /* MODIFICACIÓN: Posicionamiento de la Tarta */
@@ -1805,7 +1815,8 @@ body.maintenance-page {
     body.team-page {
         height: auto; 
         min-height: 0vh;
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
         padding-bottom: 0%;
     }
     
@@ -1850,7 +1861,8 @@ body.maintenance-page {
     width: 100%;
     margin-top: 0vw; 
     margin-right: 0vw; 
-    position: relative; 
+    position: relative;
+    padding-bottom: 10px; 
 }
 
     
@@ -1858,16 +1870,16 @@ body.maintenance-page {
     .bloque-miembro {
         width: 100%; 
         height: 50vw; 
-        max-width: 90%; /* Galleta más grande */
+        max-width: 85%; /* Galleta más grande */
         max-height: 50%;
-        margin-top: -10px;
+        margin-top: -20px;
     }
     
     /* MODIFICACIÓN: Ajuste proporcional para Xavi */
     .equipo-grid > .bloque-miembro:first-child {
         width: 80%; 
         height: 50vw;
-        max-width: 80%; /* Galleta más grande */
+        max-width: 75%; /* Galleta más grande */
         max-height: 50%;
     }
 
@@ -1900,13 +1912,13 @@ body.maintenance-page {
 .equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
     top: -3%;
     left: 9%;
-    transform: scale(1.15);
+    transform: scale(1.10);
 }
 /* Imagen rota CONFIGURACION específica para LU */
 .equipo-grid > .bloque-miembro:nth-child(2) .cookie-img.rota {
     top: 0%;
     left: 8%;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
     /* Ocultar el texto de hover y forzar la visibilidad del nombre original */
@@ -1924,6 +1936,7 @@ body.maintenance-page {
     .cookie-container:hover ~ .nombre-lateral .name-hover-sm {
         display: none !important; 
     }
+   
     
     .rol-titulo {
         font-size: 1.4rem;
