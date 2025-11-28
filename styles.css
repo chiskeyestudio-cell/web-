@@ -1979,10 +1979,12 @@ overflow: hidden;
     .cookie-container:hover ~ .nombre-lateral .name-hover-sm {
         display: none !important; 
     }
-    .btn-portfolio:focus,
-    .cookie-container:focus {
-    outline: none;
-    box-shadow: none; /* Por si el navegador añade un box-shadow en el foco */
+    .cookie-container,
+    .cookie-content .btn-portfolio,
+    .navbar a {
+        /* Esta regla es clave para los navegadores móviles basados en WebKit (Android/iOS) */
+        -webkit-tap-highlight-color: transparent !important;
+        -moz-tap-highlight-color: transparent !important;
     }
     body.team-page .cookie-hint-mobile {
         display: block;
