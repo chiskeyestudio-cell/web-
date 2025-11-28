@@ -1248,6 +1248,44 @@ body.team-page {
     transform: scale(1);
     pointer-events: auto;
 }
+    .btn-portfolio:focus,
+    .cookie-container:focus {
+    outline: none;
+    box-shadow: none; /* Por si el navegador añade un box-shadow en el foco */
+    }
+/* web-/styles.css (Línea 890 aprox.) */
+
+/* --- NUEVO: Indicador de sonido para la interacción móvil --- */
+/* Aproximadamente en la línea 890 */
+
+/* --- NUEVO: Indicador de sonido para la interacción móvil --- */
+.cookie-hint-mobile {
+    display: block; /* CAMBIO: Ahora es visible por defecto en todas las vistas */
+    position: fixed;
+    bottom: 80px; 
+    right: 25px; /* Posición estandarizada */
+    z-index: 100001;
+    text-align: center;
+    color: white;
+    font-family: 'Urbanist', sans-serif;
+    opacity: 0.9;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.cookie-hint-mobile .sound-icon {
+    font-size: 1.5rem;
+    color: #F8A07B; /* Color naranja */
+    margin-bottom: 5px;
+}
+
+.cookie-hint-mobile p {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+}
 
 
 /* ==========================================================================
@@ -1667,11 +1705,16 @@ body.maintenance-page {
   
   /* Modal Ajuste Extremo */
   .modal-content {
-      overflow: hidden;
-      overflow-y: hidden;
-      overflow-x: hidden;
+max-width: 100%;
 
   }
+.overlay{
+overflow: hidden;
+
+}
+.overlay-open{
+ overflow: hidden;
+}
 
 
   
@@ -1839,7 +1882,7 @@ body.maintenance-page {
     
     .contenedor-principal{
         width: 100%;
-        padding-top: 40px;
+        padding-top: 20px;
     }
     /* Contenido de Equipo */
     .team-title {
@@ -1935,6 +1978,16 @@ body.maintenance-page {
     }
     .cookie-container:hover ~ .nombre-lateral .name-hover-sm {
         display: none !important; 
+    }
+    .btn-portfolio:focus,
+    .cookie-container:focus {
+    outline: none;
+    box-shadow: none; /* Por si el navegador añade un box-shadow en el foco */
+    }
+    body.team-page .cookie-hint-mobile {
+        display: block;
+        bottom: 140px; 
+        right: 40px;
     }
    
     
