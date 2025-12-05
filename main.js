@@ -22,7 +22,6 @@ const imageElement = document.getElementById('main-image');
 const logo = document.querySelector('.logo img');
 
 const menuLinks = document.querySelectorAll('.menu a:not(#menu-toggle)');
-
 const modal = document.getElementById('myModal');
 const closeBtn = document.querySelector('.close-btn');
 const reservasBtn = document.querySelector('.reservas-btn');
@@ -48,29 +47,44 @@ function updateContent(section) {
     }
 }
 
-menuLinks.forEach(link => {
-    link.addEventListener('click', e => e.preventDefault());
-});
+menuLinks.forEach(link => link.addEventListener('click', e => e.preventDefault()));
 
 // ==========================================================
-// PARTE 4: MODAL
+// PARTE 4: MODAL (NO SE ABRE AUTOMÁTICAMENTE EN MÓVIL)
 // ==========================================================
-if (reservasBtn) {
-    reservasBtn.addEventListener('click', e => {
-        e.preventDefault();
-        modal.style.display = 'flex';
-    });
+function openModal() {
+    modal.style.display = 'flex';
 }
 
-closeBtn.addEventListener('click', () => {
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+// Asegurar que el modal esté cerrado al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    updateContent('recepcion');
+
+    // Solo aseguramos que no se abra automáticamente
     modal.style.display = 'none';
 });
 
-window.addEventListener('click', e => {
-    if (e.target === modal) modal.style.display = 'none';
-});
+// Botón reservas
+if (reservasBtn) {
+    reservasBtn.addEventListener('click', e => {
+        e.preventDefault();
+        openModal();
+    });
+}
 
-document.addEventListener('DOMContentLoaded', () => updateContent('recepcion'));
+// Botón cerrar
+if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+}
+
+// Cerrar al click fuera del modal
+window.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+});
 
 // ==========================================================
 // PARTE 5: OVERLAY DEL MENÚ
@@ -106,50 +120,63 @@ if (!overlay) {
     document.body.appendChild(overlay);
 }
 
-// ============================
-// Seleccionamos los iconos de redes
+// Selección de iconos sociales
 const socialIcons = document.querySelectorAll('.social-icons img');
 
 // ==========================================================
-// PARTE 6: TOGGLE DEL MENÚ + CAMBIO DE LOGO
+// FOOTER IZQUIERDO
 // ==========================================================
-// TOGGLE DEL MENÚ + CAMBIO DE LOGO + ICONOS
+let overlayFooterLeft = document.createElement('div');
+overlayFooterLeft.classList.add('overlay-footer');
+overlayFooterLeft.textContent = '©2025 chiskey | Base en Valencia Esp';
+overlay.appendChild(overlayFooterLeft);
+
+// ==========================================================
+// FOOTER DERECHO (CON LINKS CLICKEABLES)
+// ==========================================================
+let overlayFooterRight = document.createElement('div');
+overlayFooterRight.classList.add('overlay-footer-right');
+overlayFooterRight.innerHTML = `
+    <a href="https://drive.google.com/file/d/1kc8CvPUErHeAkZhF5ti5Hdf0QyjXlfL8/view?usp=sharing" target="_blank" rel="noopener noreferrer">Política de privacidad</a>
+    &nbsp;|&nbsp;
+    <a href="https://drive.google.com/file/d/10bu6E6xhUzXzlpomT_fe0ZzQC2MNudRf/view?usp=sharing" target="_blank" rel="noopener noreferrer">Aviso legal</a>
+`;
+overlayFooterRight.style.pointerEvents = 'none';
+overlayFooterRight.style.opacity = '0';
+overlay.appendChild(overlayFooterRight);
+
+function toggleOverlayFooterRight(isOpen) {
+    overlayFooterRight.style.pointerEvents = isOpen ? 'auto' : 'none';
+    overlayFooterRight.style.opacity = isOpen ? '1' : '0';
+}
+
+// ==========================================================
+// PARTE 6: TOGGLE DEL MENÚ + CAMBIO DE LOGO + BLOQUEO ICONOS
+// ==========================================================
 menuToggle.addEventListener('click', (e) => {
     e.preventDefault();
-
     const isOpen = overlay.classList.contains('open');
 
-    // Toggle overlay
     overlay.classList.toggle('open');
-
-    // Toggle clase global
     document.body.classList.toggle('overlay-open', !isOpen);
-
-    // Cambiar texto del botón
     menuToggle.textContent = isOpen ? 'MENU' : 'X';
     menuToggle.classList.toggle('active');
-
-    // Cambiar logo
     logo.src = isOpen ? logoOriginal : logoBlanco;
 
-    // Cambiar iconos usando la clase del body
+    // Iconos sociales
+    socialIcons.forEach(icon => icon.style.filter = !isOpen ? 'invert(0)' : 'invert(1)');
     socialIcons.forEach(icon => {
-        icon.style.filter = !isOpen ? 'invert(0)' : 'invert(1)'; // negro si abierto, blanco si cerrado
+        icon.style.pointerEvents = overlay.classList.contains('open') ? 'none' : 'auto';
     });
+
+    overlay.style.pointerEvents = overlay.classList.contains('open') ? 'auto' : 'none';
+    toggleOverlayFooterRight(overlay.classList.contains('open'));
 });
-
-
-// Footer en overlay
-let overlayFooter = document.createElement('div');
-overlayFooter.classList.add('overlay-footer');
-overlayFooter.textContent = '©2025 chiskey | Base en Valencia Esp';
-overlay.appendChild(overlayFooter);
 
 // ==========================================================
 // PARTE 7: LINKS DEL OVERLAY
 // ==========================================================
 const overlayLinks = overlay.querySelectorAll('.overlay-content a');
-
 overlayLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -157,27 +184,8 @@ overlayLinks.forEach(link => {
     });
 });
 
-// ============================
-// 🔥 NUEVO: sincronización de iconos con overlay en tiempo real
-// ============================
-function syncIconColors() {
-    const overlayRect = overlay.getBoundingClientRect();
-    socialIcons.forEach(icon => {
-        const iconRect = icon.getBoundingClientRect();
-        if (overlayRect.top <= iconRect.bottom && overlayRect.bottom >= iconRect.top) {
-            icon.style.filter = 'invert(0)'; // negro cuando overlay los cubre
-        } else {
-            icon.style.filter = 'invert(1)'; // blanco cuando overlay no los cubre
-        }
-    });
-    requestAnimationFrame(syncIconColors);
-}
-
-requestAnimationFrame(syncIconColors);
-
-
 // ==========================================================
-// FORMULARIO SIN REDIRECCIÓN (FORMSPREE AJAX)
+// PARTE 8: FORMULARIO SIN REDIRECCIÓN (FORMSPREE AJAX)
 // ==========================================================
 document.addEventListener('DOMContentLoaded', () => {
     const formReserva = document.getElementById("reservaForm");
@@ -187,8 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!formReserva || !mensajeGracias || !formContainer) return;
 
     formReserva.addEventListener("submit", async (e) => {
-        e.preventDefault(); // evita redirección
-
+        e.preventDefault();
         const formData = new FormData(formReserva);
 
         try {
@@ -199,10 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (respuesta.ok) {
-                // Oculta TODO lo del formulario (incluyendo h2 y tiempo)
                 formContainer.style.display = "none";
-
-                // Muestra solo el mensaje de gracias
                 mensajeGracias.style.display = "block";
             } else {
                 alert("Ocurrió un error al enviar. Intenta otra vez.");
@@ -213,3 +217,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ==========================================================
+// PARTE 9: GALLETAS (hover/click)
+// ==========================================================
+document.querySelectorAll('.cookie-container').forEach(container => {
+    const wholeCookie = container.querySelector('.cookie-img.entera');
+    const brokenCookie = container.querySelector('.cookie-img.rota');
+    
+    const handleHover = (img) => {
+        img.addEventListener('mouseenter', () => container.classList.add('hover'));
+        img.addEventListener('mouseleave', () => container.classList.remove('hover'));
+        
+        img.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if(container.classList.contains('clicked')) return; 
+            container.classList.add('clicked'); 
+
+            const nombreLateral = container.closest('.bloque-miembro').querySelector('.nombre-lateral');
+            if (nombreLateral) nombreLateral.classList.add('oculto');
+
+            const soundEl = document.getElementById("cookieBreakSound");
+            if (soundEl) {
+                try { soundEl.currentTime = 0; } catch (err) {}
+                soundEl.play().catch(()=>{});
+            }
+        });
+    };
+
+    if (wholeCookie) handleHover(wholeCookie);
+});
+
+
+// Seleccionamos todos los bloques de miembros
+document.querySelectorAll('.bloque-miembro').forEach((bloque) => {
+  const galleta = bloque.querySelector('.cookie-img');
+  const nombre = bloque.querySelector('.nombre-lateral');
+
+  galleta.addEventListener('click', () => {
+    // Alternamos la clase clicked en la cookie-container
+    bloque.querySelector('.cookie-container').classList.toggle('clicked');
+
+    // Si la galleta rota está visible, ocultamos el nombre lateral
+    if (galleta.classList.contains('rota') || bloque.querySelector('.cookie-container').classList.contains('clicked')) {
+      nombre.classList.add('oculto'); // oculta el texto lateral
+    } else {
+      nombre.classList.remove('oculto'); // muestra el texto lateral
+    }
+  });
+});
+// Selecciona todos los botones de portafolio
+const portfolioButtons = document.querySelectorAll('.btn-portfolio');
+
+portfolioButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        const url = e.currentTarget.dataset.url;
+        if (url) {
+            // Abrir en nueva pestaña sin que aparezca el mensaje
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    });
+});
