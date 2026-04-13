@@ -1,118 +1,340 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Preparando...!</title>
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
-    <link rel="stylesheet" href="styles.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servicios - Chiskey</title>
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
+
+<link rel="stylesheet" href="styles.css"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* --- RESET Y BASE --- */
+html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #5B6C8F;
+    -webkit-overflow-scrolling: touch; 
+    font-family: 'Outfit', sans-serif;
+}
+
+main {
+    margin-top: clamp(80px, 12vh, 110px); 
+}
+
+/* SECCIÓN DE SERVICIOS */
+.services {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 6rem 2rem;
+}
+
+.service-card {
+    padding: 0.5rem 0;
+    border-bottom: 2px solid #ffffff;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+}
+
+.intro-block {
+    text-align: center;
+    padding: 2rem;
+}
+
+.intro-block img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 0 auto 1.5rem auto;
+}
+
+.intro-block p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service-card h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 2rem;
+    text-transform: capitalize;
+}
+
+.plus {
+    font-size: 2.2rem;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: 0.3s;
+}
+
+.subtitle {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.4s;
+}
+
+.service-card:hover {
+    border-bottom-color: #E91E63;
+}
+
+.service-card:hover .plus, .service-card:hover .subtitle {
+    opacity: 1;
+    transform: translate(0);
+}
+
+/* --- MODAL SERVICIOS (CAPA SUPERIOR) --- */
+.modal-service {
+    display: none; 
+    position: fixed;
+    z-index: 99999; /* Por encima de la navbar */
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-service-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    position: relative;
+    color: #5B6C8F;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close-service {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 35px;
+    cursor: pointer;
+    color: #5B6C8F;
+    font-weight: bold;
+    line-height: 1;
+    z-index: 100000; /* Prioridad máxima */
+    padding: 10px;
+}
+
+#modalTitle { color: #E91E63; margin-bottom: 5px; }
+.modal-divider { border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 20px 0; }
+
+.quick-form { display: flex; flex-direction: column; gap: 10px; }
+.quick-form input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+}
+
+.btn-quick-reserva {
+    background-color: #E91E63;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* RESPONSIVE MÓVIL */
+@media (max-width: 600px) {
+    .service-card h3 { font-size: 1.2rem !important; }
+    .subtitle, .plus { opacity: 1 !important; transform: none !important; }
+    .service-card.is-visible { border-bottom-color: #E91E63; }
+}
+
+body.modal-open {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+}
+</style>
 </head>
-<body class="maintenance-page">
-    
-    <header class="navbar">
-        <div class="logo">
-            <a href="index.html"> 
-                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo de la Empresa">
-            </a>
-        </div>
-        <nav class="menu">
-            <a href="#" id="menu-toggle" data-content="menu">MENU</a>
-        </nav>
-        <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
-    </header>
 
-    <main class="maintenance-content">
-        
-        <div class="left-section">
-            <h1 class="bridge-title">PREPARANDO LA PRÓXIMA CAPA.</h1>
-            
-            <p class="bridge-subtitle">
-                Estamos amasando el diseño de esta sección para ofrecerle una experiencia exquisita. Mientras tanto revisa nuestros proyectos personales.
-            </p>
-        
+<body>
 
-<a href="https://luzamora.es/" 
-   target="_blank" 
-   class="descargar-servicios-btn">
-   luzamora.es
-</a>
-<a href="https://sotosotosoto.com/oficina/" 
-   target="_blank" 
-   class="descargar-servicios-btn">
-   sotosotosoto.com
-</a>
-        </div>
-
-        <div class="right-section">
-            <!-- Su GIF de la masa, ajustado para ser grande -->
-            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764072691/amasando_s4piqi.gif" alt="Manos amasando masa rosa" class="maintenance-gif">
-        </div>
-
-    </main>
-
-    <footer class="footer">
-        ©2025
-    </footer>
-    
-    <!-- El modal de reservas y el JS principal (para el modal y overlay) seguirán funcionando -->
-   <div id="myModal" class="modal"style="display: none;">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
-
-    <!-- Contenedor original del formulario -->
-    <div id="formContainer">
-      <h2>¡Haz tu reserva!</h2>
-      <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
-      <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required>
-
-        <label for="movil">Móvil:</label>
-        <input type="tel" id="movil" name="movil" required>
-
-        <label for="correo">Correo:</label>
-        <input type="email" id="correo" name="correo" required>
-
-        <label for="ciudad">Ciudad:</label>
-        <input type="text" id="ciudad" name="ciudad">
-
-        <label for="idea">Cuéntanos tu idea:</label>
-        <textarea id="idea" name="idea" rows="4" required></textarea>
-
-        <button type="submit">Enviar</button>
-      </form>
+<header class="navbar">
+    <div class="logo">
+        <a href="index.html">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo">
+        </a>
     </div>
+    <nav class="menu">
+        <a href="#" id="menu-toggle" data-content="menu">MENU</a>
+    </nav>
+    <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+</header>
 
-    <!-- Contenedor del mensaje de gracias -->
-    <div id="mensajeGracias" class="gracias-box" style="display:none;">
-  <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="Gracias" class="gracias-img">
-  <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
+<main>
+<section class="intro-block">
+    <img src="https://res.cloudinary.com/dsfjgsclq/image/upload/v1775586077/la_carta_logo_zlrx9l.png" alt="La Carta">
+    <p>En chiskey trabajamos como una cocina digital creativa, donde cada proyecto se construye desde la idea hasta su ejecución visual con precisión, estética y personalidad propia.</p>
+</section>
+
+<section class="services">
+    <a href="aperitivos.html" class="service-card">
+        <div class="card-header"><h3>Aperitivos</h3><span class="plus">+</span></div>
+        <p class="subtitle">Posters, Flyers & Material gráfico</p>
+    </a>
+    <a href="aperitivos.html" class="service-card">
+        <div class="card-header"><h3>Entrantes</h3><span class="plus">+</span></div>
+        <p class="subtitle">Logotipo básico & Creación de nombre</p>
+    </a>
+    <a href="aperitivos.html" class="service-card">
+        <div class="card-header"><h3>Menú del día</h3><span class="plus">+</span></div> 
+        <p class="subtitle">Identidad visual ligera, Web onePage, Papelería corporativa & Diseño de packaging</p>
+    </a>
+    <a href="aperitivos.html" class="service-card">
+        <div class="card-header"><h3>Especialidades</h3><span class="plus">+</span></div>
+        <p class="subtitle">Identidad visual completa, Sitio web completo, Manual de marca & Diseño de apps móviles</p>
+    </a>
+    <a href="aperitivos.html" class="service-card">
+        <div class="card-header"><h3>Postres</h3><span class="plus">+</span></div>
+        <p class="subtitle">Fotografía, Clips de video, Motion graphics & Modelado 3D</p>
+    </a>
+    <a href="aperitivos.html" class="service-card">
+        <div class="card-header"><h3>Sugerencias de cocina</h3><span class="plus">+</span></div>
+        <p class="subtitle">Automatizaciones visuales/operativas & Gestión de impresión</p>
+    </a>
+</section>
+
+<div id="serviceModal" class="modal-service">
+    <div class="modal-service-content">
+        <span class="close-service" id="closeXServicio">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalSubtitle" class="modal-subtitle-text"></p>
+        <hr class="modal-divider">
+        <p id="modalDescription" class="modal-description"></p>
+        
+        <form id="quickReservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="quick-form">
+            <input type="hidden" name="servicio_interes" id="hiddenServiceField">
+            <input type="text" name="nombre" placeholder="Tu nombre" required>
+            <input type="email" name="correo" placeholder="Tu correo" required>
+            <button type="submit" class="btn-quick-reserva">Reserva rápida</button>
+        </form>
+    </div>
+</div>
+</main>
+
+<footer class="footer">
+    ©2025 chiskey cocina digital creativa
+</footer>
+
+<div id="myModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <div id="formContainer">
+            <h2>¡Haz tu reserva!</h2>
+            <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
+                <input type="text" name="nombre" placeholder="Nombre" required>
+                <input type="tel" name="movil" placeholder="Móvil" required>
+                <input type="email" name="correo" placeholder="Correo" required>
+                <textarea name="idea" rows="4" placeholder="Cuéntanos tu idea" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
 </div>
 
-  </div>
-</div>
-    
-    <!-- Incluimos el main.js para que el modal y el overlay del menú funcionen -->
-    <script src="main.js"></script> 
-        <!-- Redes sociales abajo a la derecha -->
+<script src="main.js"></script>
+
 <div class="social-icons overlay-social-icons">
-    <a href="https://www.instagram.com/chiskey.estudio/" target="_blank">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
-    </a>
-
-    <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
-    </a>
-
-    <a href="https://www.tiktok.com/@chiskey.estudio?is_from_webapp=1&sender_device=pc" target="_blank">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok">
-    </a>
-
-    <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
-    </a>
+    <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
+    <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
+    <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"></a>
+    <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
 </div>
-</body>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Observer para móviles (animación de borde al hacer scroll)
+    if (window.innerWidth <= 600) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.9 });
+        document.querySelectorAll('.service-card').forEach(card => observer.observe(card));
+    }
+
+    // 2. Lógica de Modal Servicios
+    const serviceModal = document.getElementById("serviceModal");
+    const closeX = document.getElementById("closeXServicio");
+    const body = document.body;
+    
+    const infoServicios = {
+        "aperitivos": "Impacto visual rápido y efectivo. Diseñamos piezas que captan la atención al instante.",
+        "entrantes": "Cocinamos tu nombre y tu marca desde el nacimiento.",
+        "menú del día": "Presencia profesional completa pero ágil para tu negocio.",
+        "especialidades": "Transformación digital profunda y personalizada.",
+        "postres": "El toque final que hace que tu marca brille.",
+        "sugerencias de cocina": "Optimizamos tu forma de trabajar visualmente."
+    };
+
+    function closeNow() {
+        serviceModal.style.display = "none";
+        body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            const title = this.querySelector('h3').innerText;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalSubtitle').innerText = this.querySelector('.subtitle').innerText;
+            document.getElementById('modalDescription').innerText = infoServicios[title.trim().toLowerCase()] || "Información personalizada.";
+            document.getElementById('hiddenServiceField').value = title;
+            serviceModal.style.display = "flex";
+            body.classList.add('modal-open');
+        });
+    });
+
+    // Cierre blindado para que nada lo bloquee
+    if (closeX) {
+        closeX.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); 
+            closeNow();
+        });
+    }
+
+    window.addEventListener('click', function(e) {
+        if (e.target === serviceModal) closeNow();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") closeNow();
+    });
+});
+</script>
+</body>
 </html>

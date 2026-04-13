@@ -5,7 +5,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;800&family=Urbanist:wght@400;600&display=swap');
 
-
+/* PAGINA INCIO ----------------------------------------------- */
 
 /* Color de fondo para toda la página */
 body {
@@ -191,15 +191,6 @@ body {
     
     /* ... (resto del código) ... */
 
-}
-.info-sm {
-    font-size: 1.19em; 
-    margin-top: 10px; 
-    font-weight: medium;
-    font-family: 'Urbanist', sans-serif;
-    opacity: 0;
-    animation: fadeInUp 1.5s ease-out 0.6s forwards;
-    line-height: 1.7;
 }
 
 /* --- ESTILOS DE LA IMAGEN PRINCIPAL (SE DEJA POSICIÓN FIJA Y TRANSICIONES) --- */
@@ -667,14 +658,13 @@ body {
 }
 
 
-
 .footer {
     text-align: center;            /* Centra el texto */
     padding: 20px 0;               /* Espacio arriba y abajo */
     font-family: 'Urbanist', sans-serif;
-    font-size: 1em;
+    font-size: 0.75em;
     color: white;                  /* Cambia según tu fondo */
-    background-color: transparent; /* O un color si quieres */
+    background-color: #5B6C8F; /* O un color si quieres */
     
     position: fixed;               /* Fijo en la ventana */
     bottom: 0;                     /* Siempre abajo */
@@ -683,7 +673,6 @@ body {
     
     z-index: 1000;                 /* Por encima del contenido */
 }
-
 
 
 /* CSS */
@@ -699,7 +688,6 @@ body {
     transform: translateY(50px);
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
-
 
 
 .overlay.show {
@@ -765,12 +753,12 @@ body.team-page {
     /* Altura total y ANCHO total del viewport */
     height: 100%;
     width: 100%;
-    
+
     display: flex;
     flex-direction: column;
-  
-
 }
+
+
 
 .contenedor-principal {
     width: 90%; 
@@ -1159,167 +1147,7 @@ body.team-page {
 }
 
 
-/* ==========================================================================
-/* ==========================================================================
-   ESTILOS DE LA PÁGINA DE MANTENIMIENTO (PÁGINA PUENTE) - AJUSTADOS
-   ========================================================================== */
 
-/* Ajuste general del body para esta página */
-body.maintenance-page {
-    /* Mantenemos el mismo fondo que las otras páginas */
-    background-color: #5B6C8F; 
-    /* Forzamos el layout para que el GIF ocupe toda la altura */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    /* Ocultar el scroll en desktop */
-    overflow: hidden; 
-}
-
-
-.maintenance-content {
-    display: flex;
-    flex: 1; /* Ocupa el espacio restante entre el header y el footer */
-    max-width: 1600px;
-    width: 100%;
-    margin: auto; /* Centrar horizontalmente */
-    /* Se mantiene padding vertical reducido para maximizar el espacio */
-    padding: 0 140px; 
-    position: relative;
-    box-sizing: border-box; 
-    align-items: stretch;
-}
-
-.left-section {
-    /* 🚨 CAMBIO DE DISTRIBUCIÓN: Le damos mucho más espacio al texto (75% del ancho disponible) */
-    flex: 1.5; 
-    display: flex;
-    flex-direction: column;
-    /* Se añadió padding vertical para evitar que el texto toque el header/footer */
-    padding-top: 0px;
-    padding-bottom: 150px;
-    justify-content: center; /* Centrar verticalmente el texto */
-    align-items: flex-start;
-    padding-right: 5vw;
-    /* CRÍTICO: Bajamos el z-index para que el GIF lo cubra */
-    z-index: 5;
-}
-
-.bridge-title {
-    font-family: 'Outfit', sans-serif;
-    /* Tamaño ajustado para que quepa en el viewport (mantenido) */
-    font-size: 3.5vw; 
-    font-weight: 800;
-    color: white;
-    margin-bottom: 10px;
-    line-height: 1.3;
-    text-transform: uppercase;
-     animation: fadeInUp 1.5s ease-out;
-      max-width: 700px;
-}
-
-.bridge-subtitle {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 1.1rem;
-    color: white;
-    margin-bottom: 15px;
-      font-weight: 400;
-    line-height: 1.7;
-    max-width: 440px; /* Limitar el ancho del texto */
-     animation: fadeInUp 1.5s ease-out;
-}
-
-
-.descargar-servicios-btn {
-    background-color: #E91E63; 
-    color: white; 
-    text-decoration: none;
-    font-weight: 900;
-    padding: 6px 10px; 
-    border-radius: 1px; 
-    font-family: 'Urbanist', sans-serif;
-    text-transform: uppercase;
-    font-size: 0.9em;
-
-    display: inline-block; 
-    margin-top: 10px;
-
-    /* Animación igual */
-    opacity: 1;
-    animation: fadeInUp 1.5s ease-out;
-
-    position: relative;
-    z-index: 10000;
-}
-
-/* Hover igual también */
-.descargar-servicios-btn:hover {
-    background-color: #d01755;
-    transform: scale(1.03);
-    transition: 0.2s ease;
-}
-
-
-.social-links {
-    margin-top: 30px;
-    font-family: 'Urbanist', sans-serif;
-    font-size: 0.9em;
-    font-weight: 600;
-    color: white;
-    display: flex;
-    /* 💥 CAMBIO CLAVE: Usamos 'gap' para la separación horizontal sin divisores */
-    gap: 25px; 
-    
-    margin-bottom: 20px;
-}
-
-.social-links a {
-    /* Color inicial BLANCO */
-    color: white; 
-    text-decoration: none;
-    transition: color 0.3s;
-    /* 💥 CAMBIO CLAVE: Aumentamos el tamaño (de 1.5em a 2em) */
-    font-size: 2em; 
-    line-height: 1; 
-}
-
-.social-links a:hover {
-    /* Color rosa en hover */
-    color: #E91E63;
-}
-
-.right-section {
-    /* 🚨 CAMBIO DE DISTRIBUCIÓN: Le damos menos espacio al contenedor del GIF (25% del ancho disponible) */
-    flex: 0.5; 
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end; /* Alinear el GIF a la parte inferior */
-    position: relative; /* Contexto de posicionamiento */
-    /* 🚨 CAMBIO: Permite que el GIF se desborde fuera del contenedor para moverlo a la derecha */
-    overflow: visible; 
-}
-
-.maintenance-gif {
-    /* Posicionamiento absoluto */
-    position: absolute;
-    bottom: 0; 
-    /* 💥 CAMBIO CLAVE: Mover el GIF mucho más a la derecha (10vw fuera del contenedor) */
-    right: -25vw; 
-    
-    /* Mantiene la altura al 100% de la sección derecha */
-    height: 100%; 
-    width: auto;
-    max-width: none;
-    
-    /* 💥 CAMBIO CLAVE: Aumentamos la escala para una presencia dominante */
-    transform: scale(1.3); 
-    transform-origin: bottom right;
-
-    object-fit: contain;
-    pointer-events: none;
-    /* CRÍTICO: El GIF va por encima de todo */
-    z-index: 15; 
-}
 
 
 /* --- MEDIA QUERY para hacerlo responsivo en móviles (Mantenido) --- */
@@ -1375,7 +1203,7 @@ body.maintenance-page {
 /* Redes sociales abajo a la derecha (en fila) */
 .social-icons {
     position: fixed;
-    bottom: 25px;
+    bottom: 5px;
     right: 25px;
     display: flex;
     flex-direction: row;      /* 🔥 ahora en fila */
@@ -1384,7 +1212,7 @@ body.maintenance-page {
 }
 
 .social-icons img {
-    width: 20px;
+    width: 17px;
     height: 30px;
     filter: invert(1);        /* 🔥 los vuelve blancos */
     opacity: 0.85;
@@ -1478,6 +1306,32 @@ body.maintenance-page {
         padding-left: 40px;
         padding-right: 40px;
     }
+.footer {
+        display: flex !important;
+        flex-direction: column !important; 
+        /* Alineamos todo al FINAL (abajo) del contenedor */
+        justify-content: flex-start !important; 
+        align-items: center !important;
+        
+        /* Reducimos la altura para que no sea "enorme" */
+        min-height: 15px !important; 
+        padding: 39px 0 1px 0 !important; /* Poco padding abajo para que el texto toque el fondo */
+        background-color: #5B6C8F !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        width: 100% !important;
+    }
+
+    
+
+    
+    /* EL TEXTO: Forzamos que se pegue al borde inferior */
+    .footer {
+        font-size: 0.65rem !important;
+        line-height: 1 !important;
+        /* Quitamos cualquier margen que empuje el texto hacia arriba */
+        margin-bottom: 0 !important; 
+    }
 }
 
 
@@ -1541,17 +1395,20 @@ body.maintenance-page {
     
     /* Social Icons: Posición y tamaño ajustados */
 .social-icons {
-        bottom: 50px; /* Posición vertical: 50px desde abajo */
+        bottom: 30px; /* Posición vertical: 50px desde abajo */
         right: auto; /* Anular la posición fija a la derecha */
         left: 50%; /* Colocar el punto de anclaje al 50% del ancho */
         transform: translateX(-50%); /* Mover hacia atrás el 50% de su propio ancho para centrar */
         justify-content: center; /* Asegura que los iconos se centren internamente */
         width: auto; /* Permite que el contenedor solo mida el ancho de los iconos */
     }
+
     .social-icons img {
-        width: 26px;
-        height: 26px;
+        width: 20px;
+        height: 20px;
     }
+
+    
 }
 
 /* ------------------------------
@@ -1661,8 +1518,8 @@ overflow: hidden;
     margin-bottom: -10px; /* separa del footer */
 }
 .social-icons img {
-    width: 26px;
-    height: 26px;
+    width: 20px;
+    height: 20px;
 }
 
    html, body {
@@ -1785,13 +1642,7 @@ width: 130%;
     right: 10px;
 }
 
-footer.footer {
-  margin-top: auto; /* empuja el footer al fondo */
-   
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-}
+
 
 
     .overlay-footer-right a {
@@ -1893,13 +1744,6 @@ footer.footer {
 
 
 
-.descargar-servicios-btn {
-    margin-top: 15px; /* solo separa del último párrafo */
-}
-.descargar-servicios-btn:hover {
-    background-color: #d01755;
-    transform: scale(1.03);
-}
 
 
 .social-links {
@@ -2367,10 +2211,6 @@ footer.footer {
 }
 
 }
-
-
-
-
 
 
 

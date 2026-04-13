@@ -101,7 +101,7 @@ if (!overlay) {
 
     const text1 = document.createElement('a');
     text1.href = 'servicios.html';
-    text1.innerHTML = '<span>Servicios</span>';
+    text1.innerHTML = '<span>La carta</span>';
 
     const text2 = document.createElement('a');
     text2.href = 'proyectos.html';
