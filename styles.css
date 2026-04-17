@@ -1,8 +1,4 @@
 /* -----------------------------------------------------------SEGUNDA PAGINA--------------------------*/
-
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;800&family=Urbanist:wght@400;600&display=swap');
 
 /* PAGINA INCIO ----------------------------------------------- */
@@ -11,7 +7,7 @@
 body {
     background-color: #5B6C8F;
     color: white; 
-    font-family: Arial, sans-serif;
+    font-family: urbanist, sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100%;
@@ -24,20 +20,18 @@ body {
 .navbar {
     display: flex;
     align-items: center; 
-    padding: 40px 140px;
-    background-color: rgba(0, 0, 0, 0); 
+    justify-content: space-between;
+    padding: 20px clamp(20px, 8vw, 140px); /* El padding lateral se encoge solo */
     position: relative;
     z-index: 91000 !important;
-    opacity: 0;
     animation: fadeInDown 1.5s ease-out forwards;
-    justify-content: space-between;
 }
 
 
 
 .logo img {
-    height: 100px;
-    margin-right: 90px;
+    height: clamp(80px, 8vh, 100px); /* El logo escala según la altura de pantalla */
+    width: auto;
 }
 
 .menu {
@@ -116,108 +110,67 @@ body {
 }
 
 
-
-
 .content-body {
     display: flex;
     justify-content: flex-start;
-    padding: 65px 30px;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto; 
     position: relative; 
     
 }
-
-.left-column {
-    flex: 0 0 40%;
-    
-    /* --- CAMBIO CRÍTICO: ALINEAR A LA IZQUIERDA --- */
-    text-align: left; /* Asegura que los elementos en línea empiecen a la izquierda */
-    
-    padding-right: 0px;
-    margin-left: -27px; /* Mantén tu corrección de posición horizontal del bloque */
-    
+/*IMAGEN INICIAL*/
+.main-image {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: right;
-    
-    /* Elimina align-items/justify-content si no lo necesitas para espaciar */
-    /* justify-content: right; (Esto debería ser flex-start o flex-end si es flex) */
-    
-    position: relative;
-    z-index: 9999;
+    justify-content: center;
+    margin-top: -50px;
+    z-index: 10;
 }
 
-.title-lg {
-    font-size: 3em; 
-    font-weight: 800;
-    margin: 0; 
-    text-transform: uppercase;
-    line-height: 1.0; 
-    color: #ffffff; 
-    font-family: 'Outfit', sans-serif;
-    animation: fadeInUp 1.5s ease-out 0.4s forwards; /* 0.4s delay */
-      opacity: 0;
-    transform: translateY(60px);
-    /* --- CAMBIO CRÍTICO: BLOQUE PARA ALINEACIÓN CONSISTENTE A LA IZQUIERDA --- */
-    display: block; /* Ahora se alinea como un bloque normal, comenzando a la izquierda */
-    
-    /* ... animación ... */
+.main-image img {
+    width: 100%;
+
+ /* Evita que el logo se haga gigante en monitores grandes */
+    height: auto;      /* Mantiene la proporción del SVG */
+    animation: fadeIn 2s ease-in-out; /* Usando tu animación existente */
 }
 
-.title-lg2 {
-    font-size: 16em; 
-    font-weight: 800;
-    margin: 0; 
-    margin-left: -0.05em;
-    /* Mantenemos el ajuste vertical que necesites */
-    margin-top: -11px; 
-    
-    
-    line-height: 1.0; 
-    color: #ffffff; 
-    font-family: 'Outfit', sans-serif;
-    
-    white-space: nowrap; 
-    display: block; /* Correcto */
-    overflow: hidden; 
-     z-index: 9999 !important;
-    /* ... animación ... */
-    /* ... (otros estilos) ... */
-    
-    /* --- NUEVA ANIMACIÓN: Aparece desde abajo (fadeInUp) --- */
-    opacity: 0;
-    animation: fadeInUp 1.5s ease-out 0.5s forwards; /* 0.5s delay (un poco después) */
-    
-    /* ... (resto del código) ... */
-
+.img-mobile {
+    display: none; /* Oculta la versión móvil en pantallas grandes */
 }
 
-/* --- ESTILOS DE LA IMAGEN PRINCIPAL (SE DEJA POSICIÓN FIJA Y TRANSICIONES) --- */
-.right-column #main-image {
-    position: fixed;
-    transition: top 0.5s ease-in-out, right 0.5s ease-in-out;
-    will-change: top, right; 
-    max-width: none; 
-    object-fit: cover;
-    border-radius: 10px;
-    opacity: 0; 
-    animation: fadeInUp 1.5s ease-out 0.9s forwards; 
-    /* 💥 CORRECCIÓN VISIBILIDAD: Le damos un z-index para que se muestre */
-    z-index: 105;
-    pointer-events: none !important;
-
-    cursor: pointer; /* Muestra la manita al pasar el mouse */
-    
+.img-desktop {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
-/* --- ESTILO DE LA ESQUINA INFERIOR DERECHA --- */
+/* Configuración para tablets y móviles */
+@media (max-width: 768px) {
+
+    .img-desktop {
+        display: none; /* Oculta la versión horizontal */
+    }
+    
+    .img-mobile {
+        display: block; /* Muestra la versión vertical */
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+        padding-top: 60px;
+        animation: fadeIn 2s ease-in-out; /* Mantiene tu animación existente */
+    }
 
 
-
-
-
-
+    /* Ajuste opcional para el contenedor en móvil */
+  .content-body{
+    margin:30px;
+  
+  }
+  .main-image{
+    margin-top: 10px;
+  }
+}
 /* --- ESTILOS DEL MODAL --- */
 /* Overlay: inicial oculto, pero interactuable cuando está abierto */
 .modal {
@@ -290,7 +243,6 @@ body {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
 
 
 
@@ -482,7 +434,7 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 370px;
+    margin-top: 520px;
     text-align: center;
 
     mask-image: linear-gradient(to right,
@@ -676,46 +628,30 @@ body {
 
 
 /* CSS */
-.overlay-footer {
-    position: absolute; /* relativo al overlay */
-    bottom: 20px;
-    left: 140px; /* mismo valor que padding-left de navbar */
-    color: #5B6C8F;
-    font-family: 'Urbanist', sans-serif;
-    font-weight: 600;
-    font-size: 1em;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
+
 
 
 .overlay.show {
     pointer-events: auto;
     opacity: 1;
 }
-
-
 .overlay-footer,
 .overlay-footer-right {
-    position: fixed; /* ⚡ clave: fixed en vez de absolute */
-    bottom: 20px;
+    position: absolute;
+    bottom: clamp(10px, 5vh, 40px);
     font-family: 'Urbanist', sans-serif;
-    font-weight: 600;
-    font-size: 1em;
-    pointer-events: auto; /* ⚡ permite clicks */
-    z-index: 2000; /* encima del overlay-content */
+    font-size: clamp(0.7rem, 1.5vw, 1rem); /* Texto fluido */
+    color: #5B6C8F;
+    transition: opacity 0.5s ease;
+    width: auto;
 }
 
-.overlay-footer {
-    left: 140px;
-    color: #5B6C8F;
-}
+.overlay-footer { left: clamp(20px, 8vw, 140px); }
+.overlay-footer-right { right: clamp(20px, 8vw, 140px); }
 
-.overlay-footer-right {
-    right: 140px;
-    color: #5B6C8F;
-}
+
+
+
 
 .overlay-footer-right a {
     color: #5B6C8F;
@@ -725,427 +661,6 @@ body {
 .overlay-footer-right a:hover {
     text-decoration: underline;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/* ==========================================================================
-/* ==========================================================================
-   NUEVOS ESTILOS EQUIPO (REDISEÑO) - CORREGIDO Y RESPONSIVE
-   ========================================================================== */
-
-/* Ajuste general del body para esta página */
-body.team-page {
-    background-color: #5B6C8F;
-    margin: 0;
-    padding: 0;
-    /* CAMBIO CLAVE PARA PORTÁTIL/ESCRITORIO: Ocultar el scroll */
-    overflow: hidden; 
-    
-    /* Altura total y ANCHO total del viewport */
-    height: 100%;
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-}
-
-
-
-.contenedor-principal {
-    width: 90%; 
-    max-width: 1400px;
-    margin: 0 auto;
-    padding-top: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Ocupar el espacio restante en el layout flex */
-    flex-grow: 1; 
-    position: relative;
-    padding-bottom: 50px;
-    /* ELIMINAMOS EL SCROLL INTERNO EN ESCRITORIO */
-    /* overflow-y: auto; */ 
-     justify-content: flex-start;
-}
-
-/* --- 1. ENCABEZADO (TITULO Y SUBTITULO) --- */
-.team-intro {
-    text-align: center;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 10;
-    opacity: 0;
-    animation: fadeInUp 1.5s ease-out 0.3s forwards;
-}
-
-.team-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 3.5vw;
-    font-weight: 800;
-    color: white;
-    margin: 0 auto;          /* centra el bloque horizontalmente */
-    text-align: center;       /* centra el texto dentro del bloque */
-    text-transform: uppercase;
-    line-height: 1.3;
-   
-    word-wrap: break-word;
-}
-
-.team-subtitle {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 1.1rem; 
-    color: white;
-    margin: 15px auto 0 auto;  /* top 15px, auto horizontal para centrar */
-    font-weight: 400;
-    line-height: 1.7;
-    max-width: 500px;
-    opacity: 0.9;
-    text-align: center;        /* centra el texto */
-}
-
-
-/* --- 2. GRID DE LOS MIEMBROS --- */
-.equipo-grid {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5vw; 
-    width: 100%;
-    margin-top: -6vw; 
-    margin-right: -1.5vw; 
-    position: relative; 
-}
-
-/* ESTILO POR DEFECTO PARA AMBAS GALLETAS (Lucía) */
-.bloque-miembro {
-    position: relative; 
-    /* Dimensiones responsivas sin padding-bottom (Lucía) */
-    width: 30vw; 
-    height: 38.25vw; /* 30vw * (510/400) = 38.25vw */
-    max-width: 400px; 
-    max-height: 510px;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ESTILO ESPECÍFICO PARA XAVI (bloque-miembro:first-child) */
-.equipo-grid > .bloque-miembro:first-child {
-    /* Galleta de Xavi más pequeña: 25vw (max 333px) */
-    width: 25vw; 
-    height: 31.875vw; /* 25vw * (510/400) = 31.875vw */
-    max-width: 333px;
-    max-height: 409px;
-}
-
-
-/* --- 3. NOMBRES LATERALES (XAVI / LU) --- */
-.nombre-lateral {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.5vw; 
-    font-weight: 800;
-    color: white;
-    text-transform: uppercase;
-
-    white-space: normal; 
-    display: block;      
-    width: 15vw; 
-    max-width: 200px;
-
-    position: absolute; 
-    z-index: 5;
-    top: 50%; /* sigue centrado vertical */
-    transform: translateY(-60%) translateX(0); /* empieza ligeramente arriba */
-    opacity: 0;
-
-    animation: fadeInUp 1s ease-out forwards;
-}
-
-
-
-/* 3a. Ocultar el texto de hover por defecto, y mostrar el nombre original */
-.nombre-lateral .name-hover-sm { 
-    display: none;
-}
-.nombre-lateral .name-original {
-    display: block; /* Asegura que XAVI/LU estén visibles */
-}
-
-/* 3b. Forzar el salto de línea en el texto de hover (elemento inyectado en HTML) */
-.nombre-lateral {
-  position: absolute;
-  z-index: 0; /* actualmente visible detrás de la galleta */
-  transition: opacity 0.3s ease;
-}
-
-/* 3c. ESTILO DE HOVER: Cuando el cookie es sobrevolado, afecta al hermano (~) .nombre-lateral */
-.cookie-container:hover ~ .nombre-lateral .name-original {
-    display: none; /* Oculta XAVI/LU */
-}
-
-.cookie-container:hover ~ .nombre-lateral .name-hover-sm {
-    /* Muestra el mensaje de hover con estilos específicos */
-    display: block; 
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 0.6em;
-}
-
-
-/* 2. Posicionamiento específico para XAVI (Izquierda) */
-/* El texto se alinea a la derecha para que la envoltura comience cerca de la galleta */
-.nombre-lateral.izquierda {
-    right: 90%; /* CAMBIO: De 350px a 110% (relativo al padre) */
-    text-align: right; 
-}
-/* regla específica para Xavi */
-
-#nombreXavi {
-    right: 87%;
-    top: 50%;
-    
-}
-
-#nombreLucia {
-    left: 92%;
-    top: 50%;
- 
-}
-
-
-/* 3. Posicionamiento específico para LU (Derecha) */
-/* El texto se alinea a la izquierda para que la envoltura comience cerca de la galleta */
-.nombre-lateral.derecha {
-    
-    left: 90%; /* CAMBIO: De 350px a 110% (relativo al padre) */
-    text-align: left; 
-}
-/* Cuando se rompe la galleta, ocultamos el nombre */
-.nombre-lateral.oculto {
-    opacity: 0;
-    transform: translateY(-50%) scale(0.9); 
-    pointer-events: none;
-}
-
-/* --- 4. CONTENEDOR GALLETA --- */
-.cookie-container {
-    
-    position: relative; 
-    display: inline-block;
-    top: 0; 
-    left: 0; 
-    width: 85%;   
-    height: 100%;  
-   
-    /* IMPORTANTE: z-index más alto que el nombre lateral */
-    opacity: 0;
-    animation: fadeInUp 1.5s ease-out 0.6s forwards;
-}
-
-
-
-.cookie-img {
-    pointer-events: auto;
-    position: absolute;
-    cursor: pointer;
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-    top: -5%; 
-    left: 13%; 
-    width: 85%;
-    height: 100%;
-    display: block;
-    
-    /* 🔥 ARREGLA EL PEDO */
-    object-fit: contain; 
-    image-rendering: auto;
-    max-width: none;      /* evita escalados raros CON LA WEB */
-    max-height: none;     /* evita que CHROME Y LOS DEMAS limiten la imagen */
-    aspect-ratio: auto;   /* hace que la imagen respete su forma real */
-    
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-    z-index: 10; 
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); 
-}
-
-
-
-/* Mantenemos la galleta entera más pequeña */
-.cookie-img.entera { 
-    transform: scale(0.85); 
-}
-
-/* Hacemos la galleta rota más grande (para Lu) */
-.cookie-img.rota {
-  position: absolute;
-  z-index: 10; /* más alto que el nombre lateral */
-  opacity: 0;
-  transform: scale(1.2);
-  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-}
-
-/* Imagen entera CONFIGURAR específica para Xavi */
-.equipo-grid > .bloque-miembro:first-child .cookie-img.entera {
-    top: -5%;
-    left: 5%;
-    transform: scale(0.85); /* solo para Xavi */
-}
-/* Imagen entera CONFIGURAR específica para LU */
-.equipo-grid > .bloque-miembro:nth-child(2) .cookie-img.entera {
-    top: -3%;
-    left: 15%;
-    transform: scale(0.82);
-}
-
-
-
-/* Estados al hacer click */
-.cookie-container.clicked .cookie-img.entera { 
-    opacity: 0; 
-    transform: scale(0.85); /* Mantenemos la escala mientras desaparece */
-}
-
-.cookie-container.clicked .cookie-img.rota { 
-    opacity: 1; 
-    transform: scale(1.2); /* Mantenemos la escala por defecto para Lu */
-}
-
-/* Imagen rota CONFIGURACION específica para Xavi */
-.equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
-    top: -3%;
-    left: 9%;
-    transform: scale(1.4);
-}
-/* Imagen rota CONFIGURACION específica para LU */
-.equipo-grid > .bloque-miembro:nth-child(2) .cookie-img.rota {
-    top: 0%;
-    left: 8%;
-    transform: scale(1.2);
-}
-
-
-
-/* Mostrar solo al pasar mouse y SI NO está rota */
-.cookie-container:hover .click-hint {
-    opacity: 0 !important; 
-    transform: translate(-50%, -50%); 
-}
-
-/* Si ya está rota (clase clicked), no mostramos el mensaje */
-.cookie-container.clicked:hover .click-hint {
-    opacity: 0 !important;
-}
-
-/* --- 6. CONTENIDO INTERNO (ROLES Y BOTÓN) --- */
-.cookie-content {
-    position: absolute;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-    
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.5s ease-in-out;
-    pointer-events: none;
-     z-index: 12; 
-}
-
-/* Estilo del texto "DISEÑADOR GRÁFICO..." */
-.rol-titulo {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.9rem; /* CAMBIO: De em a rem (más controlable) */
-    font-weight: 900;
-    line-height: 0.95;
-    color: white;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-    z-index: 2; 
-}
-
-.btn-portfolio {
-    background-color: #E91E63;
-    color: white;
-    font-family: 'Urbanist', sans-serif;
-    font-weight: 900; 
-    font-size: 0.9em;
-    text-transform: uppercase;
-    border: none;
-    padding: 4px 5px; 
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-    letter-spacing: 1px;
-    z-index: 12; 
-}
-
-.btn-portfolio:hover {
-    background-color: #c2185b;
-    transform: scale(1.05);
-     z-index: 12; 
-}
-
-/* Mostrar contenido cuando está clickeado */
-.cookie-container.clicked .cookie-content {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-}
-    .btn-portfolio:focus,
-    .cookie-container:focus {
-    outline: none;
-    box-shadow: none; /* Por si el navegador añade un box-shadow en el foco */
-    }
-/* web-/styles.css (Línea 890 aprox.) */
-
-/* --- NUEVO: Indicador de sonido para la interacción móvil --- */
-/* Aproximadamente en la línea 890 */
-
-/* --- NUEVO: Indicador de sonido para la interacción móvil --- */
-.cookie-hint-mobile {
-    display: block; /* CAMBIO: Ahora es visible por defecto en todas las vistas */
-    position: fixed;
-    bottom: 80px; 
-    right: 25px; /* Posición estandarizada */
-    z-index: 100001;
-    text-align: center;
-    color: white;
-    font-family: 'Urbanist', sans-serif;
-    opacity: 0.9;
-    transition: opacity 0.3s;
-    pointer-events: none;
-}
-
-.cookie-hint-mobile .sound-icon {
-    font-size: 1.5rem;
-    color: #F8A07B; /* Color naranja */
-    margin-bottom: 5px;
-}
-
-.cookie-hint-mobile p {
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 1;
-}
-
 
 
 
@@ -1285,23 +800,14 @@ body.team-page {
 
 /* --- MEDIA QUERY para hacerlo responsivo en móviles (General 850px) --- */
 @media (max-width: 850px) {
-    .navbar {
-        flex-direction: column;
-        padding: 20px;
-    }
+
     .menu {
         margin-top: 15px;
         flex-wrap: wrap; 
         justify-content: center;
     }
-    .content-body {
-        flex-direction: column; 
-        padding: 20px;
-    }
-    .left-column {
-        padding-right: 0;
-        margin-bottom: 30px;
-    }
+
+
     .body {
         padding-left: 40px;
         padding-right: 40px;
@@ -1341,16 +847,6 @@ body.team-page {
    ------------------------------ */
 @media (max-width: 768px) {
     
-    /* Navbar: Disposición horizontal Logo | Menu | Reservas */
-    .navbar { 
-        flex-direction: row; 
-        padding: 20px 20px; 
-        align-items: center; 
-        justify-content: space-between; 
-    }
-    .logo img { 
-        height: 80px; /* Tamaño del logo en tablet/móvil */
-    }
     .menu {
         flex-grow: 1; /* Permite que el menú se centre */
         text-align: center;
@@ -1424,31 +920,8 @@ body.team-page {
     min-width: 100%;
   }
   .content-body { padding: 60px 40px; flex-direction: column; }
-  .left-column { flex-basis: 100%; margin-left: 0; text-align: left; }
-  .title-lg { font-size: 2.4em; }
-  .title-lg2 { font-size: 10em; margin-left: 0; }
-  
-   /* Imagen de la tarta relativa y más grande que en móvil */
-    /* MODIFICACIÓN: Posicionamiento de la Tarta */
-  #main-image { 
-      position: relative !important; 
-      max-width: 75%; 
-      height: auto; 
-      margin: 30px auto; 
-      display: block; 
-      left: auto !important; 
-      right: auto !important; 
-      top: auto !important; 
-      transform: none; 
-      margin-top: -80px !important; /* Mueve la imagen hacia arriba */
-      z-index: 1;
-  }
-    .info-sm { 
-        margin-top: -50px; /* Mueve el info-sm hacia arriba */
-        padding-top: 80px; /* Compensación para empujar el texto hacia abajo */
-        position: relative;
-        z-index: 10;
-    }
+     /* Imagen de la tarta relativa y más grande que en móvil */
+
   
   .scrolling-text-container { position: relative; margin-top: 300px; width: 100%; left: 50%; transform: translateX(-50%); }
   
@@ -1475,12 +948,6 @@ overflow: hidden;
  overflow: hidden;
 }
 
-
-/* LOGO más pequeño */
-.navbar .logo img {
-    width: 25%;   /* antes 100%, ajusta al gusto */
-    height: auto;
-}
 
 /* Menú más pequeño SIN alterar la posición */
 .menu a {
@@ -1533,7 +1000,6 @@ overflow: hidden;
 }
 
  
-  /* Este es el bloque que contiene TODO tu contenido de la página */
   .main-wrapper {
     flex: 1; 
     display: flex;
@@ -1543,69 +1009,13 @@ overflow: hidden;
     justify-content: center;
   }
 
-  /* El contenido interno mantiene tus espacios originales */
-  .content-body {
-    margin: 0 auto;     /* solo centra horizontal → NO toca márgenes internos */
-  }
-
-
-  /* Página Principal: Flujo vertical */
-    /* MODIFICACIÓN: Aumentar Padding en Móviles */
- 
-
-
-/* Para title-lg */
-.left-column {
-     max-width: 310px;
-    margin: 0 auto;  /* centra horizontalmente */
-    text-align: left; /* o center si quieres centrar el texto */
-}
-
-.title-lg {
-    font-size: 2.2em;
-    margin-bottom: 1.2rem;
-    margin-top: 0rem;
-}
-
-.title-lg2 {
-    font-size: 5.3em;
-    white-space: normal;
-    text-align: left; 
-}
-
-
-  
-
-
-/* Imagen */
-#main-image {
-width: 130%;
-    max-width: 350px;   /* límite para que no se haga gigante */
-    height: auto;
-    
-    display: block;
-    margin: 130px auto;  /* siempre centrada, sin empujar nada */
-    left: -5%;
-
-    position: relative;
-    transform: none !important;  /* cancela desplazamientos raros */
-    z-index: 5;
-}
 
 
 
   
- .info-sm {
-    max-width: 100%;        /* ahora sí será más ancho */
-    margin: 0 auto;        /* centra el bloque */
-    padding-top: 30px;
-    position: relative;
-    z-index: 10;
-    font-size: 1em;
-    text-align: center;
-}
 
-    .scrolling-text-container { position: absolute; margin-top: 415px; width: 100%; left: 50%; transform: translateX(-50%); }
+
+    .scrolling-text-container { position: absolute; margin-top: 550px; width: 100%; left: 50%; transform: translateX(-50%); }
  
 .modal {
     display: none; /* inicia oculto */
@@ -1658,32 +1068,6 @@ width: 130%;
     .overlay-content a {
         font-size: 12vw; /* Se ajusta el tamaño de fuente usando Viewport Width (7vw) */
         line-height: 1.0; 
-    }
-    
-    .overlay-footer-right {
-    text-align: center;            /* Centra el texto */
-    padding: 10px 0;               /* Espacio arriba y abajo */
-    font-family: 'Urbanist', sans-serif;
-    font-size: 1em;
-    color: #5B6C8F;                  /* Cambia según tu fondo */
-    background-color: transparent; /* O un color si quieres */
-    position: absolute;               /* Fijo en la ventana */
-    bottom: 0;                     /* Siempre abajo */
-    left: 0;
-    width: 100%;  
-    }
-
-     .overlay-footer{
-    text-align: center;            /* Centra el texto */
-    padding: 30px 0;               /* Espacio arriba y abajo */
-    font-family: 'Urbanist', sans-serif;
-    font-size: 1em;
-    color: #5B6C8F;                  /* Cambia según tu fondo */
-    background-color: transparent; /* O un color si quieres */
-    position: absolute;               /* Fijo en la ventana */
-    bottom: 0;                     /* Siempre abajo */
-    left: 0;
-    width: 100%;  
     }
     
 
@@ -1809,40 +1193,10 @@ width: 130%;
 }
 
 
-
-
-
-
-
-
-
-
-
-/* -------------------------------------------------------
-   💻 iPad Pro 12.9 vertical (1366px de alto, 1024px ancho)
-------------------------------------------------------- */
-@media (min-width: 1024px) and (max-width: 1366px) {
-    /* ajustes aquí */
-      #main-image {
-        width: 55%;
-        top: 200px;
-        right: 50px;
-    }
-
-    .title-lg2 {
-        font-size: 12em;
-    }
-}
-
 /* --- RESPONSIVE ESPECÍFICO EQUIPO (Móvil/Tablet) --- */
 @media (max-width: 900px) {
     
    
-/* LOGO más pequeño */
-.navbar .logo img {
-    width: 25%;   /* antes 100%, ajusta al gusto */
-    height: auto;
-}
 
 /* Menú más pequeño SIN alterar la posición */
 .menu a {
@@ -1866,205 +1220,7 @@ width: 130%;
     text-align: center;
 }
     
-    .contenedor-principal{
-        width: 100%;
-        padding-top: 0px;
-    }
-    /* Contenido de Equipo */
-    .team-title {
-        font-size: 8vw;
-    }
-    
-    .team-subtitle {
-          font-family: 'Urbanist', sans-serif;
-    font-size: 0.9rem;
-    color: white;
-    margin-bottom: 18px;
-    margin-top: -1PX;
-      font-weight: 400;
-    line-height: 1.5;
-    max-width: 240px; /* Limitar el ancho del texto */
-     animation: fadeInUp 1.5s ease-out;
- 
-
-    }
-
-
-      /* Oculta el texto original en móvil */
-    .team-subtitle {
-        font-size: 0;        /* truco para esconder texto sin romper el layout */
-        line-height: 0;
-    }
-
-    /* Inserta NUEVO TEXTO solo en móvil */
-    .team-subtitle::after {
-        content: "Cocinamos con método, chispa y visión. Cada proyecto es único."; /* Nuevo texto */
-        font-size: 1rem;     /* ajusta si quieres más grande */
-        line-height: 1.5;
-        display: block;
-        color: white;        /* o el color que uses en la web */
-        font-family: 'Urbanist', sans-serif;
-           max-width: 240px; /* Limitar el ancho del texto */
-     animation: fadeInUp 1.5s ease-out;
- 
-    }
-
-
-    /* MODIFICACIÓN: Reducir separación */
- .equipo-grid {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 65%;
-    margin-top: 3vw; 
-    margin-right: 0vw; 
-    position: relative;
-    padding-bottom: 0px; 
-}
-
-    
-    /* MODIFICACIÓN: Aumentar el tamaño de las galletas (Lucía) */
-    .bloque-miembro {
-        width: 100%; 
-        height: 50vw; 
-        max-width: 100%; /* Galleta más grande */
-        max-height: 50%;
-        margin-top: -41px;
-    }
-    
-    /* MODIFICACIÓN: Ajuste proporcional para Xavi */
-    .equipo-grid > .bloque-miembro:first-child {
-        width: 80%; 
-        height: 50vw;
-        max-width: 77%; /* Galleta más grande */
-        max-height: 50%;
-        margin-bottom: -10px;
-    }
-
-    
-    
-    /* MODIFICACIÓN: Nombre debajo de la galleta (fijo y sin hover) */
-    .nombre-lateral {
-        transform: none; 
-        order: 2; 
-        width: 20%; 
-        text-align: center !important; 
-        margin-top: 0x; 
-        margin-bottom: 0px; 
-        margin-right: 100px;
-        font-size: 4vw; 
-        max-width: none;
-        z-index: 5;
-    }
-    
-    #nombreXavi {
-        left: 10%;
-        top: 40%;
-        z-index: 5;
-    }
-
-    #nombreLucia {
-        left: 15%;
-        top: 50%;
-        z-index: 5;
-    }
-    
-    .cookie-img {
-    pointer-events: auto;
-    position: absolute;
-    cursor: pointer;
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-    top: -5%; 
-    left: 13%; 
-    width: 85%;
-    height: 100%;
-    display: block;
-    
-    /* 🔥 ARREGLA EL PEDO */
-    object-fit: contain; 
-    image-rendering: auto;
-    max-width: none;      /* evita escalados raros CON LA WEB */
-    max-height: none;     /* evita que CHROME Y LOS DEMAS limiten la imagen */
-    aspect-ratio: auto;   /* hace que la imagen respete su forma real */
-    
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-    z-index: 10 !important; 
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); 
-}
-
-    /* Imagen rota CONFIGURACION específica para Xavi */
-.equipo-grid > .bloque-miembro:first-child .cookie-img.rota {
-    top: -3%;
-    left: 9%;
-    transform: scale(1.4);
-}
-/* Imagen rota CONFIGURACION específica para LU */
-.equipo-grid > .bloque-miembro:nth-child(2) .cookie-img.rota {
-    top: 0%;
-    left: 8%;
-    transform: scale(1.2);
-}
-
-    /* Ocultar el texto de hover y forzar la visibilidad del nombre original */
-    .nombre-lateral .name-hover-sm { 
-        display: none !important; /* Force hide hover text */
-    }
-    .nombre-lateral .name-original {
-        display: block !important; /* Force show original text */
-    }
-    
-    /* Anular el efecto de hover en el media query (sin cambio de texto) */
-    .cookie-container:hover ~ .nombre-lateral .name-original {
-        display: block !important; 
-    }
-    .cookie-container:hover ~ .nombre-lateral .name-hover-sm {
-        display: none !important; 
-    }
-    .cookie-container,
-    .cookie-content .btn-portfolio,
-    .navbar a {
-        /* Esta regla es clave para los navegadores móviles basados en WebKit (Android/iOS) */
-        -webkit-tap-highlight-color: transparent !important;
-        -moz-tap-highlight-color: transparent !important;
-    }
-
-
-
-
-
-
-    /* RESTO DE PAGINAS */
-    body.team-page .cookie-hint-mobile {
-        display: block;
-        bottom: 140px; 
-        right: 40px;
-    }
    
-    .btn-portfolio {
-    background-color: #E91E63;
-    color: white;
-    font-family: 'Urbanist', sans-serif;
-    font-weight: 900; 
-    font-size: 0.8em;
-    text-transform: uppercase;
-    border: none;
-    padding: 2px 5px; 
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-    letter-spacing: 1px;
-    z-index: 12; 
-    margin-top: -15px;
-}
-    .rol-titulo {
-        font-size: 1.4rem;
-    }
-    
-    .nombre-lateral.oculto {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
 
     /* --- PÁGINAS PUENTE (Mantenimiento) --- */
     body.maintenance-page {
@@ -2135,80 +1291,6 @@ width: 130%;
         margin-top:-110px;
     }
 
-
-
-
-    
-
-    /* --- FORZAR que la galleta rota esté por encima del nombre lateral --- */
-
-/* Aseguramos que el bloque padre sea referencia y tenga z-index base */
-.bloque-miembro {
-  position: relative;    /* ya lo tienes, pero por si acaso */
-  z-index: 0;            /* base limpia */
-}
-
-/* Elevamos el contenedor de cookie cuando esté visible / clickeado */
-.cookie-container {
-  position: relative;    /* ya lo tienes, reforzado */
-  z-index: 1000;         /* host con prioridad sobre el nombre lateral */
-  pointer-events: auto;
-}
-
-/* La imagen rota debe ir por encima de todo */
-.cookie-img.rota {
-  z-index: 1100 !important;   /* forzamos prioridad absoluta */
-  position: absolute;         /* ya lo tienes, pero por si acaso */
-  pointer-events: auto;       /* seguir permitiendo clicks si hace falta */
-}
-
-/* Cuando se activa la versión rota (clase clicked), nos aseguramos */
-.cookie-container.clicked .cookie-img.rota {
-  opacity: 1 !important;
-  z-index: 1200 !important;   /* más alto aún mientras esté visible */
-  transform: translateZ(0);    /* forzar composición en GPU, evita algunos bugs */
-}
-
-/* Nos aseguramos de que el nombre lateral quede por debajo */
-.nombre-lateral {
-  position: absolute;   /* ya lo tienes */
-  z-index: 50;          /* muy por debajo de la galleta rota */
-  /* si tienes transform en nombre-lateral, mantenlo; aquí su z-index seguirá siendo menor */
-}
-
-/* Si quieres que la galleta rota oculte por completo visualmente el texto (no solo z-index) */
-.cookie-container.clicked ~ .nombre-lateral,
-.cookie-container.clicked + .nombre-lateral {
-  visibility: hidden;   /* lo hace invisible, ocupa espacio pero no se ve */
-  /* alternativamente: opacity: 0; pointer-events: none; */
-}
-
-/* Contenido que aparece cuando la galleta está rota */
-.cookie-container.clicked .cookie-content {
-    z-index: 1250;           
-   
-    display: flex;           /* lo hacemos visible de inmediato */
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-
-    opacity: 1 !important;
-    transition: none !important;
-}
-
-/* Rol-titulo y botón */
-.cookie-container.clicked .rol-titulo,
-.cookie-container.clicked .btn-portfolio {
-    z-index: 1251; 
-    display: block;          /* aparece inmediatamente */
-}
-
-/* Cuando NO está clickeada, ocultamos completamente */
-.cookie-container:not(.clicked) .cookie-content,
-.cookie-container:not(.clicked) .rol-titulo,
-.cookie-container:not(.clicked) .btn-portfolio {
-    display: none !important;   /* desaparece instantáneamente */
-}
 
 }
 

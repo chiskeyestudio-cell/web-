@@ -15,9 +15,7 @@ const pageContent = {
 // ==========================================================
 // PARTE 2: CAPTURA DE ELEMENTOS
 // ==========================================================
-const title1Element = document.getElementById('main-title1');
-const title2Element = document.getElementById('main-title2');
-const infoElement = document.getElementById('main-info');
+// Los elementos de texto (main-title, etc) se capturan dentro de updateContent para evitar errores si no existen
 const imageElement = document.getElementById('main-image');
 const logo = document.querySelector('.logo img');
 
@@ -30,45 +28,60 @@ const logoOriginal = 'https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595
 const logoBlanco = 'https://res.cloudinary.com/dxsip0hvb/image/upload/v1763596790/LOGO_AZUL_CHISKEY_yu3mqz.png';
 
 // ==========================================================
-// PARTE 3: FUNCIÓN PARA ACTUALIZAR CONTENIDO
+// PARTE 3: FUNCIÓN PARA ACTUALIZAR CONTENIDO (CORREGIDA)
 // ==========================================================
 function updateContent(section) {
     const data = pageContent[section];
     if (!data) return;
 
-    title1Element.textContent = data.title1;
-    title2Element.textContent = data.title2;
-    infoElement.textContent = data.info;
-    imageElement.src = data.imgUrl;
+    // Capturamos elementos solo si existen en el HTML actual para evitar el error "null"
+    const title1Element = document.getElementById('main-title1');
+    const title2Element = document.getElementById('main-title2');
+    const infoElement = document.getElementById('main-info');
 
-    if (data.position) {
-        imageElement.style.top = data.position.top;
-        imageElement.style.right = data.position.right;
+    if (title1Element) title1Element.textContent = data.title1;
+    if (title2Element) title2Element.textContent = data.title2;
+    if (infoElement) infoElement.textContent = data.info;
+
+    // Actualización de imagen (si existe el contenedor)
+    if (imageElement) {
+        const img = imageElement.querySelector('img');
+        if (img) img.src = data.imgUrl;
+
+        if (data.position) {
+            imageElement.style.top = data.position.top;
+            imageElement.style.right = data.position.right;
+        }
     }
 }
 
 menuLinks.forEach(link => link.addEventListener('click', e => e.preventDefault()));
 
 // ==========================================================
-// PARTE 4: MODAL (NO SE ABRE AUTOMÁTICAMENTE EN MÓVIL)
+// PARTE 4: MODAL (CONTROL DE APERTURA)
 // ==========================================================
 function openModal() {
-    modal.style.display = 'flex';
+    if (modal) modal.style.display = 'flex';
 }
 
 function closeModal() {
-    modal.style.display = 'none';
+    if (modal) modal.style.display = 'none';
 }
 
-// Asegurar que el modal esté cerrado al cargar la página
+// Inicialización segura al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
-    updateContent('recepcion');
+    // Solo actualiza si detecta la estructura de la página de inicio antigua
+    if (document.getElementById('main-title1')) {
+        updateContent('recepcion');
+    }
 
-    // Solo aseguramos que no se abra automáticamente
-    modal.style.display = 'none';
+    // ASEGURAR QUE EL MODAL ESTÉ CERRADO AL CARGAR
+    if (modal) {
+        modal.style.display = 'none';
+    }
 });
 
-// Botón reservas
+// Eventos del modal
 if (reservasBtn) {
     reservasBtn.addEventListener('click', e => {
         e.preventDefault();
@@ -76,12 +89,10 @@ if (reservasBtn) {
     });
 }
 
-// Botón cerrar
 if (closeBtn) {
     closeBtn.addEventListener('click', closeModal);
 }
 
-// Cerrar al click fuera del modal
 window.addEventListener('click', e => {
     if (e.target === modal) closeModal();
 });
@@ -120,20 +131,14 @@ if (!overlay) {
     document.body.appendChild(overlay);
 }
 
-// Selección de iconos sociales
 const socialIcons = document.querySelectorAll('.social-icons img');
 
-// ==========================================================
-// FOOTER IZQUIERDO
-// ==========================================================
+// Footers del overlay
 let overlayFooterLeft = document.createElement('div');
 overlayFooterLeft.classList.add('overlay-footer');
 overlayFooterLeft.textContent = '©2025 chiskey | Base en Valencia Esp';
 overlay.appendChild(overlayFooterLeft);
 
-// ==========================================================
-// FOOTER DERECHO (CON LINKS CLICKEABLES)
-// ==========================================================
 let overlayFooterRight = document.createElement('div');
 overlayFooterRight.classList.add('overlay-footer-right');
 overlayFooterRight.innerHTML = `
@@ -151,31 +156,30 @@ function toggleOverlayFooterRight(isOpen) {
 }
 
 // ==========================================================
-// PARTE 6: TOGGLE DEL MENÚ + CAMBIO DE LOGO + BLOQUEO ICONOS
+// PARTE 6: TOGGLE DEL MENÚ
 // ==========================================================
-menuToggle.addEventListener('click', (e) => {
-    e.preventDefault();
-    const isOpen = overlay.classList.contains('open');
+if (menuToggle) {
+    menuToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = overlay.classList.contains('open');
 
-    overlay.classList.toggle('open');
-    document.body.classList.toggle('overlay-open', !isOpen);
-    menuToggle.textContent = isOpen ? 'MENU' : 'X';
-    menuToggle.classList.toggle('active');
-    logo.src = isOpen ? logoOriginal : logoBlanco;
+        overlay.classList.toggle('open');
+        document.body.classList.toggle('overlay-open', !isOpen);
+        menuToggle.textContent = isOpen ? 'MENU' : 'X';
+        menuToggle.classList.toggle('active');
+        if (logo) logo.src = isOpen ? logoOriginal : logoBlanco;
 
-    // Iconos sociales
-    socialIcons.forEach(icon => icon.style.filter = !isOpen ? 'invert(0)' : 'invert(1)');
-    socialIcons.forEach(icon => {
-        icon.style.pointerEvents = overlay.classList.contains('open') ? 'none' : 'auto';
+        socialIcons.forEach(icon => {
+            icon.style.filter = !isOpen ? 'invert(0)' : 'invert(1)';
+            icon.style.pointerEvents = overlay.classList.contains('open') ? 'none' : 'auto';
+        });
+
+        overlay.style.pointerEvents = overlay.classList.contains('open') ? 'auto' : 'none';
+        toggleOverlayFooterRight(overlay.classList.contains('open'));
     });
+}
 
-    overlay.style.pointerEvents = overlay.classList.contains('open') ? 'auto' : 'none';
-    toggleOverlayFooterRight(overlay.classList.contains('open'));
-});
-
-// ==========================================================
-// PARTE 7: LINKS DEL OVERLAY
-// ==========================================================
+// Redirección de links del overlay
 const overlayLinks = overlay.querySelectorAll('.overlay-content a');
 overlayLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -185,7 +189,7 @@ overlayLinks.forEach(link => {
 });
 
 // ==========================================================
-// PARTE 8: FORMULARIO SIN REDIRECCIÓN (FORMSPREE AJAX)
+// PARTE 7: FORMULARIO AJAX
 // ==========================================================
 document.addEventListener('DOMContentLoaded', () => {
     const formReserva = document.getElementById("reservaForm");
@@ -218,61 +222,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================================
-// PARTE 9: GALLETAS (hover/click)
+// PARTE 8: GALLETAS Y PORTFOLIO
 // ==========================================================
 document.querySelectorAll('.cookie-container').forEach(container => {
     const wholeCookie = container.querySelector('.cookie-img.entera');
-    const brokenCookie = container.querySelector('.cookie-img.rota');
     
-    const handleHover = (img) => {
-        img.addEventListener('mouseenter', () => container.classList.add('hover'));
-        img.addEventListener('mouseleave', () => container.classList.remove('hover'));
-        
-        img.addEventListener('click', (e) => {
+    if (wholeCookie) {
+        wholeCookie.addEventListener('click', (e) => {
             e.stopPropagation();
             if(container.classList.contains('clicked')) return; 
             container.classList.add('clicked'); 
 
-            const nombreLateral = container.closest('.bloque-miembro').querySelector('.nombre-lateral');
+            const nombreLateral = container.closest('.bloque-miembro')?.querySelector('.nombre-lateral');
             if (nombreLateral) nombreLateral.classList.add('oculto');
 
             const soundEl = document.getElementById("cookieBreakSound");
             if (soundEl) {
-                try { soundEl.currentTime = 0; } catch (err) {}
+                soundEl.currentTime = 0;
                 soundEl.play().catch(()=>{});
             }
         });
-    };
-
-    if (wholeCookie) handleHover(wholeCookie);
-});
-
-
-// Seleccionamos todos los bloques de miembros
-document.querySelectorAll('.bloque-miembro').forEach((bloque) => {
-  const galleta = bloque.querySelector('.cookie-img');
-  const nombre = bloque.querySelector('.nombre-lateral');
-
-  galleta.addEventListener('click', () => {
-    // Alternamos la clase clicked en la cookie-container
-    bloque.querySelector('.cookie-container').classList.toggle('clicked');
-
-    // Si la galleta rota está visible, ocultamos el nombre lateral
-    if (galleta.classList.contains('rota') || bloque.querySelector('.cookie-container').classList.contains('clicked')) {
-      nombre.classList.add('oculto'); // oculta el texto lateral
-    } else {
-      nombre.classList.remove('oculto'); // muestra el texto lateral
     }
-  });
 });
-// Selecciona todos los botones de portafolio
-const portfolioButtons = document.querySelectorAll('.btn-portfolio');
 
+const portfolioButtons = document.querySelectorAll('.btn-portfolio');
 portfolioButtons.forEach(button => {
     button.addEventListener('click', (e) => {
         const url = e.currentTarget.dataset.url;
         if (url) {
-            // Abrir en nueva pestaña sin que aparezca el mensaje
             window.open(url, '_blank', 'noopener,noreferrer');
         }
     });
