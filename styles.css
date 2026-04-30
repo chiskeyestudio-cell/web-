@@ -10,9 +10,10 @@ body {
     font-family: urbanist, sans-serif;
     margin: 0;
     padding: 0;
-    min-height: 100%;
+    min-height: 100vh; /* Cambiado de 100% a 100vh */
     position: relative;
-   overflow: hidden; /* evita scroll, pero no genera zoom */
+    overflow-x: hidden; /* Evita scroll horizontal */
+    overflow-y: auto;   /* ¡ESTO ACTIVA EL SCROLL VERTICAL! */
 }
 
 /* --- ESTILOS DE LA CABECERA / MENÚ --- */
@@ -458,12 +459,13 @@ body {
 
 .scrolling-track span {
     color: #F8A07B;
-    font-size: 1.1em;
+    /* Mínimo 0.8rem, ideal 2vw, máximo 1.5rem */
+    font-size: clamp(0.8rem, 2vw, 1.5rem); 
     font-family: 'Outfit', sans-serif;
     font-weight: 900;
     letter-spacing: 1px;
     word-spacing: 1em;
-    padding-right: 2em; /* separador para suavizar unión */
+    padding-right: 2em; 
 }
 
 /* Animación perfecta sin saltos */
@@ -922,11 +924,22 @@ body {
   .content-body { padding: 60px 40px; flex-direction: column; }
      /* Imagen de la tarta relativa y más grande que en móvil */
 
-  
-  .scrolling-text-container { position: relative; margin-top: 300px; width: 100%; left: 50%; transform: translateX(-50%); }
-  
-}
 
+.scrolling-text-container {
+    width: clamp(80%, 95%, 100%); /* Se expande más en móviles */
+    margin: 0 auto;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Ajusta la distancia vertical de forma fluida */
+    margin-top: clamp(300px, 50vh, 550px); 
+    text-align: center;
+
+    mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+}
+}
 
 
 /* ------------------------------
@@ -996,9 +1009,10 @@ overflow: hidden;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+}
+.page-index{
     overflow-y: hidden;
 }
-
  
   .main-wrapper {
     flex: 1; 
@@ -1010,13 +1024,6 @@ overflow: hidden;
   }
 
 
-
-
-  
-
-
-    .scrolling-text-container { position: absolute; margin-top: 550px; width: 100%; left: 50%; transform: translateX(-50%); }
- 
 .modal {
     display: none; /* inicia oculto */
     position: fixed;
@@ -1053,8 +1060,6 @@ overflow: hidden;
 }
 
 
-
-
     .overlay-footer-right a {
         font-size: 10px;
     }
@@ -1072,63 +1077,16 @@ overflow: hidden;
     
 
 
-
-    
-/* Ajuste general del body para esta página */
-  body.maintenance-page {
-        overflow: auto; /* permite scroll */
+.scrolling-text-container {
+        /* En móviles muy pequeños, mejor usar un margen superior menor */
+        margin-top: clamp(480px, 60vh, 450px);
+        width: 100%;
     }
-
-
-.maintenance-content {
-    display: flex;
-    flex: 1; /* Ocupa el espacio restante entre el header y el footer */
-    max-width: 1600px;
-    width: 100%;
-    margin: auto; /* Centrar horizontalmente */
-    /* Se mantiene padding vertical reducido para maximizar el espacio */
-    padding: 0 140px; 
-    position: relative;
-    box-sizing: border-box; 
-    align-items: stretch;
-}
-.left-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* texto arriba */
-    align-items: flex-start;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-right: 5vw;
-}
-
-.bridge-title {
-    font-family: 'Outfit', sans-serif;
-    /* Tamaño ajustado para que quepa en el viewport (mantenido) */
-    font-size: 3.5vw; 
-    font-weight: 800;
-    color: white;
-    margin-bottom: 10px;
-    line-height: 1.3;
-    text-transform: uppercase;
-     animation: fadeInUp 1.5s ease-out;
-      max-width: 700px;
-}
-
-.bridge-subtitle {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 0.9rem;
-    color: white;
-    margin-bottom: 15px;
-      font-weight: 400;
-    line-height: 1.5;
-    max-width: 840px; /* Limitar el ancho del texto */
-     animation: fadeInUp 1.5s ease-out;
-}
-
-
-
-
+    
+    .scrolling-track span {
+        /* Texto un poco más grande para legibilidad en móvil */
+        font-size: clamp(0.9rem, 4vw, 1.2rem);
+    }
 
 .social-links {
     margin-top: 30px;
@@ -1169,34 +1127,12 @@ overflow: hidden;
     overflow: visible; 
 }
 
-.maintenance-gif {
-    /* Posicionamiento absoluto */
-    position: absolute;
-    bottom: 0; 
-    /* 💥 CAMBIO CLAVE: Mover el GIF mucho más a la derecha (10vw fuera del contenedor) */
-    right: -25vw; 
-    
-    /* Mantiene la altura al 100% de la sección derecha */
-    width: auto;
-    max-width: none;
-    
-    /* 💥 CAMBIO CLAVE: Aumentamos la escala para una presencia dominante */
-    transform: scale(1.3); 
-    transform-origin: bottom right;
-
-    object-fit: contain;
-    pointer-events: none;
-    /* CRÍTICO: El GIF va por encima de todo */
-    z-index: 15; 
-}
-    
 }
 
 
 /* --- RESPONSIVE ESPECÍFICO EQUIPO (Móvil/Tablet) --- */
 @media (max-width: 900px) {
     
-   
 
 /* Menú más pequeño SIN alterar la posición */
 .menu a {
@@ -1220,84 +1156,659 @@ overflow: hidden;
     text-align: center;
 }
     
-   
-
-    /* --- PÁGINAS PUENTE (Mantenimiento) --- */
-    body.maintenance-page {
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: auto; 
-        min-height: 100vh;
-    }
-    
-    .maintenance-content {
-        /* Texto primero, luego GIF */
-        flex-direction: column; 
-        padding: 20px 5vw;
-        align-items: center;
-    }
-
-    .left-section {
-        flex: 1; 
-        padding-right: 0;
-        padding-top: 10px;
-        padding-bottom: 10px; 
-        width: 100%;
-        align-items: center; 
-        text-align: center;
-        display: contents;
-    }
-    .bridge-subtitle {
-        text-align: center;
-        max-width: auto;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-top: 0;
-        order: 3;
-        margin: 0;
-    }
-    .social-links {
-        justify-content: center;
-    }
-
-    
-    .bridge-title {
-        font-size: 8vw; 
-        order:3;
-        margin: 0;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    .right-section {
-        order: 2; 
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin-bottom: -90px;
-        overflow: scroll; 
-        padding: 0px;
-        margin-top: 0;
-    }
-    
-    .maintenance-gif {
-        position: static; 
-        transform: none;
-        transform-origin: right;
-        width: 90%; 
-        max-width: 400px;
-        height: auto;
-        z-index: 5;
-        margin-top:-110px;
-    }
 
 
 }
 
 
+/*RECETA*/
+/* ─────────────────────────────
+       HERO TITLE
+    ───────────────────────────── */
+    .receta {
+      padding: 30px 20px 100px;
+    }
+
+    .receta__eyebrow {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 0.12em;
+      line-height: 0.3;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .receta__title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      letter-spacing: 0.04em;
+      line-height: 0.2;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .receta__sub {
+      font-size: clamp(0.75rem, 2vw, 0.9rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: 4%;
+      
+    }
+
+    /* ─────────────────────────────
+       SECTION LABEL PILL
+    ───────────────────────────── */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid #f9f9f9;
+      border-radius: 40px;
+      padding: 6px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 32px;
+    }
 
 
 
+    /* ─────────────────────────────
+       SHARED BLOCK WRAPPER
+    ───────────────────────────── */
+    .block {
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 5%;
+    }
+
+
+    /* ─────────────────────────────
+       NECESITARÁS BOX
+    ───────────────────────────── */
+    .necesitas {
+      border: 1.5px solid #f9f9f9;
+      border-radius: 4px;
+      padding: 28px 20px 20px;
+      margin: 0 auto 48px;
+      max-width: 560px;
+    }
+
+    .necesitas__title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .necesitas__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .necesitas__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .necesitas__item img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .necesitas__btn {
+      background:#E91E63 ;
+      color: #f9f9f9;
+      border: none;
+      padding: 5px 5px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      
+      margin-top: 4px;
+      transition: opacity 0.2s;
+    }
+    .necesitas__btn:hover { opacity: 0.85; }
+
+    /* ─────────────────────────────
+       ILLUSTRATION GRID (sofrito)
+    ───────────────────────────── */
+    .illus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 0;
+    }
+
+    .illus-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .illus-item img {
+      width: 100%;
+      max-width: 160px;
+      height: 140px;
+      object-fit: contain;
+    }
+
+    .illus-caption {
+      font-size: 0.9rem;
+      font-weight: 400;
+      line-height: 1.55;
+      text-align: center;
+      color: var(--text-light);
+    }
+
+    /* ─────────────────────────────
+       REDUCCION SECTION
+    ───────────────────────────── */
+
+    /* MÓVIL: layout en 2 columnas compacto */
+    .reduccion__layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+      margin-right: 4%;
+    }
+
+    /* Col izquierda: fantasma + caption */
+    .reduccion__left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .reduccion__left img {
+      width: 90px;
+    }
+
+    .reduccion__caption {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* Col derecha: quote + caption — ocupa toda la columna derecha */
+    .reduccion__layout > div:nth-child(2) {
+      display: flex;
+      flex-direction: column;
+
+      
+    }
+
+    .reduccion__quote {
+      border: 1.5px dashed rgba(255,255,255,0.5);
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-style: italic;
+      color: #f9f9f9;
+    }
+
+    /* Llama: ocupa las 2 columnas centrada abajo */
+    .reduccion__center {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .reduccion__center img {
+      width: 180px;
+    }
+
+    .reduccion__center .reduccion__caption {
+      text-align: left;
+      max-width: 140px;
+    }
+
+    /* ─────────────────────────────
+       EMPLATADO SECTION
+    ───────────────────────────── */
+    .emplatado__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .emplatado__item {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .emplatado__item img {
+      width: 100%;
+      max-width: 160px;
+      height: 120px;
+      object-fit: contain;
+      
+    }
+
+    .emplatado__caption {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.55;
+    }
+
+    .row-2cols{
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+
+
+    /* ─────────────────────────────
+       ANIMATIONS
+    ───────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .illus-item:nth-child(1) { animation-delay: 0.05s; }
+    .illus-item:nth-child(2) { animation-delay: 0.15s; }
+    .illus-item:nth-child(3) { animation-delay: 0.25s; }
+
+    /* ─────────────────────────────
+       DESKTOP (≥ 768px)
+    ───────────────────────────── */
+    @media (min-width: 768px) {
+
+      /* Sofrito: ilustraciones + necesitas lado a lado */
+      .sofrito__desktop {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 30px;
+        align-items: start;
+      }
+
+      /* Necesitas va a la derecha en desktop, pero en HTML está abajo para mobile */
+      .necesitas {
+        margin: 0;
+        max-width: 400px;
+        order: 2;
+      }
+
+      .sofrito__illus { order: 1; }
+
+      /* Reduccion: 3 columnas */
+      .reduccion__layout {
+        grid-template-columns: 160px 1fr 200px;
+        gap: 32px;
+        align-items: start;
+    
+      }
+
+      /* Reset mobile overrides for reduccion__center in desktop */
+      .reduccion__center {
+        grid-column: auto;
+        flex-direction: column;
+        justify-content:flex-start;
+        gap: 8px;
+      }
+
+      .reduccion__center .reduccion__caption {
+        text-align: left;
+       
+        max-width: none;
+      }
+
+      .reduccion__caption {
+        text-align: left;
+      }
+
+      .reduccion__left {
+        align-items: flex-start;
+      }
+      
+      .columnaemplatado{
+        padding: 56px 48px;
+      }
+     
+
+
+      .reduccion__center img { width: 200px; }
+
+      /* Emplatado: 4 columnas */
+      .emplatado__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .illus-grid { gap: 24px; }
+      .illus-item img { height: 160px; }
+    }
+
+    /* ─────────────────────────────
+       ROW 2 COLS (reduccion + emplatado en desktop)
+    ───────────────────────────── */
+    .row-2cols { display: contents; }
+
+    @media (min-width: 768px) {
+      .row-2cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+      }
+      /* quitamos el border-top individual cuando están en la fila */
+      .row-2cols .block {
+        border-top: none;
+      }
+      /* línea vertical separadora entre los dos */
+    }
+
+    /* ── SECTION ── */
+    .horno {
+      background: #E91E63;
+      padding: 80px 20px 100px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* subtle radial glow */
+    .horno::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 10%, rgba(255,255,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── SEARCH ── */
+    .horno__search-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      margin-top: 60px;
+    }
+
+    .horno__search-wrap {
+      display: flex;
+      align-items: center;
+      max-width: 420px;
+      margin: 0 auto 60px;
+      border-radius: 40px;
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    }
+
+    .horno__search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 16px 22px;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #f9f9f9;
+      background: transparent;
+    }
+
+    .horno__search-input::placeholder { color: #f9f9f9; font-weight: 400; }
+
+    .horno__search-btn {
+      background:#F8A07B;
+      border: none;
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .horno__search-btn:hover { background: #e07a00; }
+    .horno__search-btn svg { width: 22px; height: 22px; fill: var(--white); }
+
+    /* ── TAGLINE ── */
+    .horno__tagline {
+      font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+      text-transform: uppercase;
+      max-width: 520px;
+      margin: 0 auto 70px;
+      opacity: 0.95;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* horizontal line */
+    .timeline__track {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      right: 5%;
+      height: 4px;
+      background: #f9f9f9;
+      border-radius: 2px;
+      transform: translateY(-50%);
+    }
+
+    /* top row: steps 2 & 4 */
+    .timeline__row {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      margin-bottom: 0;
+    }
+
+    .timeline__row--top {
+      padding-bottom: 28px;
+    }
+
+    .timeline__row--bottom {
+      padding-top: 28px;
+    }
+
+    /* each step */
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 155px;
+      gap: 10px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .step--top { flex-direction: column-reverse; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .step:nth-child(1) { animation-delay: 0.1s; }
+    .step:nth-child(2) { animation-delay: 0.25s; }
+    .step:nth-child(3) { animation-delay: 0.4s; }
+    .step:nth-child(4) { animation-delay: 0.55s; }
+    .step:nth-child(5) { animation-delay: 0.7s; }
+
+    .step__badge {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #F8A07B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      color: #f9f9f9;
+      flex-shrink: 0;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.2s;
+    }
+    .step:hover .step__badge { transform: scale(1.12); }
+
+    .step__dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--white);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step__card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px 12px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      width: 100%;
+    }
+
+    .step__title {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .step__desc {
+      font-size: 0.65rem;
+      font-weight: 400;
+      line-height: 1.55;
+      opacity: 0.88;
+    }
+
+    /* connector line between dot and badge */
+    .step__connector {
+      width: 2px;
+      height: 26px;
+      background: rgba(255,255,255,0.5);
+    }
+
+    /* ── FOOTER LINK ── */
+    .horno__footer {
+      margin-top: 60px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      opacity: 0.85;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── RESPONSIVE ── */
+
+    /* Desktop: ocultar cards móviles, vline y spacer */
+    .step__card--mobile,
+    .step__vline,
+    .step__spacer { display: none; }
+
+    @media (max-width: 680px) {
+      .timeline__track { display: none; }
+
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 20px;
+      }
+
+      .timeline__row { display: contents; }
+
+      .step[data-order="1"] { order: 1; }
+      .step[data-order="2"] { order: 2; }
+      .step[data-order="3"] { order: 3; }
+      .step[data-order="4"] { order: 4; }
+      .step[data-order="5"] { order: 5; }
+
+      /* Grid de 2 columnas: [44px círculo] [1fr card] */
+      .step {
+        display: grid !important;
+        grid-template-columns: 44px 1fr;
+        column-gap: 14px;
+        width: 100%;
+        /* El grid tiene 2 filas: fila1=badge+card, fila2=vline+spacer */
+      }
+
+      /* Ocultar elementos exclusivos de desktop */
+      .step__dot,
+      .step__connector,
+      .step__card--desktop { display: none !important; }
+
+      /* Badge: col1, fila1 */
+      .step__badge {
+        grid-column: 1; grid-row: 1;
+        width: 44px; height: 44px; font-size: 1.4rem;
+        align-self: start; justify-self: center;
+        margin-top: 2px;
+      }
+
+      /* Card móvil: col2, fila1 */
+      .step__card--mobile {
+        display: block;
+        grid-column: 2; grid-row: 1;
+        text-align: left; align-self: start;
+        margin-bottom: 0;
+      }
+
+      /* Línea vertical: col1, fila2 */
+      .step__vline {
+        display: block;
+        grid-column: 1; grid-row: 2;
+        width: 2px;
+        height: 100%; min-height: 16px;
+        background: rgba(255,255,255,0.4);
+        justify-self: center;
+        margin: 4px 0;
+      }
+
+      /* Espaciador: col2, fila2 — da altura a la fila para que la línea se vea */
+      .step__spacer {
+        display: block;
+        grid-column: 2; grid-row: 2;
+        height: 16px;
+      }
+
+      /* Anular márgenes inline de los pasos 2 y 4 */
+      .step[data-order="2"],
+      .step[data-order="4"] {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .step[data-order="5"] .step__vline,
+      .step[data-order="5"] .step__spacer { display: none !important; }
+
+      .step__title { font-size: 0.75rem; }
+      .step__desc  { font-size: 0.68rem; }
+    }
 
 
 
