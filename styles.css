@@ -16,6 +16,10 @@ body {
     overflow-y: auto;   /* ¡ESTO ACTIVA EL SCROLL VERTICAL! */
 }
 
+.page-index{
+  overflow-y: hidden;
+}
+
 /* --- ESTILOS DE LA CABECERA / MENÚ --- */
 
 .navbar {
@@ -808,7 +812,7 @@ body {
         flex-wrap: wrap; 
         justify-content: center;
     }
-
+.overlay-footer-right { right: auto; }
 
     .body {
         padding-left: 40px;
@@ -824,7 +828,7 @@ body {
         /* Reducimos la altura para que no sea "enorme" */
         min-height: 15px !important; 
         padding: 39px 0 1px 0 !important; /* Poco padding abajo para que el texto toque el fondo */
-        background-color: #5B6C8F !important;
+        background-color: #5B6C8F;
         position: fixed !important;
         bottom: 0 !important;
         width: 100% !important;
@@ -1010,9 +1014,6 @@ overflow: hidden;
     flex-direction: column;
     overflow-x: hidden;
 }
-.page-index{
-    overflow-y: hidden;
-}
  
   .main-wrapper {
     flex: 1; 
@@ -1168,7 +1169,7 @@ overflow: hidden;
     .receta {
       padding: 30px 20px 100px;
     }
-
+ 
     .receta__eyebrow {
       font-family: 'Outfit', sans-serif;
       font-size: clamp(2rem, 5vw, 3rem);
@@ -1177,7 +1178,7 @@ overflow: hidden;
       font-weight: 400;
       text-align: center;
     }
-
+ 
     .receta__title {
       font-family: 'Outfit', sans-serif;
       font-size: clamp(3rem, 10vw, 6rem);
@@ -1186,17 +1187,17 @@ overflow: hidden;
       margin-bottom: 40px;
       text-align: center;
     }
-
+ 
     .receta__sub {
-      font-size: clamp(0.75rem, 2vw, 0.9rem);
+      font-size: clamp(0.9rem, 2vw, 0.9rem);
       font-weight: 400;
       letter-spacing: 0.05em;
       color: var(--text-light);
       text-align: center;
-      margin-bottom: 4%;
+      margin-bottom: 5%;
       
     }
-
+ 
     /* ─────────────────────────────
        SECTION LABEL PILL
     ───────────────────────────── */
@@ -1211,9 +1212,9 @@ overflow: hidden;
       letter-spacing: 0.06em;
       margin-bottom: 32px;
     }
-
-
-
+ 
+ 
+ 
     /* ─────────────────────────────
        SHARED BLOCK WRAPPER
     ───────────────────────────── */
@@ -1222,46 +1223,45 @@ overflow: hidden;
       margin: 0 auto;
       margin-bottom: 5%;
     }
-
-
+ 
+ 
     /* ─────────────────────────────
        NECESITARÁS BOX
     ───────────────────────────── */
     .necesitas {
       border: 1.5px solid #f9f9f9;
       border-radius: 4px;
-      padding: 28px 20px 20px;
+      padding: 20px 20px 40px;
       margin: 0 auto 48px;
       max-width: 560px;
     }
-
+ 
     .necesitas__title {
       font-family: 'Outfit', sans-serif;
       font-size: 1.5rem;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.1em;
       text-align: center;
-      margin-bottom: 28px;
     }
-
+ 
     .necesitas__grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
-
+ 
     .necesitas__item {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 20px;
     }
-
+ 
     .necesitas__item img {
       width: 100px;
       height: 100px;
       object-fit: contain;
     }
-
+ 
     .necesitas__btn {
       background:#E91E63 ;
       color: #f9f9f9;
@@ -1278,17 +1278,24 @@ overflow: hidden;
       transition: opacity 0.2s;
     }
     .necesitas__btn:hover { opacity: 0.85; }
-
+ 
     /* ─────────────────────────────
        ILLUSTRATION GRID (sofrito)
     ───────────────────────────── */
     .illus-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
-      margin-bottom: 0;
+      margin-bottom: 50px;
     }
-
+ 
+    /* 1.3 ocupa ancho completo y se centra */
+    .illus-item:nth-child(3) {
+      grid-column: 1 / -1;
+      max-width: 240px;
+      margin: 0 auto;
+    }
+ 
     .illus-item {
       display: flex;
       flex-direction: column;
@@ -1296,14 +1303,14 @@ overflow: hidden;
       gap: 10px;
       animation: fadeUp 0.5s ease both;
     }
-
+ 
     .illus-item img {
       width: 100%;
       max-width: 160px;
       height: 140px;
       object-fit: contain;
     }
-
+ 
     .illus-caption {
       font-size: 0.9rem;
       font-weight: 400;
@@ -1311,75 +1318,99 @@ overflow: hidden;
       text-align: center;
       color: var(--text-light);
     }
-
+ 
     /* ─────────────────────────────
        REDUCCION SECTION
     ───────────────────────────── */
-
-    /* MÓVIL: layout en 2 columnas compacto */
+ 
+    /* MÓVIL: grid de 2 cols × 3 filas
+       Fila 1: [fantasma img] [quote]
+       Fila 2: [—]           [caption 2.1]
+       Fila 3: [fuego + texto 2.2 — ancho completo]
+    */
     .reduccion__layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      grid-template-rows: auto auto auto;
+      gap: 10px 16px;
       align-items: start;
-      margin-right: 4%;
+      margin-right: 0;
     }
-
-    /* Col izquierda: fantasma + caption */
+ 
+    /* Abrimos reduccion__left como display:contents para colocar sus hijos en el grid */
     .reduccion__left {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
+      display: contents;
     }
-
+ 
+    /* Imagen del fantasma: col 1, fila 1 */
     .reduccion__left img {
-      width: 90px;
+      grid-column: 1;
+      grid-row: 2;
+      width: 100px;
+      justify-self: center;
+      align-self: start;
+      margin-top: 10px;
     }
-
+ 
+    /* Caption 2.1 (hijo de reduccion__left): col 2, fila 2 — debajo del quote */
+    .reduccion__left .reduccion__caption {
+      grid-column: 2;
+      grid-row: 2;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      text-align: left;
+      align-self: start;
+    }
+ 
     .reduccion__caption {
       font-size: 0.9rem;
       color: var(--text-light);
       line-height: 1.5;
       text-align: center;
     }
-
-    /* Col derecha: quote + caption — ocupa toda la columna derecha */
+ 
+    /* Abrimos el div del quote también como contents */
     .reduccion__layout > div:nth-child(2) {
-      display: flex;
-      flex-direction: column;
-
-      
+      display: contents;
     }
-
+ 
+    /* Quote: col 2, fila 1 */
     .reduccion__quote {
+      grid-column: 1;
+      grid-row: 1;
       border: 1.5px dashed rgba(255,255,255,0.5);
       padding: 12px 14px;
       font-size: 0.9rem;
       font-weight: 600;
       font-style: italic;
       color: #f9f9f9;
+      align-self: start;
     }
-
-    /* Llama: ocupa las 2 columnas centrada abajo */
+ 
+    /* Llama: fila 3, imagen a la derecha, texto a la izquierda */
     .reduccion__center {
       grid-column: 1 / -1;
+      grid-row: 3;
       display: flex;
-      flex-direction: row;
+      flex-direction: row-reverse;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      justify-content: flex-start;
+      gap: 12px;
     }
-
+ 
     .reduccion__center img {
       width: 180px;
+      margin-bottom: 100px;
+      flex-shrink: 0;
     }
-
+ 
     .reduccion__center .reduccion__caption {
       text-align: left;
-      max-width: 140px;
+      max-width: 180px;
+      flex: 1;
     }
-
+ 
     /* ─────────────────────────────
        EMPLATADO SECTION
     ───────────────────────────── */
@@ -1388,14 +1419,14 @@ overflow: hidden;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
-
+ 
     .emplatado__item {
       display: flex;
       flex-direction: column;
       gap: 10px;
       align-items: center;
     }
-
+ 
     .emplatado__item img {
       width: 100%;
       max-width: 160px;
@@ -1403,19 +1434,19 @@ overflow: hidden;
       object-fit: contain;
       
     }
-
+ 
     .emplatado__caption {
       font-size: 0.9rem;
       color: var(--text-light);
       line-height: 1.55;
     }
-
+ 
     .row-2cols{
     max-width: 1200px;
     margin: 0 auto;
     }
-
-
+ 
+ 
     /* ─────────────────────────────
        ANIMATIONS
     ───────────────────────────── */
@@ -1423,16 +1454,16 @@ overflow: hidden;
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
+ 
     .illus-item:nth-child(1) { animation-delay: 0.05s; }
     .illus-item:nth-child(2) { animation-delay: 0.15s; }
     .illus-item:nth-child(3) { animation-delay: 0.25s; }
-
+ 
     /* ─────────────────────────────
        DESKTOP (≥ 768px)
     ───────────────────────────── */
     @media (min-width: 768px) {
-
+ 
       /* Sofrito: ilustraciones + necesitas lado a lado */
       .sofrito__desktop {
         display: grid;
@@ -1440,68 +1471,118 @@ overflow: hidden;
         gap: 30px;
         align-items: start;
       }
-
+ 
+      /* Volvemos a 3 cols en desktop */
+      .illus-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+ 
+      /* Anulamos el override móvil del 3er item */
+      .illus-item:nth-child(3) {
+        grid-column: auto;
+        max-width: none;
+        margin: 0;
+      }
+ 
       /* Necesitas va a la derecha en desktop, pero en HTML está abajo para mobile */
       .necesitas {
         margin: 0;
         max-width: 400px;
         order: 2;
       }
-
+ 
       .sofrito__illus { order: 1; }
-
+ 
       /* Reduccion: 3 columnas */
       .reduccion__layout {
-        grid-template-columns: 160px 1fr 200px;
-        gap: 32px;
+        grid-template-columns: 175px 1fr 180px;
+        gap: 24px;
         align-items: start;
-    
+        margin-right: 40px;
+        margin-top: 15px;
       }
-
-      /* Reset mobile overrides for reduccion__center in desktop */
+ 
+      /* Reset mobile display:contents — volvemos a cajas normales en desktop */
+      .reduccion__left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        grid-column: auto;
+        grid-row: auto;
+      }
+ 
+      .reduccion__left img {
+        grid-column: auto;
+        grid-row: auto;
+        justify-self: auto;
+        align-self: auto;
+      }
+ 
+      .reduccion__left .reduccion__caption {
+        grid-column: auto;
+        grid-row: auto;
+        font-size: 0.9rem;
+        text-align: left;
+        align-self: auto;
+      }
+ 
+      .reduccion__layout > div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        grid-column: auto;
+        grid-row: auto;
+      }
+ 
+      .reduccion__quote {
+        grid-column: auto;
+        grid-row: auto;
+        align-self: auto;
+      }
+ 
+      /* Reset mobile grid overrides for reduccion__center in desktop */
       .reduccion__center {
         grid-column: auto;
+        grid-row: auto;
         flex-direction: column;
-        justify-content:flex-start;
+        justify-content: flex-start;
         gap: 8px;
       }
-
+ 
       .reduccion__center .reduccion__caption {
         text-align: left;
-       
         max-width: none;
+        flex: none;
       }
-
+ 
       .reduccion__caption {
         text-align: left;
-      }
-
-      .reduccion__left {
-        align-items: flex-start;
       }
       
       .columnaemplatado{
         padding: 56px 48px;
       }
      
-
-
-      .reduccion__center img { width: 200px; }
-
+ 
+ 
+      .reduccion__center img { width: 200px; margin-bottom: 0;}
+ 
       /* Emplatado: 4 columnas */
       .emplatado__grid {
         grid-template-columns: repeat(2, 1fr);
       }
-
+ 
       .illus-grid { gap: 24px; }
       .illus-item img { height: 160px; }
     }
-
+ 
     /* ─────────────────────────────
        ROW 2 COLS (reduccion + emplatado en desktop)
     ───────────────────────────── */
     .row-2cols { display: contents; }
-
+ 
     @media (min-width: 768px) {
       .row-2cols {
         display: grid;
@@ -1514,7 +1595,7 @@ overflow: hidden;
       }
       /* línea vertical separadora entre los dos */
     }
-
+ 
     /* ── SECTION ── */
     .horno {
       background: #E91E63;
@@ -1523,7 +1604,7 @@ overflow: hidden;
       overflow: hidden;
       position: relative;
     }
-
+ 
     /* subtle radial glow */
     .horno::before {
       content: '';
@@ -1532,7 +1613,7 @@ overflow: hidden;
       background: radial-gradient(ellipse at 50% 10%, rgba(255,255,255,0.12) 0%, transparent 70%);
       pointer-events: none;
     }
-
+ 
     /* ── SEARCH ── */
     .horno__search-label {
       font-size: 0.78rem;
@@ -1542,7 +1623,7 @@ overflow: hidden;
       margin-bottom: 14px;
       margin-top: 60px;
     }
-
+ 
     .horno__search-wrap {
       display: flex;
       align-items: center;
@@ -1550,10 +1631,10 @@ overflow: hidden;
       margin: 0 auto 60px;
       border-radius: 40px;
       overflow: hidden;
-      background: var(--white);
+      background: #f9f9f9;
       box-shadow: 0 8px 30px rgba(0,0,0,0.18);
     }
-
+ 
     .horno__search-input {
       flex: 1;
       border: none;
@@ -1561,14 +1642,14 @@ overflow: hidden;
       padding: 16px 22px;
       font-family: 'Urbanist', sans-serif;
       font-size: 0.95rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.08em;
-      color: #f9f9f9;
-      background: transparent;
+      background: #f9f9f9;
+      text-transform: uppercase;
     }
-
-    .horno__search-input::placeholder { color: #f9f9f9; font-weight: 400; }
-
+ 
+    .horno__search-input::placeholder { color: #E91E63; font-weight: 800; text-transform: uppercase; }
+ 
     .horno__search-btn {
       background:#F8A07B;
       border: none;
@@ -1583,7 +1664,7 @@ overflow: hidden;
     }
     .horno__search-btn:hover { background: #e07a00; }
     .horno__search-btn svg { width: 22px; height: 22px; fill: var(--white); }
-
+ 
     /* ── TAGLINE ── */
     .horno__tagline {
       font-size: clamp(0.75rem, 1.8vw, 0.9rem);
@@ -1595,14 +1676,14 @@ overflow: hidden;
       margin: 0 auto 70px;
       opacity: 0.95;
     }
-
+ 
     /* ── TIMELINE ── */
     .timeline {
       position: relative;
       max-width: 860px;
       margin: 0 auto;
     }
-
+ 
     /* horizontal line */
     .timeline__track {
       position: absolute;
@@ -1614,35 +1695,26 @@ overflow: hidden;
       border-radius: 2px;
       transform: translateY(-50%);
     }
-
+ 
     /* top row: steps 2 & 4 */
     .timeline__row {
       display: flex;
       justify-content: space-around;
-      align-items: flex-end;
       margin-bottom: 0;
     }
-
-    .timeline__row--top {
-      padding-bottom: 28px;
-    }
-
-    .timeline__row--bottom {
-      padding-top: 28px;
-    }
-
+ 
     /* each step */
     .step {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 155px;
-      gap: 10px;
+      gap: 6px;
       animation: fadeUp 0.6s ease both;
     }
-
+ 
     .step--top { flex-direction: column-reverse; }
-
+ 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -1652,7 +1724,7 @@ overflow: hidden;
     .step:nth-child(3) { animation-delay: 0.4s; }
     .step:nth-child(4) { animation-delay: 0.55s; }
     .step:nth-child(5) { animation-delay: 0.7s; }
-
+ 
     .step__badge {
       width: 50px;
       height: 50px;
@@ -1671,50 +1743,82 @@ overflow: hidden;
       transition: transform 0.2s;
     }
     .step:hover .step__badge { transform: scale(1.12); }
-
-    .step__dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--white);
-      flex-shrink: 0;
-      position: relative;
-      z-index: 2;
-    }
-
+ 
+   
+ 
     .step__card {
       background: var(--card-bg);
-      border: 1.5px solid var(--card-border);
+      border: 1.5px solid #F8A07B;
       border-radius: 10px;
       padding: 14px 12px;
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
-      width: 100%;
+      width: 200px;
     }
-
+ 
     .step__title {
-      font-size: 0.7rem;
+      font-size: 1rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       line-height: 1.4;
       margin-bottom: 6px;
     }
-
+ 
     .step__desc {
-      font-size: 0.65rem;
+      font-size: 0.9rem;
       font-weight: 400;
       line-height: 1.55;
       opacity: 0.88;
     }
-
+ 
+    /* dot: pequeño círculo sobre la línea horizontal */
+    .step__dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #f9f9f9;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+ 
     /* connector line between dot and badge */
     .step__connector {
       width: 2px;
       height: 26px;
       background: rgba(255,255,255,0.5);
     }
-
+ 
+    /* ── ROW ALIGNMENT ── */
+    /* Espacio entre la línea horizontal y los badges */
+    .timeline__row--top {
+      align-items: flex-end;
+      padding-bottom: 4px;
+    }
+    .timeline__row--bottom {
+      align-items: flex-start;
+      padding-top: 4px;
+    }
+ 
+    /* step--top (pasos 2 y 4): orden visual de arriba a abajo:
+       card → connector → badge → dot
+       Usamos `order` porque column-reverse con elementos ocultos
+       (mobile cards) desordena el resultado */
+    .step--top {
+      flex-direction: column;
+      gap: 6px;
+    }
+ 
+    .step--top .step__card--desktop { order: 1; }
+    .step--top .step__connector     { order: 2; }
+    .step--top .step__badge         { order: 3; }
+    .step--top .step__dot           { order: 4; }
+    /* elementos móviles ocultos, pero con order alto por seguridad */
+    .step--top .step__vline,
+    .step--top .step__card--mobile,
+    .step--top .step__spacer        { order: 99; }
+ 
     /* ── FOOTER LINK ── */
     .horno__footer {
       margin-top: 60px;
@@ -1723,32 +1827,37 @@ overflow: hidden;
       opacity: 0.85;
       letter-spacing: 0.04em;
     }
-
+ 
     /* ── RESPONSIVE ── */
-
+ 
     /* Desktop: ocultar cards móviles, vline y spacer */
     .step__card--mobile,
     .step__vline,
     .step__spacer { display: none; }
-
+ 
+    .page-sobreck .footer {
+    position: static !important;
+    width: 100% !important;
+    background: #E91E63;
+}
     @media (max-width: 680px) {
       .timeline__track { display: none; }
-
+ 
       .timeline {
         display: flex;
         flex-direction: column;
         align-items: stretch;
         padding: 0 20px;
       }
-
+ 
       .timeline__row { display: contents; }
-
+ 
       .step[data-order="1"] { order: 1; }
       .step[data-order="2"] { order: 2; }
       .step[data-order="3"] { order: 3; }
       .step[data-order="4"] { order: 4; }
       .step[data-order="5"] { order: 5; }
-
+ 
       /* Grid de 2 columnas: [44px círculo] [1fr card] */
       .step {
         display: grid !important;
@@ -1757,12 +1866,12 @@ overflow: hidden;
         width: 100%;
         /* El grid tiene 2 filas: fila1=badge+card, fila2=vline+spacer */
       }
-
+ 
       /* Ocultar elementos exclusivos de desktop */
       .step__dot,
       .step__connector,
       .step__card--desktop { display: none !important; }
-
+ 
       /* Badge: col1, fila1 */
       .step__badge {
         grid-column: 1; grid-row: 1;
@@ -1770,7 +1879,7 @@ overflow: hidden;
         align-self: start; justify-self: center;
         margin-top: 2px;
       }
-
+ 
       /* Card móvil: col2, fila1 */
       .step__card--mobile {
         display: block;
@@ -1778,7 +1887,7 @@ overflow: hidden;
         text-align: left; align-self: start;
         margin-bottom: 0;
       }
-
+ 
       /* Línea vertical: col1, fila2 */
       .step__vline {
         display: block;
@@ -1789,14 +1898,14 @@ overflow: hidden;
         justify-self: center;
         margin: 4px 0;
       }
-
+ 
       /* Espaciador: col2, fila2 — da altura a la fila para que la línea se vea */
       .step__spacer {
         display: block;
         grid-column: 2; grid-row: 2;
         height: 16px;
       }
-
+ 
       /* Anular márgenes inline de los pasos 2 y 4 */
       .step[data-order="2"],
       .step[data-order="4"] {
@@ -1805,24 +1914,7 @@ overflow: hidden;
       }
       .step[data-order="5"] .step__vline,
       .step[data-order="5"] .step__spacer { display: none !important; }
-
+ 
       .step__title { font-size: 0.75rem; }
       .step__desc  { font-size: 0.68rem; }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
