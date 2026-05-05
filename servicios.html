@@ -1,359 +1,1493 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Servicios - Chiskey</title>
+
 <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
 
-<link rel="stylesheet" href="styles.css"> 
+<link rel="stylesheet" href="styles.css">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Urbanist:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+
 
 <style>
+
 /* --- RESET Y BASE --- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+
+
 html, body {
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background-color: #5B6C8F;
-    -webkit-overflow-scrolling: touch; 
-    font-family: 'Outfit', sans-serif;
+
+  overflow-x: hidden !important;
+
+  overflow-y: auto !important;
+
+  height: auto !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  background-color: #5B6C8F;
+
+  -webkit-overflow-scrolling: touch;
+
+  font-family: 'Outfit', sans-serif;
+
 }
+
+
+
+:root {
+
+  --bg: #5B6C8F;
+
+  --pink: #E91E63;
+
+  --pink-dark: #c2185b;
+
+  --white: #ffffff;
+
+  --white-10: rgba(255,255,255,0.1);
+
+  --white-20: rgba(255,255,255,0.2);
+
+  --white-05: rgba(255,255,255,0.05);
+
+  --white-60: rgba(255,255,255,0.6);
+
+}
+
+
 
 main {
-    margin-top: clamp(80px, 12vh, 110px); 
+
+  margin-top: clamp(80px, 12vh, 110px);
+
+  padding-bottom: 7rem;
+
 }
 
-/* SECCIÓN DE SERVICIOS */
-.services {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 6rem 2rem;
-}
 
-.service-card {
-    padding: 0.5rem 0;
-    border-bottom: 2px solid #ffffff;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: block;
-}
+
+/* ── INTRO ── */
 
 .intro-block {
-    text-align: center;
-    padding: 2rem;
+
+  text-align: center;
+
+  padding: 3rem 2rem 2rem;
+
+  position: relative;
+
 }
 
-.intro-block img {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    display: block;
-    margin: 0 auto 1.5rem auto;
+
+
+.intro-block img:first-of-type {
+
+  width: 100%;
+
+  max-width: 400px;
+
+  height: auto;
+
+  display: block;
+
+  margin: 0 auto 1.5rem;
+
+  animation: fadeDown 0.8s ease both;
+
 }
+
+
+
+/* URBANIST: párrafo intro */
 
 .intro-block p {
-    max-width: 700px;
-    margin: 0 auto;
-    color: #ffffff;
-    font-size: 1rem;
-    line-height: 1.6;
-}
 
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+  max-width: 600px;
 
-.service-card h3 {
-    margin: 0;
-    color: #ffffff;
-    font-size: 2rem;
-    text-transform: capitalize;
-}
+  margin: 0 auto;
 
-.plus {
-    font-size: 2.2rem;
-    color: #ffffff;
-    opacity: 0;
-    transform: translateX(10px);
-    transition: 0.3s;
-}
+  color: var(--white-60);
 
-.subtitle {
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-    color: #ffffff;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: 0.4s;
-}
+  font-size: 1rem;
 
-.service-card:hover {
-    border-bottom-color: #E91E63;
-}
+  line-height: 1.7;
 
-.service-card:hover .plus, .service-card:hover .subtitle {
-    opacity: 1;
-    transform: translate(0);
-}
+  font-weight: 300;
 
-/* --- MODAL SERVICIOS (CAPA SUPERIOR) --- */
-.modal-service {
-    display: none; 
-    position: fixed;
-    z-index: 99999; /* Por encima de la navbar */
-    left: 0; top: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    padding: 20px;
-    box-sizing: border-box;
-    justify-content: center;
-    align-items: center;
-}
+  animation: fadeDown 0.8s 0.1s ease both;
 
-.modal-service-content {
-    background-color: #ffffff;
-    padding: 2rem;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 15px;
-    position: relative;
-    color: #5B6C8F;
-    max-height: 90vh;
-    overflow-y: auto;
-}
+  font-family: 'Urbanist', sans-serif;
 
-.close-service {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 35px;
-    cursor: pointer;
-    color: #5B6C8F;
-    font-weight: bold;
-    line-height: 1;
-    z-index: 100000; /* Prioridad máxima */
-    padding: 10px;
-}
-
-#modalTitle { color: #E91E63; margin-bottom: 5px; }
-.modal-divider { border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 20px 0; }
-
-.quick-form { display: flex; flex-direction: column; gap: 10px; }
-.quick-form input {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background: #f9f9f9;
-}
-
-.btn-quick-reserva {
-    background-color: #E91E63;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
 }
 
 
-/* Esto solo afectará a "La Carta" (la primera imagen) */
-.intro-block img:first-of-type {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    display: block;
-    margin: 0 auto 1.5rem auto;
-}
 
 .intro-secondary-img {
-    display: block !important; /* El !important asegura que ignore la regla de arriba */
-    margin: 20px auto !important; 
-    width: 50px !important;
-    height: auto;
+
+  display: block !important;
+
+  margin: 1.5rem auto 0 !important;
+
+  width: 44px !important;
+
+  height: auto;
+
+  opacity: 0.85;
+
+  animation: fadeDown 0.8s 0.2s ease both;
+
 }
-/* RESPONSIVE MÓVIL */
-@media (max-width: 600px) {
-    .service-card h3 { font-size: 1.2rem !important; }
-    .subtitle, .plus { opacity: 1 !important; transform: none !important; }
-    .service-card.is-visible { border-bottom-color: #E91E63; }
+
+
+
+/* ── DIVISOR CON TEXTO ── */
+
+.menu-divider {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 1.5rem;
+
+  padding: 2rem 2rem 0;
+
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  animation: fadeUp 0.7s 0.3s ease both;
+
+  opacity: 0;
+
 }
+
+
+
+.menu-divider-line {
+
+  flex: 1;
+
+  height: 0.5px;
+
+  background: var(--white-20);
+
+}
+
+
+
+/* OUTFIT: "elige tu plato" */
+
+.menu-divider-label {
+
+  font-family: 'Outfit', sans-serif;
+
+  font-style: italic;
+
+  font-size: 1rem;
+
+  color: var(--white-60);
+
+  white-space: nowrap;
+
+  letter-spacing: 0.04em;
+
+}
+
+
+
+/* ── SERVICES ── */
+
+.services {
+
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 0;
+
+  padding: 2rem 2rem 4rem;
+
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  counter-reset: card-counter;
+
+}
+
+
+
+.service-card {
+
+  padding: 1.4rem 0;
+
+  border-bottom: 0.5px solid var(--white-20);
+
+  transition: all 0.35s ease;
+
+  text-decoration: none;
+
+  display: block;
+
+  position: relative;
+
+  overflow: hidden;
+
+  counter-increment: card-counter;
+
+
+
+  /* scroll reveal */
+
+  opacity: 0;
+
+  transform: translateY(18px);
+
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease;
+
+}
+
+
+
+.service-card.visible {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+}
+
+
+
+/* número fantasma detrás */
+
+.service-card::before {
+
+  content: "0" counter(card-counter);
+
+  position: absolute;
+
+  right: 3rem;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 5rem;
+
+  font-weight: 700;
+
+  color: var(--white);
+
+  opacity: 0;
+
+  transition: opacity 0.35s ease, transform 0.35s ease;
+
+  pointer-events: none;
+
+  line-height: 1;
+
+}
+
+
+
+.service-card:hover::before {
+
+  opacity: 0.06;
+
+  transform: translateY(-50%) scale(1.1);
+
+}
+
+
+
+.card-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+}
+
+
+
+/* OUTFIT: títulos de servicios (Aperitivos, Entrantes, Plato Fuerte...) */
+
+.service-card h3 {
+
+  margin: 0;
+
+  color: var(--white);
+
+  font-size: clamp(1.4rem, 3vw, 2rem);
+
+  font-weight: 500;
+
+  text-transform: capitalize;
+
+  transition: letter-spacing 0.3s ease;
+
+  font-family: 'Outfit', sans-serif;
+
+}
+
+
+
+.service-card:hover h3 {
+
+  letter-spacing: 0.03em;
+
+}
+
+
+
+.plus {
+
+  font-size: 2rem;
+
+  color: var(--pink);
+
+  opacity: 0;
+
+  transform: translateX(10px) rotate(-45deg);
+
+  transition: 0.35s ease;
+
+  font-weight: 300;
+
+  flex-shrink: 0;
+
+  margin-left: 1rem;
+
+}
+
+
+
+/* URBANIST: descripciones de servicios (Posters, Flyers...) */
+
+.subtitle {
+
+  margin-top: 0.5rem;
+
+  font-size: 0.82rem;
+
+  color: var(--white-60);
+
+  font-weight: 300;
+
+  opacity: 0;
+
+  transform: translateY(8px);
+
+  transition: 0.35s ease;
+
+  max-width: 70%;
+
+  font-family: 'Urbanist', sans-serif;
+
+}
+
+
+
+.service-card:hover {
+
+  border-bottom-color: var(--pink);
+
+  padding-left: 0.5rem;
+
+}
+
+
+
+.service-card:hover .plus {
+
+  opacity: 1;
+
+  transform: translateX(0) rotate(0deg);
+
+}
+
+
+
+.service-card:hover .subtitle {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+}
+
+
+
+/* ── PACKS SECTION ── */
+
+.packs-section {
+
+  padding: 1rem 2rem 4rem;
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+}
+
+
+
+.packs-title {
+
+  text-align: center;
+
+  margin-bottom: 2.5rem;
+
+  opacity: 0;
+
+  transform: translateY(16px);
+
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+}
+
+
+
+.packs-title.visible {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+}
+
+
+
+/* OUTFIT: "nuestros menús del día" */
+
+.packs-title span {
+
+  font-family: 'Outfit', sans-serif;
+
+  font-style: italic;
+
+  font-size: 0.9rem;
+
+  color: var(--white-60);
+
+  letter-spacing: 0.08em;
+
+}
+
+
+
+.packs-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 1.25rem;
+
+}
+
+
+
+.pack-card {
+
+  background: var(--white-05);
+
+  border: 0.5px solid var(--white-20);
+
+  border-radius: 12px;
+
+  padding: 1.75rem 1.5rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 1.25rem;
+
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+
+  position: relative;
+
+  overflow: hidden;
+
+
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease, background 0.3s ease;
+
+}
+
+
+
+.pack-card.visible {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+}
+
+
+
+.pack-card:hover {
+
+  border-color: var(--pink);
+
+  background: rgba(233, 30, 99, 0.06);
+
+  transform: translateY(-4px);
+
+}
+
+
+
+/* OUTFIT: badges Esencial / Completo / Chiskey */
+
+.pack-badge {
+
+  display: inline-block;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  color: var(--white-60);
+
+  background: rgba(233,30,99,0.12);
+
+  border: 0.5px solid rgba(233,30,99,0.3);
+
+  border-radius: 20px;
+
+  padding: 3px 10px;
+
+  align-self: flex-start;
+
+  font-family: 'Outfit', sans-serif;
+
+}
+
+
+
+.pack-img {
+
+  width: 100%;
+
+  max-width: 220px;
+
+  margin: 0 auto;
+
+  display: block;
+
+  object-fit: contain;
+
+  height: 160px;
+
+}
+
+
+
+.pack-list {
+
+  list-style: none;
+
+  padding: 0;
+
+  margin: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.7rem;
+
+  flex: 1;
+
+}
+
+
+
+/* URBANIST: descripciones de los packs */
+
+.pack-list li {
+
+  font-size: 0.82rem;
+
+  color: var(--white-60);
+
+  font-weight: 300;
+
+  line-height: 1.5;
+
+  padding-left: 1.1rem;
+
+  position: relative;
+
+  font-family: 'Urbanist', sans-serif;
+
+}
+
+
+
+.pack-list li::before {
+
+  content: '—';
+
+  position: absolute;
+
+  left: 0;
+
+  color: var(--pink);
+
+  font-size: 0.7rem;
+
+  top: 1px;
+
+}
+
+
+
+.btn-reservar {
+
+  background: var(--pink);
+
+  color: var(--white);
+
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: background 0.25s ease, transform 0.2s ease;
+
+  font-family: 'Outfit', sans-serif;
+
+  font-weight: 600;
+
+  font-size: 0.85rem;
+
+  letter-spacing: 0.04em;
+
+  width: 100%;
+
+  margin-top: auto;
+
+}
+
+
+
+.btn-reservar:hover {
+
+  background: var(--pink-dark);
+
+  transform: scale(1.02);
+
+}
+
+
+
+/* ── MODAL ── */
+
+.modal-service {
+
+  display: none;
+
+  position: fixed;
+
+  z-index: 99999;
+
+  left: 0; top: 0; width: 100%; height: 100%;
+
+  background-color: rgba(0,0,0,0.65);
+
+  backdrop-filter: blur(6px);
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  justify-content: center;
+
+  align-items: center;
+
+}
+
+
+
+.modal-service-content {
+
+  background-color: #ffffff;
+
+  padding: 2rem;
+
+  width: 90%;
+
+  max-width: 500px;
+
+  border-radius: 16px;
+
+  position: relative;
+
+  color: #5B6C8F;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  animation: modalIn 0.3s ease both;
+
+}
+
+
+
+@keyframes modalIn {
+
+  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+
+}
+
+
+
+.close-service {
+
+  position: absolute;
+
+  right: 15px; top: 10px;
+
+  font-size: 32px;
+
+  cursor: pointer;
+
+  color: #5B6C8F;
+
+  font-weight: bold;
+
+  line-height: 1;
+
+  z-index: 100000;
+
+  padding: 10px;
+
+  opacity: 0.6;
+
+  transition: opacity 0.2s;
+
+}
+
+
+
+.close-service:hover { opacity: 1; }
+
+
+
+#modalTitle { color: var(--pink); margin-bottom: 5px; }
+
+.modal-divider { border: 0; border-top: 1px solid rgba(0,0,0,0.08); margin: 20px 0; }
+
+.quick-form { display: flex; flex-direction: column; gap: 10px; }
+
+
+
+.quick-form input {
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  border: 1px solid #ddd;
+
+  background: #f9f9f9;
+
+  font-family: 'Outfit', sans-serif;
+
+  font-size: 0.9rem;
+
+}
+
+
+
+.btn-quick-reserva {
+
+  background-color: var(--pink);
+
+  color: white;
+
+  border: none;
+
+  padding: 14px;
+
+  border-radius: 8px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  font-family: 'Outfit', sans-serif;
+
+  font-size: 0.9rem;
+
+  transition: background 0.2s ease;
+
+}
+
+
+
+.btn-quick-reserva:hover { background: var(--pink-dark); }
+
+
+
+/* ── SOCIAL ICONS ── */
+
+.social-icons img {
+
+  filter: invert(1);
+
+  width: 18px;
+
+  height: 18px;
+
+  opacity: 0.6;
+
+  transition: opacity 0.2s ease;
+
+}
+
+
+
+.social-icons a:hover img { opacity: 1; }
+
+
+
+/* ── ANIMATIONS ── */
+
+@keyframes fadeDown {
+
+  from { opacity: 0; transform: translateY(-12px); }
+
+  to   { opacity: 1; transform: translateY(0); }
+
+}
+
+
+
+@keyframes fadeUp {
+
+  from { opacity: 0; transform: translateY(16px); }
+
+  to   { opacity: 1; transform: translateY(0); }
+
+}
+
+
+
+.menu-divider.visible {
+
+  animation: fadeUp 0.6s ease both;
+
+  opacity: 1;
+
+}
+
+
+
+/* ── RESERVAS MODAL (heredado) ── */
 
 body.modal-open {
-    overflow: hidden !important;
-    position: fixed;
-    width: 100%;
+
+  overflow: hidden !important;
+
+  position: fixed;
+
+  width: 100%;
+
 }
 
 
+
+/* ── RESPONSIVE ── */
+
+@media (max-width: 768px) {
+
+  .packs-grid { grid-template-columns: 1fr; }
+
+
+
+  .service-card h3 { font-size: 1.2rem !important; }
+
+  .subtitle, .plus { opacity: 1 !important; transform: none !important; }
+
+  .service-card { padding-left: 0 !important; }
+
+  .service-card::before { display: none; }
+
+
+
+  .packs-section { padding: 1rem 1.25rem 4rem; }
+
+  .services { padding: 2rem 1.25rem 3rem; }
+
+  .intro-block { padding: 2rem 1.25rem 1rem; }
+
+  .menu-divider { padding: 1.5rem 1.25rem 0; }
+
+}
+
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .packs-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  .pack-img { max-width: 160px; height: 130px; }
+
+}
+
 </style>
+
 </head>
+
+
 
 <body>
 
+
+
+<!-- HEADER: sin tocar -->
+
 <header class="navbar">
-    <div class="logo">
-        <a href="index.html">
-            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo">
-        </a>
-    </div>
-    <nav class="menu">
-        <a href="#" id="menu-toggle" data-content="menu">MENU</a>
-    </nav>
-    <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+
+  <div class="logo">
+
+    <a href="index.html">
+
+      <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo">
+
+    </a>
+
+  </div>
+
+  <nav class="menu">
+
+    <a href="#" id="menu-toggle" data-content="menu">MENU</a>
+
+  </nav>
+
+  <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+
 </header>
 
+
+
 <main>
-<section class="intro-block">
+
+
+
+  <!-- INTRO -->
+
+  <section class="intro-block">
+
     <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776087584/la_carta_logo_qrdylm.png" alt="La Carta">
-    <p>En chiskey trabajamos como una cocina digital creativa, donde cada proyecto se construye desde la idea hasta su ejecución visual con precisión, estética y personalidad propia.</p>
-<img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776087572/ICONO_COCINA_pdopgd.png" alt="Imagen descriptiva de la cocina digital Chiskey" class="intro-secondary-img">
-</section>
 
-<section class="services">
-    <a href="aperitivos.html" class="service-card">
-        <div class="card-header"><h3>Aperitivos</h3><span class="plus">+</span></div>
-        <p class="subtitle">Posters, Flyers & Material gráfico</p>
-    </a>
-    <a href="aperitivos.html" class="service-card">
-        <div class="card-header"><h3>Entrantes</h3><span class="plus">+</span></div>
-        <p class="subtitle">Logotipo básico & Creación de nombre</p>
-    </a>
-    <a href="aperitivos.html" class="service-card">
-        <div class="card-header"><h3>Menú del día</h3><span class="plus">+</span></div> 
-        <p class="subtitle">Identidad visual ligera, Web onePage, Papelería corporativa & Diseño de packaging</p>
-    </a>
-    <a href="aperitivos.html" class="service-card">
-        <div class="card-header"><h3>Especialidades</h3><span class="plus">+</span></div>
-        <p class="subtitle">Identidad visual completa, Sitio web completo, Manual de marca & Diseño de apps móviles</p>
-    </a>
-    <a href="aperitivos.html" class="service-card">
-        <div class="card-header"><h3>Postres</h3><span class="plus">+</span></div>
-        <p class="subtitle">Fotografía, Clips de video, Motion graphics & Modelado 3D</p>
-    </a>
-    <a href="aperitivos.html" class="service-card">
-        <div class="card-header"><h3>Sugerencias de cocina</h3><span class="plus">+</span></div>
-        <p class="subtitle">Automatizaciones visuales/operativas & Gestión de impresión</p>
-    </a>
-</section>
+    <p>Somos una cocina digital donde estrategia y creatividad comparten la misma mesa. Tomamos tu idea, la afinamos hasta su esencia y la convertimos en algo que se ve, se siente y se recuerda.</p>
 
-<div id="serviceModal" class="modal-service">
-    <div class="modal-service-content">
-        <span class="close-service" id="closeXServicio">&times;</span>
-        <h2 id="modalTitle"></h2>
-        <p id="modalSubtitle" class="modal-subtitle-text"></p>
-        <hr class="modal-divider">
-        <p id="modalDescription" class="modal-description"></p>
-        
-        <form id="quickReservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="quick-form">
-            <input type="hidden" name="servicio_interes" id="hiddenServiceField">
-            <input type="text" name="nombre" placeholder="Tu nombre" required>
-            <input type="email" name="correo" placeholder="Tu correo" required>
-            <button type="submit" class="btn-quick-reserva">Reserva rápida</button>
-        </form>
+    <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776087572/ICONO_COCINA_pdopgd.png" alt="Icono cocina Chiskey" class="intro-secondary-img">
+
+  </section>
+
+
+
+  <!-- DIVISOR -->
+
+  <div class="menu-divider">
+
+    <div class="menu-divider-line"></div>
+
+    <span class="menu-divider-label">Elige tu plato</span>
+
+    <div class="menu-divider-line"></div>
+
+  </div>
+
+
+
+  <!-- SERVICES LIST -->
+
+  <section class="services">
+
+    <a href="aperitivos.html" class="service-card">
+
+      <div class="card-header"><h3>Aperitivos</h3><span class="plus">+</span></div>
+
+      <p class="subtitle">Posters, Flyers & Material gráfico</p>
+
+    </a>
+
+    <a href="aperitivos.html" class="service-card">
+
+      <div class="card-header"><h3>Entrantes</h3><span class="plus">+</span></div>
+
+      <p class="subtitle">Logotipo básico & Creación de nombre</p>
+
+    </a>
+
+    <a href="aperitivos.html" class="service-card">
+
+      <div class="card-header"><h3>Plato Fuerte</h3><span class="plus">+</span></div>
+
+      <p class="subtitle">Identidad visual ligera, Web onePage, Papelería corporativa & Diseño de packaging</p>
+
+    </a>
+
+    <a href="aperitivos.html" class="service-card">
+
+      <div class="card-header"><h3>Especialidades</h3><span class="plus">+</span></div>
+
+      <p class="subtitle">Identidad visual completa, Sitio web completo, Manual de marca & Diseño de apps móviles</p>
+
+    </a>
+
+    <a href="aperitivos.html" class="service-card">
+
+      <div class="card-header"><h3>Postres</h3><span class="plus">+</span></div>
+
+      <p class="subtitle">Fotografía, Clips de video, Motion graphics & Modelado 3D</p>
+
+    </a>
+
+    <a href="aperitivos.html" class="service-card">
+
+      <div class="card-header"><h3>Sugerencias de cocina</h3><span class="plus">+</span></div>
+
+      <p class="subtitle">Automatizaciones visuales/operativas & Gestión de impresión</p>
+
+    </a>
+
+  </section>
+
+
+
+  <!-- PACKS -->
+
+  <section class="packs-section">
+
+    <div class="packs-title">
+
+      <span>Nuestros menús del día</span>
+
     </div>
-</div>
+
+    <div class="packs-grid">
+
+
+
+      <div class="pack-card">
+
+        <span class="pack-badge">Esencial</span>
+
+        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776439994/manu_1_esencial_idwed6.png" alt="Pack Esencial">
+
+        <ul class="pack-list">
+
+          <li>Identidad Visual: Nombre, Logotipo (Isotipo + Logotipo) y sus variantes.</li>
+
+          <li>Cromática y Tipografía: La paleta de colores y fuentes que definen tu "sabor".</li>
+
+          <li>Guía de Uso Rápida: Para que no se "queme" tu marca al usarla.</li>
+
+        </ul>
+
+        <button class="btn-reservar">Reservar</button>
+
+      </div>
+
+
+
+      <div class="pack-card">
+
+        <span class="pack-badge">Completo</span>
+
+        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776440085/menu_2_completo_hzjjtr.png" alt="Pack Completo">
+
+        <ul class="pack-list">
+
+          <li>Branding Completo: Universo visual, texturas y sistema gráfico expandido.</li>
+
+          <li>Web One-Page: Primer escaparate digital.</li>
+
+          <li>Manual de Identidad: El libro de cocina completo de tu marca.</li>
+
+        </ul>
+
+        <button class="btn-reservar">Reservar</button>
+
+      </div>
+
+
+
+      <div class="pack-card">
+
+        <span class="pack-badge">Chiskey</span>
+
+        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776440126/menu_3_chiskey_v1zsb1.png" alt="Pack Chiskey">
+
+        <ul class="pack-list">
+
+          <li>Web Corporativa Completa: Sitio web multi-página y autogestionable.</li>
+
+          <li>Producción Audiovisual: Fotografía de producto y piezas de video.</li>
+
+          <li>Consultoría de Sobremesa: Acompañamiento estratégico.</li>
+
+        </ul>
+
+        <button class="btn-reservar">Reservar</button>
+
+      </div>
+
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- MODAL SERVICIOS -->
+
+  <div id="serviceModal" class="modal-service">
+
+    <div class="modal-service-content">
+
+      <span class="close-service" id="closeXServicio">&times;</span>
+
+      <h2 id="modalTitle"></h2>
+
+      <p id="modalSubtitle" class="modal-subtitle-text"></p>
+
+      <hr class="modal-divider">
+
+      <p id="modalDescription" class="modal-description"></p>
+
+      <form id="quickReservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="quick-form">
+
+        <input type="hidden" name="servicio_interes" id="hiddenServiceField">
+
+        <input type="text" name="nombre" placeholder="Tu nombre" required>
+
+        <input type="email" name="correo" placeholder="Tu correo" required>
+
+        <button type="submit" class="btn-quick-reserva">Reserva rápida</button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
 </main>
 
+
+
+<!-- FOOTER: sin tocar -->
+
 <footer class="footer">
-    ©2025 chiskey cocina digital creativa
+
+  ©2025 chiskey cocina digital creativa
+
 </footer>
 
+
+
+<!-- MODAL RESERVAS (heredado) -->
+
 <div id="myModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <div id="formContainer">
-            <h2>¡Haz tu reserva!</h2>
-            <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
-                <input type="text" name="nombre" placeholder="Nombre" required>
-                <input type="tel" name="movil" placeholder="Móvil" required>
-                <input type="email" name="correo" placeholder="Correo" required>
-                <textarea name="idea" rows="4" placeholder="Cuéntanos tu idea" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
+
+  <div class="modal-content">
+
+    <span class="close-btn">&times;</span>
+
+    <div id="formContainer">
+
+      <h2>¡Haz tu reserva!</h2>
+
+      <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
+
+        <input type="text" name="nombre" placeholder="Nombre" required>
+
+        <input type="tel" name="movil" placeholder="Móvil" required>
+
+        <input type="email" name="correo" placeholder="Correo" required>
+
+        <textarea name="idea" rows="4" placeholder="Cuéntanos tu idea" required></textarea>
+
+        <button type="submit">Enviar</button>
+
+      </form>
+
     </div>
+
+  </div>
+
 </div>
+
+
 
 <script src="main.js"></script>
 
+
+
+<!-- SOCIAL ICONS -->
+
 <div class="social-icons overlay-social-icons">
-    <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
-    <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
-    <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"></a>
-    <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
+
+  <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
+
+  <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
+
+  <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"></a>
+
+  <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
+
 </div>
 
+
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // 1. Observer para móviles (animación de borde al hacer scroll)
-    if (window.innerWidth <= 600) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { threshold: 0.9 });
-        document.querySelectorAll('.service-card').forEach(card => observer.observe(card));
-    }
 
-    // 2. Lógica de Modal Servicios
-    const serviceModal = document.getElementById("serviceModal");
-    const closeX = document.getElementById("closeXServicio");
-    const body = document.body;
-    
-    const infoServicios = {
-        "aperitivos": "Impacto visual rápido y efectivo. Diseñamos piezas que captan la atención al instante.",
-        "entrantes": "Cocinamos tu nombre y tu marca desde el nacimiento.",
-        "menú del día": "Presencia profesional completa pero ágil para tu negocio.",
-        "especialidades": "Transformación digital profunda y personalizada.",
-        "postres": "El toque final que hace que tu marca brille.",
-        "sugerencias de cocina": "Optimizamos tu forma de trabajar visualmente."
-    };
+document.addEventListener("DOMContentLoaded", function () {
 
-    function closeNow() {
-        serviceModal.style.display = "none";
-        body.classList.remove('modal-open');
-    }
 
-    document.querySelectorAll('.service-card').forEach(card => {
-        card.addEventListener('click', function(e) {
-            e.preventDefault();
-            const title = this.querySelector('h3').innerText;
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalSubtitle').innerText = this.querySelector('.subtitle').innerText;
-            document.getElementById('modalDescription').innerText = infoServicios[title.trim().toLowerCase()] || "Información personalizada.";
-            document.getElementById('hiddenServiceField').value = title;
-            serviceModal.style.display = "flex";
-            body.classList.add('modal-open');
-        });
+
+  // ── SCROLL REVEAL (cards + packs + divisor) ──
+
+  const revealObserver = new IntersectionObserver((entries) => {
+
+    entries.forEach((entry, i) => {
+
+      if (entry.isIntersecting) {
+
+        const delay = entry.target.dataset.delay || 0;
+
+        setTimeout(() => {
+
+          entry.target.classList.add('visible');
+
+        }, delay);
+
+        revealObserver.unobserve(entry.target);
+
+      }
+
     });
 
-    // Cierre blindado para que nada lo bloquee
-    if (closeX) {
-        closeX.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation(); 
-            closeNow();
-        });
-    }
+  }, { threshold: 0.1 });
 
-    window.addEventListener('click', function(e) {
-        if (e.target === serviceModal) closeNow();
+
+
+  // Service cards con delay escalonado
+
+  document.querySelectorAll('.service-card').forEach((el, i) => {
+
+    el.dataset.delay = i * 80;
+
+    revealObserver.observe(el);
+
+  });
+
+
+
+  // Pack cards con delay escalonado
+
+  document.querySelectorAll('.pack-card').forEach((el, i) => {
+
+    el.dataset.delay = i * 120;
+
+    revealObserver.observe(el);
+
+  });
+
+
+
+  // Divisor y título de packs
+
+  document.querySelectorAll('.menu-divider, .packs-title').forEach(el => {
+
+    revealObserver.observe(el);
+
+  });
+
+
+
+  // ── MODAL SERVICIOS ──
+
+  const serviceModal = document.getElementById("serviceModal");
+
+  const closeX = document.getElementById("closeXServicio");
+
+  const body = document.body;
+
+
+
+  const infoServicios = {
+
+    "aperitivos": "Impacto visual rápido y efectivo. Diseñamos piezas que captan la atención al instante.",
+
+    "entrantes": "Cocinamos tu nombre y tu marca desde el nacimiento.",
+
+    "plato fuerte": "Presencia profesional completa pero ágil para tu negocio.",
+
+    "especialidades": "Transformación digital profunda y personalizada.",
+
+    "postres": "El toque final que hace que tu marca brille.",
+
+    "sugerencias de cocina": "Optimizamos tu forma de trabajar visualmente."
+
+  };
+
+
+
+  function closeModal() {
+
+    serviceModal.style.display = "none";
+
+    body.classList.remove('modal-open');
+
+  }
+
+
+
+  document.querySelectorAll('.service-card').forEach(card => {
+
+    card.addEventListener('click', function (e) {
+
+      e.preventDefault();
+
+      const title = this.querySelector('h3').innerText;
+
+      document.getElementById('modalTitle').innerText = title;
+
+      document.getElementById('modalSubtitle').innerText = this.querySelector('.subtitle').innerText;
+
+      document.getElementById('modalDescription').innerText = infoServicios[title.trim().toLowerCase()] || "Información personalizada.";
+
+      document.getElementById('hiddenServiceField').value = title;
+
+      serviceModal.style.display = "flex";
+
+      body.classList.add('modal-open');
+
     });
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape") closeNow();
+  });
+
+
+
+  if (closeX) {
+
+    closeX.addEventListener('click', function (e) {
+
+      e.preventDefault();
+
+      e.stopPropagation();
+
+      closeModal();
+
     });
+
+  }
+
+
+
+  window.addEventListener('click', function (e) {
+
+    if (e.target === serviceModal) closeModal();
+
+  });
+
+
+
+  document.addEventListener('keydown', (e) => {
+
+    if (e.key === "Escape") closeModal();
+
+  });
+
+
+
+  // ── BOTONES RESERVAR EN PACKS ──
+
+  document.querySelectorAll('.btn-reservar').forEach(button => {
+
+    button.addEventListener('click', function (e) {
+
+      e.preventDefault();
+
+      e.stopPropagation();
+
+      const packBadge = this.closest('.pack-card')?.querySelector('.pack-badge')?.innerText || "Pack";
+
+      const title = "Reserva — " + packBadge;
+
+      document.getElementById('modalTitle').innerText = title;
+
+      document.getElementById('modalSubtitle').innerText = "Has seleccionado el pack " + packBadge + ".";
+
+      document.getElementById('modalDescription').innerText = "Completa tus datos y te contactamos en menos de 24h.";
+
+      document.getElementById('hiddenServiceField').value = title;
+
+      serviceModal.style.display = "flex";
+
+      body.classList.add('modal-open');
+
+    });
+
+  });
+
+
+
 });
+
 </script>
+
+
+
 </body>
+
 </html>
