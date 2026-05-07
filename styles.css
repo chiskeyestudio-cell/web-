@@ -32,6 +32,22 @@ body {
     animation: fadeInDown 1.5s ease-out forwards;
 }
 
+.navbar-tupedido {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    padding: 20px clamp(20px, 8vw, 140px); /* El padding lateral se encoge solo */
+    position: relative;
+    z-index: 91000 !important;
+    background-color: #E91E63;
+    transition: background-color 0.3s ease;
+}
+
+.overlay-open .navbar-tupedido {
+  background-color: white;
+  transition: background-color 0.3s ease;
+}
+
 
 
 .logo img {
@@ -632,6 +648,28 @@ body {
     z-index: 1000;                 /* Por encima del contenido */
 }
 
+.footer-horno {
+    text-align: center;            /* Centra el texto */
+    padding: 20px 0;               /* Espacio arriba y abajo */
+    font-family: 'Urbanist', sans-serif;
+    font-size: 0.75em;
+    color: white;                  /* Cambia según tu fondo */
+    background-color: #E91E63; /* O un color si quieres */
+    
+    position: fixed;               /* Fijo en la ventana */
+    bottom: 0;                     /* Siempre abajo */
+    left: 0;
+    width: 100%;                   /* Que ocupe todo el ancho */
+    
+    z-index: 1000;                 /* Por encima del contenido */
+}
+
+.page-sobreck{
+  background-color: #E91E63;
+}
+
+
+
 
 /* CSS */
 
@@ -829,6 +867,22 @@ body {
         min-height: 15px !important; 
         padding: 39px 0 1px 0 !important; /* Poco padding abajo para que el texto toque el fondo */
         background-color: #5B6C8F;
+        position: fixed !important;
+        bottom: 0 !important;
+        width: 100% !important;
+    }
+
+    .footer-horno {
+        display: flex !important;
+        flex-direction: column !important; 
+        /* Alineamos todo al FINAL (abajo) del contenedor */
+        justify-content: flex-start !important; 
+        align-items: center !important;
+        
+        /* Reducimos la altura para que no sea "enorme" */
+        min-height: 15px !important; 
+        padding: 39px 0 1px 0 !important; /* Poco padding abajo para que el texto toque el fondo */
+        background-color: #E91E63;
         position: fixed !important;
         bottom: 0 !important;
         width: 100% !important;
@@ -1328,14 +1382,14 @@ overflow: hidden;
        Fila 2: [—]           [caption 2.1]
        Fila 3: [fuego + texto 2.2 — ancho completo]
     */
-    .reduccion__layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto auto;
-      gap: 10px 16px;
-      align-items: start;
-      margin-right: 0;
-    }
+  .reduccion__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px 16px;
+    align-items: start;
+    margin-right: 0;
+  }
  
     /* Abrimos reduccion__left como display:contents para colocar sus hijos en el grid */
     .reduccion__left {
@@ -1343,24 +1397,32 @@ overflow: hidden;
     }
  
     /* Imagen del fantasma: col 1, fila 1 */
-    .reduccion__left img {
-      grid-column: 1;
-      grid-row: 2;
-      width: 100px;
-      justify-self: center;
-      align-self: start;
-      margin-top: 10px;
-    }
- 
+  .reduccion__left img {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100px;
+    justify-self: center;
+    align-self: start;
+    margin-top: 0;
+  }
+  .reduccion__layout > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+  }
     /* Caption 2.1 (hijo de reduccion__left): col 2, fila 2 — debajo del quote */
     .reduccion__left .reduccion__caption {
       grid-column: 2;
-      grid-row: 2;
-      font-size: 0.82rem;
+      grid-row: 1;
+      font-size: 0.9rem;
       color: var(--text-light);
       line-height: 1.5;
       text-align: left;
-      align-self: start;
+      align-self: end;
+     padding-top: 45%;
     }
  
     .reduccion__caption {
@@ -1370,46 +1432,44 @@ overflow: hidden;
       text-align: center;
     }
  
-    /* Abrimos el div del quote también como contents */
-    .reduccion__layout > div:nth-child(2) {
-      display: contents;
-    }
- 
+
     /* Quote: col 2, fila 1 */
-    .reduccion__quote {
-      grid-column: 1;
-      grid-row: 1;
-      border: 1.5px dashed rgba(255,255,255,0.5);
-      padding: 12px 14px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      font-style: italic;
-      color: #f9f9f9;
-      align-self: start;
-    }
+.reduccion__quote {
+  border: 1.5px dashed rgba(255,255,255,0.5);
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-style: italic;
+  color: #f9f9f9;
+}
  
     /* Llama: fila 3, imagen a la derecha, texto a la izquierda */
     .reduccion__center {
       grid-column: 1 / -1;
-      grid-row: 3;
-      display: flex;
-      flex-direction: row-reverse;
+      grid-row: 2;
+      display: contents;
+      flex-direction: row;
       align-items: center;
       justify-content: flex-start;
       gap: 12px;
     }
  
-    .reduccion__center img {
-      width: 180px;
-      margin-bottom: 100px;
-      flex-shrink: 0;
-    }
+ .reduccion__center img {
+  grid-column: 2;
+  grid-row: 2;
+  width: 150px;
+  justify-self: center;
+  align-self: center;
+  margin-bottom: 0;
+}
+
  
-    .reduccion__center .reduccion__caption {
-      text-align: left;
-      max-width: 180px;
-      flex: 1;
-    }
+.reduccion__center .reduccion__caption {
+  grid-column: 1;
+  grid-row: 2;
+  text-align: left;
+  align-self: center;
+}
  
     /* ─────────────────────────────
        EMPLATADO SECTION
@@ -1526,6 +1586,7 @@ overflow: hidden;
         font-size: 0.9rem;
         text-align: left;
         align-self: auto;
+        padding-top: 0;
       }
  
       .reduccion__layout > div:nth-child(2) {
@@ -1544,18 +1605,22 @@ overflow: hidden;
  
       /* Reset mobile grid overrides for reduccion__center in desktop */
       .reduccion__center {
+        display: flex;          /* ← sobreescribe el display:contents del móvil */
         grid-column: auto;
         grid-row: auto;
         flex-direction: column;
         justify-content: flex-start;
+        align-items: center;
         gap: 8px;
       }
  
-      .reduccion__center .reduccion__caption {
-        text-align: left;
-        max-width: none;
-        flex: none;
-      }
+    .reduccion__center .reduccion__caption {
+      grid-column: auto;
+      grid-row: auto;
+      text-align: left;
+      max-width: none;
+      flex: none;
+    }
  
       .reduccion__caption {
         text-align: left;
@@ -1567,7 +1632,12 @@ overflow: hidden;
      
  
  
-      .reduccion__center img { width: 200px; margin-bottom: 0;}
+      .reduccion__center img {
+        grid-column: auto;
+        grid-row: auto;
+        width: 200px;
+        margin-bottom: 0;
+      }
  
       /* Emplatado: 4 columnas */
       .emplatado__grid {
@@ -1596,7 +1666,7 @@ overflow: hidden;
       /* línea vertical separadora entre los dos */
     }
  
-    /* ── SECTION ── */
+      /* ── SECTION ── */
     .horno {
       background: #E91E63;
       padding: 80px 20px 100px;
@@ -1610,7 +1680,7 @@ overflow: hidden;
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 10%, rgba(255,255,255,0.12) 0%, transparent 70%);
+  
       pointer-events: none;
     }
  
@@ -1819,6 +1889,28 @@ overflow: hidden;
     .step--top .step__card--mobile,
     .step--top .step__spacer        { order: 99; }
  
+ 
+    /* ── TIMELINE HOVER / FOCUS ── */
+    /* Badge: escala ya definida arriba, añadimos glow */
+    .step:hover .step__badge,
+    .step:focus-within .step__badge {
+      background: rgb(233, 30, 99);
+      box-shadow: 0 0 0 4px #f9f9f9, 0 6px 24px rgba(0,0,0,0.25);
+    }
+ 
+    /* Card: borde y sombra más brillantes al hover */
+    .step:hover .step__card,
+    .step:focus-within .step__card {
+      border-color: lch(100% 0.01 296.81 / 0.85);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.25), 0 8px 28px rgba(0,0,0,0.2);
+      background: rgba(249, 249, 249,0.05);
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+ 
+    .step__card {
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+ 
     /* ── FOOTER LINK ── */
     .horno__footer {
       margin-top: 60px;
@@ -1835,11 +1927,7 @@ overflow: hidden;
     .step__vline,
     .step__spacer { display: none; }
  
-    .page-sobreck .footer {
-    position: static !important;
-    width: 100% !important;
-    background: #E91E63;
-}
+    /* page-sobreck usa el footer estándar azul fijo — sin override */
     @media (max-width: 680px) {
       .timeline__track { display: none; }
  
@@ -1918,3 +2006,158 @@ overflow: hidden;
       .step__title { font-size: 0.75rem; }
       .step__desc  { font-size: 0.68rem; }
     }
+    /* Igualar tamaño visual: imagen 1.1 (personas) respecto a 1.2 (corazones) */
+
+/* Móvil */
+.illus-item:nth-child(1),
+.illus-item:nth-child(2) {
+  height: 200px;          /* misma altura para ambos — ajusta si hace falta */
+  justify-content: flex-end;
+}
+
+.illus-item:nth-child(1) img {
+  width: 130px;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .illus-item:nth-child(1),
+  .illus-item:nth-child(2) {
+    height: 220px;
+    justify-content: flex-end;
+  }
+  .illus-item:nth-child(1) img {
+    width: 140px;
+  }
+}
+
+      /* ── RESULTADO DEL PEDIDO ── */
+      .horno__resultado {
+        max-width: 860px;
+        margin: 0 auto;
+        display: none;
+      }
+ 
+      .resultado__bienvenida {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(1.1rem, 3vw, 1.5rem);
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+ 
+      .resultado__notas {
+        font-size: 0.9rem;
+        font-weight: 400;
+        opacity: 0.85;
+        line-height: 1.6;
+        margin-bottom: 50px;
+        font-style: italic;
+      }
+ 
+      /* Error */
+      .horno__error {
+        display: none;
+        background: rgba(255,255,255,0.12);
+        border: 1.5px dashed rgba(255,255,255,0.5);
+        border-radius: 12px;
+        padding: 28px 32px;
+        max-width: 460px;
+        margin: 0 auto 40px;
+        text-align: center;
+      }
+ 
+      .horno__error p {
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.6;
+        margin: 0 0 14px;
+      }
+ 
+      .horno__error a {
+        color: white;
+        font-weight: 800;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+ 
+      /* Loading spinner */
+      .horno__loading {
+        display: none;
+        margin: 20px auto;
+        width: 36px;
+        height: 36px;
+        border: 3px solid rgba(255,255,255,0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+ 
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+ 
+      /* ── STEP COMPLETADO ── */
+      .step.completado .step__badge {
+        background: #ffffff;
+        color: #E91E63;
+        box-shadow: 0 0 0 4px rgba(255,255,255,0.4), 0 6px 20px rgba(0,0,0,0.2);
+      }
+ 
+      .step.completado .step__dot {
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
+      }
+ 
+      .step.completado .step__card {
+        border-color: rgba(255,255,255,0.9);
+        background: rgba(255,255,255,0.18);
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 8px 28px rgba(0,0,0,0.15);
+      }
+ 
+      /* ── STEP ACTIVO ── */
+      .step.activo .step__badge {
+        background: #ffffff;
+        color: #E91E63;
+        box-shadow: 0 0 0 5px rgba(255,255,255,0.5), 0 0 24px rgba(255,255,255,0.4);
+        animation: pulso 1.8s ease-in-out infinite;
+      }
+ 
+      .step.activo .step__card {
+        border-color: rgba(255,255,255,0.9);
+        background: rgba(255,255,255,0.22);
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.3), 0 10px 32px rgba(0,0,0,0.2);
+      }
+ 
+      @keyframes pulso {
+        0%, 100% { box-shadow: 0 0 0 5px rgba(255,255,255,0.5), 0 0 24px rgba(255,255,255,0.4); }
+        50%       { box-shadow: 0 0 0 8px rgba(255,255,255,0.25), 0 0 40px rgba(255,255,255,0.25); }
+      }
+ 
+      /* Etiqueta "← aquí" sobre el badge activo */
+      .step.activo .step__badge::after {
+        content: '← aquí';
+        position: absolute;
+        left: calc(100% + 10px);
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: 'Urbanist', sans-serif;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+        color: white;
+        opacity: 0.85;
+      }
+ 
+      @media (max-width: 680px) {
+        .step.activo .step__badge::after {
+          left: 50%;
+          top: calc(100% + 6px);
+          transform: translateX(-50%);
+        }
+      }

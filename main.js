@@ -123,8 +123,8 @@ if (!overlay) {
     text3.innerHTML = '<span>Sobre ck</span>';
 
     const text4 = document.createElement('a');
-    text4.href = 'equipo.html';
-    text4.innerHTML = '<span>Equipo</span>';
+    text4.href = 'tupedido.html';
+    text4.innerHTML = '<span>Tu pedido</span>';
 
     overlayContent.append(text1, text2, text3, text4);
     overlay.appendChild(overlayContent);
