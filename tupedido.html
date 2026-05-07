@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Preparando...!</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="page-sobreck">
+    <header class="navbar-tupedido">
+        <div class="logo">
+            <a href="index.html"> 
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo de la Empresa">
+            </a>
+        </div>
+        <nav class="menu">
+            <a href="#" id="menu-toggle" data-content="menu">MENU</a>
+        </nav>
+        <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+    </header>
+
+    <section class="horno">
+
+      <p class="receta__eyebrow">EL</p>
+      <h1 class="receta__title">HORNO</h1>
+
+      <p class="receta__sub">
+        Tu proyecto nunca se queda frío.<br>
+        Chiskey te ofrece la posibilidad de consultar<br>
+        el estado de tu pedido en tiempo real.
+      </p>
+
+      <p class="horno__search-label">Introduce tu código</p>
+      <div class="horno__search-wrap">
+        <input class="horno__search-input" id="codigoInput" type="text" placeholder="CHISKEY1234" maxlength="20" />
+        <button class="horno__search-btn" id="buscarBtn" aria-label="Buscar">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+                  stroke="white" stroke-width="2.2" stroke-linecap="round"
+                  stroke-linejoin="round" fill="none"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Spinner -->
+      <div class="horno__loading" id="hornoLoading"></div>
+
+      <!-- Error personalizado -->
+      <div class="horno__error" id="hornoError">
+        <p> Ese código no lo encontramos en la cocina.<br>Revísalo bien o escríbenos y lo miramos juntos.</p>
+        <a href="mailto:hola@chiskey.es">Contactar con Chiskey →</a>
+      </div>
+
+      <!-- Bienvenida + notas (aparece tras buscar con éxito) -->
+      <div class="horno__resultado" id="hornoResultado">
+        <p class="resultado__bienvenida" id="resultadoBienvenida"></p>
+        <p class="resultado__notas" id="resultadoNotas"></p>
+      </div>
+
+      <p class="horno__tagline" id="hornoTagline">
+        Este es el viaje que seguirá tu marca. En<br>
+        cada paso, recibirás un aviso para que<br>
+        puedas asomarte a la cocina y ver cómo<br>
+        va el punto de cocción.
+      </p>
+
+      <!-- TIMELINE -->
+      <div class="timeline" id="hornoTimeline">
+        <div class="timeline__track"></div>
+
+        <div class="timeline__row timeline__row--top">
+
+          <div class="step step--top" data-order="2" style="margin-left:13%">
+            <div class="step__card step__card--desktop">
+              <p class="step__title">Preparando<br>la base</p>
+              <p class="step__desc">Creamos un tablero de referentes visuales para asegurar que estamos en la misma sintonía antes de encender el fuego.</p>
+            </div>
+            <div class="step__connector"></div>
+            <div class="step__badge">2</div>
+            <div class="step__dot"></div>
+            <div class="step__vline"></div>
+            <div class="step__card step__card--mobile">
+              <p class="step__title">Preparando<br>la base</p>
+              <p class="step__desc">Creamos un tablero de referentes visuales para asegurar que estamos en la misma sintonía antes de encender el fuego.</p>
+            </div>
+            <div class="step__spacer"></div>
+          </div>
+
+          <div class="step step--top" data-order="4" style="margin-right:13%">
+            <div class="step__card step__card--desktop">
+              <p class="step__title">Emplatado<br>y cata</p>
+              <p class="step__desc">Te presentamos la propuesta de branding. Escuchamos tu feedback y ajustamos los detalles finales para que el resultado sea exquisito.</p>
+            </div>
+            <div class="step__connector"></div>
+            <div class="step__badge">4</div>
+            <div class="step__dot"></div>
+            <div class="step__vline"></div>
+            <div class="step__card step__card--mobile">
+              <p class="step__title">Emplatado<br>y cata</p>
+              <p class="step__desc">Te presentamos la propuesta de branding. Escuchamos tu feedback y ajustamos los detalles finales para que el resultado sea exquisito.</p>
+            </div>
+            <div class="step__spacer"></div>
+          </div>
+
+        </div>
+
+        <div class="timeline__row timeline__row--bottom">
+
+          <div class="step" data-order="1">
+            <div class="step__dot"></div>
+            <div class="step__badge">1</div>
+            <div class="step__connector"></div>
+            <div class="step__card step__card--desktop">
+              <p class="step__title">Selección de<br>ingredientes</p>
+              <p class="step__desc">Revisamos el formulario inicial, cerramos el presupuesto y agendamos la reunión de arranque para conocernos de verdad.</p>
+            </div>
+            <div class="step__vline"></div>
+            <div class="step__card step__card--mobile">
+              <p class="step__title">Selección de<br>ingredientes</p>
+              <p class="step__desc">Revisamos el formulario inicial, cerramos el presupuesto y agendamos la reunión de arranque para conocernos de verdad.</p>
+            </div>
+            <div class="step__spacer"></div>
+          </div>
+
+          <div class="step" data-order="3">
+            <div class="step__dot"></div>
+            <div class="step__badge">3</div>
+            <div class="step__connector"></div>
+            <div class="step__card step__card--desktop">
+              <p class="step__title">Cocción a<br>fuego lento</p>
+              <p class="step__desc">Diseñamos el logotipo, elegimos la tipografía y creamos todo el universo visual que hará que tu proyecto respire por sí solo.</p>
+            </div>
+            <div class="step__vline"></div>
+            <div class="step__card step__card--mobile">
+              <p class="step__title">Cocción a<br>fuego lento</p>
+              <p class="step__desc">Diseñamos el logotipo, elegimos la tipografía y creamos todo el universo visual que hará que tu proyecto respire por sí solo.</p>
+            </div>
+            <div class="step__spacer"></div>
+          </div>
+
+          <div class="step" data-order="5">
+            <div class="step__dot"></div>
+            <div class="step__badge">5</div>
+            <div class="step__connector"></div>
+            <div class="step__card step__card--desktop">
+              <p class="step__title">Entrega<br>final</p>
+              <p class="step__desc">Exportamos todos los archivos, preparamos el manual de marca con nuestra metodología y te entregamos las llaves de tu nueva identidad.</p>
+            </div>
+            <div class="step__vline"></div>
+            <div class="step__card step__card--mobile">
+              <p class="step__title">Entrega<br>final</p>
+              <p class="step__desc">Exportamos todos los archivos, preparamos el manual de marca con nuestra metodología propia y te entregamos las llaves de tu nueva identidad.</p>
+            </div>
+            <div class="step__spacer"></div>
+          </div>
+
+        </div>
+      </div><!-- /timeline -->
+
+      <p class="horno__footer">Si ya eres cliente, introduce tu código arriba para ver el estado de tu pedido.</p>
+
+    </section>
+
+    <footer class="footer-horno">©2025</footer>
+    
+    <div id="myModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <div id="formContainer">
+          <h2>¡Haz tu reserva!</h2>
+          <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
+          <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="movil">Móvil:</label>
+            <input type="tel" id="movil" name="movil" required>
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required>
+            <label for="ciudad">Ciudad:</label>
+            <input type="text" id="ciudad" name="ciudad">
+            <label for="idea">Cuéntanos tu idea:</label>
+            <textarea id="idea" name="idea" rows="4" required></textarea>
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
+        <div id="mensajeGracias" class="gracias-box" style="display:none;">
+          <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="Gracias" class="gracias-img">
+          <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
+        </div>
+      </div>
+    </div>
+    
+    <script src="main.js"></script>
+
+    <div class="social-icons overlay-social-icons">
+        <a href="https://www.instagram.com/chiskey.estudio/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+        </a>
+        <a href="https://www.tiktok.com/@chiskey.estudio?is_from_webapp=1&sender_device=pc" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok">
+        </a>
+        <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
+        </a>
+    </div>
+
+    <script>
+    // ══════════════════════════════════════════════════════
+    // ⚙️  CONFIGURACIÓN
+    // Pega aquí la URL que te da Apps Script al publicar
+    // ══════════════════════════════════════════════════════
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_hLr8RYmt0yuuegM1goH5LQpJRjEyX6G0xRHpct_apwbjBUbFCh6vZSy3b0dRr0to/exec';
+
+    // ══════════════════════════════════════════════════════
+    // ELEMENTOS DEL DOM
+    // ══════════════════════════════════════════════════════
+    const codigoInput        = document.getElementById('codigoInput');
+    const buscarBtn          = document.getElementById('buscarBtn');
+    const hornoLoading       = document.getElementById('hornoLoading');
+    const hornoError         = document.getElementById('hornoError');
+    const hornoResultado     = document.getElementById('hornoResultado');
+    const resultadoBienvenida = document.getElementById('resultadoBienvenida');
+    const resultadoNotas     = document.getElementById('resultadoNotas');
+    const hornoTagline       = document.getElementById('hornoTagline');
+    const steps              = document.querySelectorAll('.step');
+
+    // ══════════════════════════════════════════════════════
+    // RESET — vuelve al estado inicial sin resultado
+    // ══════════════════════════════════════════════════════
+    function resetEstado() {
+      hornoError.style.display     = 'none';
+      hornoResultado.style.display = 'none';
+      hornoTagline.style.display   = 'block';
+      steps.forEach(s => s.classList.remove('completado', 'activo'));
+    }
+
+    // ══════════════════════════════════════════════════════
+    // MOSTRAR RESULTADO OK
+    // ══════════════════════════════════════════════════════
+    function mostrarResultado(data) {
+      resultadoBienvenida.textContent = `¡Hola, ${data.cliente}!`;
+
+      if (data.notas && data.notas.trim() !== '') {
+        resultadoNotas.textContent   = ` ${data.notas}`;
+        resultadoNotas.style.display = 'block';
+      } else {
+        resultadoNotas.style.display = 'none';
+      }
+
+      hornoResultado.style.display = 'block';
+      hornoTagline.style.display   = 'none';
+
+      // Iluminar el timeline según la fase
+      const faseActual = data.fase;
+      steps.forEach(step => {
+        const orden = parseInt(step.dataset.order);
+        step.classList.remove('completado', 'activo');
+        if (orden < faseActual)       step.classList.add('completado');
+        else if (orden === faseActual) step.classList.add('activo');
+      });
+
+      // Scroll suave al timeline
+      document.getElementById('hornoTimeline')
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ══════════════════════════════════════════════════════
+    // BUSCAR PEDIDO EN GOOGLE SHEETS
+    // ══════════════════════════════════════════════════════
+    async function buscarPedido() {
+      const codigo = codigoInput.value.trim().toUpperCase();
+      if (!codigo) return;
+
+      resetEstado();
+      hornoLoading.style.display = 'block';
+      buscarBtn.disabled = true;
+
+      try {
+        const url  = `${APPS_SCRIPT_URL}?codigo=${encodeURIComponent(codigo)}`;
+        const resp = await fetch(url);
+        const data = await resp.json();
+
+        if (data.encontrado) {
+          mostrarResultado(data);
+        } else {
+          hornoError.style.display = 'block';
+        }
+      } catch (err) {
+        hornoError.style.display = 'block';
+      } finally {
+        hornoLoading.style.display = 'none';
+        buscarBtn.disabled = false;
+      }
+    }
+
+    // ══════════════════════════════════════════════════════
+    // EVENTOS
+    // ══════════════════════════════════════════════════════
+    buscarBtn.addEventListener('click', buscarPedido);
+
+    codigoInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') buscarPedido();
+    });
+
+    codigoInput.addEventListener('input', () => {
+      if (codigoInput.value.trim() === '') resetEstado();
+    });
+    </script>
+
+</body>
+</html>
