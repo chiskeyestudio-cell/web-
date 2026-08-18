@@ -62,6 +62,7 @@ menuLinks.forEach(link => link.addEventListener('click', e => e.preventDefault()
 // ==========================================================
 function openModal() {
     if (modal) modal.style.display = 'flex';
+     iniciarPasos();   // ← añade esta línea
 }
 
 function closeModal() {
@@ -254,3 +255,104 @@ portfolioButtons.forEach(button => {
         }
     });
 });
+
+
+
+
+
+// ==========================================================
+// COMANDA: rotación de proyectos servidos
+// ==========================================================
+const comandaProyectos = [
+    { num: 'COMANDA #003', plato: 'el hogar', desc: 'identidad de marca' },
+    { num: 'COMANDA #002', plato: 'oliv.ia', desc: 'app con ia' },
+    { num: 'COMANDA #001', plato: 'izate 360', desc: 'diseño y desarrollo web' }
+];
+
+let comandaIndex = 0;
+const comandaEl = document.getElementById('comanda');
+
+if (comandaEl) {
+    const numEl = document.getElementById('comandaNum');
+    const platoEl = document.getElementById('comandaPlato');
+    const descEl = document.getElementById('comandaDesc');
+    const papelEl = comandaEl.querySelector('.comanda__papel');
+
+    setInterval(() => {
+        comandaIndex = (comandaIndex + 1) % comandaProyectos.length;
+        const p = comandaProyectos[comandaIndex];
+
+        // re-imprime el ticket con el siguiente proyecto
+        papelEl.style.animation = 'none';
+        void papelEl.offsetWidth; // reinicia la animación
+        numEl.textContent = p.num;
+        platoEl.textContent = p.plato;
+        descEl.textContent = p.desc;
+        papelEl.style.animation = 'imprimir 0.9s cubic-bezier(0.22, 1, 0.36, 1) both';
+    }, 7000);
+}
+
+
+// ==========================================================
+// CURSOR FUEGO: rescoldo que se enciende sobre clicables
+// ==========================================================
+const cursorFuego = document.createElement('div');
+cursorFuego.classList.add('cursor-fuego');
+cursorFuego.innerHTML = `
+    <div class="rescoldo"></div>
+    <svg class="llama" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 1 C13 8, 20 10, 20 19 C20 26, 16.5 31, 12 31 
+                 C7.5 31, 4 26, 4 19 C4 13, 8 11, 8.5 6 
+                 C10 9, 11.5 9.5, 12 1 Z" fill="#E91E63"/>
+        <path d="M12 12 C12.5 16, 16 17.5, 16 22 C16 26.5, 14 29, 12 29 
+                 C10 29, 8 26.5, 8 22 C8 18.5, 10.5 17, 11 14 
+                 C11.3 15.5, 11.8 15.8, 12 12 Z" fill="#F8A07B"/>
+    </svg>
+`;
+document.body.appendChild(cursorFuego);
+
+window.addEventListener('mousemove', e => {
+    cursorFuego.style.left = e.clientX + 'px';
+    cursorFuego.style.top = e.clientY + 'px';
+});
+
+// Se enciende sobre cualquier cosa clicable
+const clicables = 'a, button, .reservas-btn, #menu-toggle, input, textarea, .comanda';
+document.addEventListener('mouseover', e => {
+    if (e.target.closest(clicables)) cursorFuego.classList.add('encendido');
+});
+document.addEventListener('mouseout', e => {
+    if (e.target.closest(clicables)) cursorFuego.classList.remove('encendido');
+});
+
+
+
+
+
+
+
+// ==========================================================
+// PASOS ANIMADOS DEL MODAL COMANDA
+// ==========================================================
+// ==========================================================
+// PASOS ANIMADOS DEL MODAL COMANDA
+// ==========================================================
+let pasoInterval = null;
+
+function iniciarPasos() {
+    const pasos = document.querySelectorAll('.comanda-pasos .paso');
+    if (!pasos.length) return;
+
+    // reinicia: apaga todos, enciende el primero
+    pasos.forEach(p => p.classList.remove('activo'));
+    let pasoActual = 0;
+    pasos[0].classList.add('activo');
+
+    // limpia cualquier ciclo anterior antes de arrancar uno nuevo
+    if (pasoInterval) clearInterval(pasoInterval);
+    pasoInterval = setInterval(() => {
+        pasos[pasoActual].classList.remove('activo');
+        pasoActual = (pasoActual + 1) % pasos.length;
+        pasos[pasoActual].classList.add('activo');
+    }, 2000);
+}

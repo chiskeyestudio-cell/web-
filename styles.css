@@ -69,6 +69,19 @@ body {
   width: auto; /* que mida su contenido */
 }
 
+/* tamaño del texto del menú (cortinilla), responsivo en todas las pantallas */
+body .overlay-content a {
+    font-size: clamp(1.6rem, 5vw, 3rem);
+}
+
+/* con el menú abierto, la página de atrás no se mueve */
+body.overlay-open {
+    overflow: hidden;
+    /* opcional, refuerzo para que no rebote en móvil: */
+    position: fixed;
+    width: 100%;
+}
+
 /* Modificación del botón */
 .menu a {
     color: white; /* Color inicial (blanco) */
@@ -150,10 +163,11 @@ body {
 
 .main-image img {
     width: 100%;
-
- /* Evita que el logo se haga gigante en monitores grandes */
-    height: auto;      /* Mantiene la proporción del SVG */
-    animation: fadeIn 2s ease-in-out; /* Usando tu animación existente */
+    max-width: 1255px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: -3%;
+    animation: fadeIn 2s ease-in-out;
 }
 
 .img-mobile {
@@ -215,9 +229,9 @@ body {
 .modal-content {
     background-color: #ffffff;
     color: #5B6C8F;
-    padding: 70px;
+    padding: 50px;
     border-radius: 2px;
-    max-width: 400px;
+    max-width: 320px;
     width: 100%;
     margin-top: 40px;
     margin-bottom: 40px;
@@ -365,6 +379,8 @@ body {
 }
 
 
+
+
 /* --- KEYFRAMES --- */
 @keyframes fadeInUp {
     0% {
@@ -455,7 +471,7 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 520px;
+      margin-top: clamp(460px, 48vh, 480px);
     text-align: center;
 
     mask-image: linear-gradient(to right,
@@ -476,11 +492,11 @@ body {
     white-space: nowrap;
     animation: loop 20s linear infinite;
 }
-
+ 
 .scrolling-track span {
     color: #F8A07B;
     /* Mínimo 0.8rem, ideal 2vw, máximo 1.5rem */
-    font-size: clamp(0.8rem, 2vw, 1.5rem); 
+    font-size: clamp(0.6rem, 1.2vw, 0.9rem); 
     font-family: 'Outfit', sans-serif;
     font-weight: 900;
     letter-spacing: 1px;
@@ -632,20 +648,29 @@ body {
 }
 
 
+/* Footer: estático al final del flujo, iconos arriba + ©2025 abajo.
+   Regla única para todas las páginas menos index (que la scopea aparte). */
 .footer {
-    text-align: center;            /* Centra el texto */
-    padding: 20px 0;               /* Espacio arriba y abajo */
-    font-family: 'Urbanist', sans-serif;
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 0;
+    padding: 20px 0 14px;
+    background: transparent;
+    color: white;
     font-size: 0.75em;
-    color: white;                  /* Cambia según tu fondo */
-    background-color: #5B6C8F; /* O un color si quieres */
-    
-    position: fixed;               /* Fijo en la ventana */
-    bottom: 0;                     /* Siempre abajo */
-    left: 0;
-    width: 100%;                   /* Que ocupe todo el ancho */
-    
-    z-index: 1000;                 /* Por encima del contenido */
+    font-family: 'Urbanist', sans-serif;
+    text-align: center;
+}
+
+@media (max-width: 850px) {
+    .footer {
+        font-size: 0.65rem;
+        line-height: 1;
+    }
 }
 
 .footer-horno {
@@ -856,23 +881,7 @@ body {
         padding-left: 40px;
         padding-right: 40px;
     }
-.footer {
-        display: flex !important;
-        flex-direction: column !important; 
-        /* Alineamos todo al FINAL (abajo) del contenedor */
-        justify-content: flex-start !important; 
-        align-items: center !important;
-        
-        /* Reducimos la altura para que no sea "enorme" */
-        min-height: 15px !important; 
-        padding: 39px 0 1px 0 !important; /* Poco padding abajo para que el texto toque el fondo */
-        background-color: #5B6C8F;
-        position: fixed !important;
-        bottom: 0 !important;
-        width: 100% !important;
-    }
-
-    .footer-horno {
+.footer-horno {
         display: flex !important;
         flex-direction: column !important; 
         /* Alineamos todo al FINAL (abajo) del contenedor */
@@ -888,16 +897,6 @@ body {
         width: 100% !important;
     }
 
-    
-
-    
-    /* EL TEXTO: Forzamos que se pegue al borde inferior */
-    .footer {
-        font-size: 0.65rem !important;
-        line-height: 1 !important;
-        /* Quitamos cualquier margen que empuje el texto hacia arriba */
-        margin-bottom: 0 !important; 
-    }
 }
 
 
@@ -1059,24 +1058,6 @@ overflow: hidden;
     width: 20px;
     height: 20px;
 }
-
-   html, body {
-    min-height: 100vh; /* siempre cubre pantalla */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-}
- 
-  .main-wrapper {
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
-
-    /* CLAVE: centrado sin alterar los espacios internos */
-    justify-content: center;
-  }
 
 
 .modal {
@@ -1674,7 +1655,13 @@ overflow: hidden;
       overflow: hidden;
       position: relative;
     }
- 
+
+    @media (max-width: 768px) {
+      .horno {
+        padding-top: 24px;
+      }
+    }
+
     /* subtle radial glow */
     .horno::before {
       content: '';
@@ -2161,3 +2148,423 @@ overflow: hidden;
           transform: translateX(-50%);
         }
       }
+
+
+
+
+
+
+
+
+
+      /* ── COMANDA (ticket de cocina) ─────────────── */
+.comanda {
+    position: fixed;
+    top: 130px;
+    right: clamp(20px, 6vw, 100px);
+    z-index: 500;
+    text-decoration: none;
+    overflow: hidden;
+    padding-bottom: 8px;
+}
+
+.comanda__papel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: #f9f9f9;
+    color: #5B6C8F;
+    font-family: 'Urbanist', sans-serif;
+    padding: 14px 18px 16px;
+    width: 150px;
+    transform: rotate(2deg);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    /* borde inferior dentado tipo ticket */
+    clip-path: polygon(
+        0 0, 100% 0, 100% calc(100% - 6px),
+        95% 100%, 90% calc(100% - 6px), 85% 100%,
+        80% calc(100% - 6px), 75% 100%, 70% calc(100% - 6px),
+        65% 100%, 60% calc(100% - 6px), 55% 100%,
+        50% calc(100% - 6px), 45% 100%, 40% calc(100% - 6px),
+        35% 100%, 30% calc(100% - 6px), 25% 100%,
+        20% calc(100% - 6px), 15% 100%, 10% calc(100% - 6px),
+        5% 100%, 0 calc(100% - 6px)
+    );
+    animation: imprimir 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 1.8s;
+    transition: transform 0.3s ease;
+}
+
+.comanda:hover .comanda__papel {
+    transform: rotate(0deg) scale(1.04);
+}
+
+@keyframes imprimir {
+    0%   { transform: translateY(-110%) rotate(2deg); }
+    100% { transform: translateY(0) rotate(2deg); }
+}
+
+.comanda__label {
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #E91E63;
+    border-bottom: 1.5px dashed #5B6C8F55;
+    padding-bottom: 5px;
+    margin-bottom: 3px;
+}
+
+.comanda__num {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+}
+
+.comanda__plato {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.comanda__desc {
+    font-size: 0.68rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.comanda__estado {
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #E91E63;
+    margin-top: 4px;
+}
+
+.comanda__cta {
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+    border-top: 1.5px dashed #5B6C8F55;
+    padding-top: 6px;
+}
+
+/* Móvil: más pequeña y sin tapar la tarta */
+@media (max-width: 768px) {
+    .comanda {
+        top: auto;
+        bottom: 110px;
+        right: 14px;
+    }
+    .comanda__papel {
+        width: 118px;
+        padding: 10px 12px 14px;
+    }
+    .comanda__plato { font-size: 0.85rem; }
+}
+
+
+
+
+
+
+
+
+
+
+/* ── CURSOR FUEGO ─────────────────────────── */
+.cursor-fuego {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 999999;
+    transform: translate(-50%, -50%);
+}
+
+/* Rescoldo: el punto en reposo, late suave */
+.cursor-fuego .rescoldo {
+    width: 10px; height: 10px;
+    background: #E91E63;
+    border-radius: 50%;
+    animation: latir 2s ease-in-out infinite;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+@keyframes latir {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(233,30,99,0.5); }
+    50%      { box-shadow: 0 0 12px 3px rgba(248,160,123,0.55); }
+}
+
+/* Llama: oculta en reposo */
+.cursor-fuego .llama {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -55%) scale(0);
+    width: 26px; height: 34px;
+    opacity: 0;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+}
+
+/* Estado encendido (hover sobre clicable) */
+.cursor-fuego.encendido .rescoldo {
+    transform: scale(0.4);
+    opacity: 0.5;
+}
+.cursor-fuego.encendido .llama {
+    opacity: 1;
+    transform: translate(-50%, -55%) scale(1);
+    animation: arder 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes arder {
+    from { transform: translate(-50%, -55%) scale(1) rotate(-2deg); }
+    to   { transform: translate(-50%, -57%) scale(1.08) rotate(2deg); }
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+    .cursor-fuego { display: none; }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ── MODAL ESTILO COMANDA ─────────────────── */
+.comanda-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #5B6C8F;
+    padding-bottom: 12px;
+    margin-top: 15px;
+    margin-bottom: 4px;
+}
+
+.comanda-form-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #E91E63;
+    line-height: 1;
+    margin: 0;
+}
+
+.tiempo-respuesta {
+   font-size: 14px;
+   opacity: 0.75;
+   margin-top: 10px;
+   margin-bottom: 25px;
+}
+
+.comanda-form-folio {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #f9f9f9;
+    background: #5B6C8F;
+    padding: 3px 10px;
+    letter-spacing: 0.05em;
+}
+
+.comanda-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 10px;
+}
+
+.comanda-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    align-items: center;
+    border-bottom: 1px solid #5B6C8F;
+}
+
+.comanda-row label {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #5B6C8F;
+    padding: 10px 8px;
+    border-right: 1px solid #5B6C8F;
+    text-transform: capitalize;
+}
+
+.comanda-row input,
+.comanda-row textarea {
+    border: none;
+    background: transparent;
+    padding: 10px 8px;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 0.85rem;
+    color: #5B6C8F;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    resize: none;
+}
+
+.comanda-row input::placeholder,
+.comanda-row textarea::placeholder {
+    color: #5B6C8F80;
+    font-style: italic;
+}
+
+.comanda-row--idea {
+    grid-template-columns: 90px 1fr;
+    align-items: start;
+    border-bottom: 2px solid #5B6C8F;
+}
+
+.comanda-row--idea label {
+    padding-top: 14px;
+    height: 100%;
+}
+
+.comanda-form button[type="submit"] {
+    margin-top: 66px;
+    background-color: #E91E63;
+    color: #f9f9f9;
+    border: none;
+    padding: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.comanda-form button[type="submit"]:hover {
+    background-color: #5B6C8F;
+}
+
+
+
+/* ── PASOS ANIMADOS DE LA COMANDA ─────────── */
+.comanda-pasos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0px 34px;
+    border-bottom: 1px dashed #5B6C8F80;
+    margin-bottom: 20px;
+}
+
+
+.comanda-pasos .paso {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #5B6C8F;
+    transition: color 0.4s ease;
+    white-space: nowrap;
+    
+    
+    
+}
+
+.comanda-pasos .paso.activo {
+    color: #E91E63;
+}
+
+.comanda-pasos .sep {
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #5B6C8F80;
+    
+}
+
+/* modal reservas compacto — global (todas las páginas) */
+.modal-content {
+    max-width: 320px;
+    padding: 38px 36px;
+}
+.comanda-form button[type="submit"] {
+    margin-top: 24px;
+}
+.comanda-pasos {
+    padding: 8px 0 20px;
+    margin-bottom: 14px;
+}
+.close-btn {
+    top: 10px;
+    right: 14px;
+}
+
+
+@media (max-width: 768px) {
+    body.page-index .footer {
+        position: static !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        min-height: 0 !important;
+        padding: 100px 0 5px !important;   /* aire arriba / abajo */
+        background: transparent !important;
+    }
+}
+/* menú overlay: texto más grande solo en móvil */
+@media (max-width: 768px) {
+    body .overlay-content a {
+        font-size: clamp(2rem, 10vw, 3rem);
+    }
+}
+
+
+.footer .social-icons {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    justify-content: center !important;
+    margin: 0 !important;
+}
+/* iconos de redes siempre opacos, en todas las páginas */
+.social-icons img {
+    opacity: 1 !important;
+}
+.social-icons img:hover {
+    opacity: 1 !important;
+}
+
+
+/* modal: ocultar la fila de pasos en móvil */
+@media (max-width: 768px) {
+    .comanda-pasos {
+        display: none;
+    }
+    /* quitar el flash azul al tocar en móvil */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+}
+
+/* overlay móvil: ©2025 arriba, privacidad/aviso abajo */
+@media (max-width: 768px) {
+    .overlay-footer {          /* ©2025 chiskey */
+        bottom: 46px;
+        top: auto;
+        padding: 0;
+    }
+    .overlay-footer-right {    /* política de privacidad / aviso legal */
+        bottom: 26px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        text-align: center;
+    }
+}
+

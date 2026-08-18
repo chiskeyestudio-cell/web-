@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Servicios - Chiskey</title>
+<title>La carta de servicios</title>
 
 <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
 
@@ -24,7 +24,7 @@
 
 /* --- RESET Y BASE --- */
 
-*, *::before, *::after { box-sizing: border-box; }
+.page *, .page *::before, .page *::after { box-sizing: border-box; }
 
 
 
@@ -216,19 +216,15 @@ main {
 
 .services {
 
-  display: grid;
+  display: flex;
 
-  grid-template-columns: 1fr;
+  flex-direction: column;
 
-  gap: 0;
+  padding: 1rem 2rem 4rem;
 
-  padding: 2rem 2rem 4rem;
-
-  max-width: 900px;
+  max-width: 960px;
 
   margin: 0 auto;
-
-  counter-reset: card-counter;
 
 }
 
@@ -236,25 +232,7 @@ main {
 
 .service-card {
 
-  padding: 1.4rem 0;
-
   border-bottom: 0.5px solid var(--white-20);
-
-  transition: all 0.35s ease;
-
-  text-decoration: none;
-
-  display: block;
-
-  position: relative;
-
-  overflow: hidden;
-
-  counter-increment: card-counter;
-
-
-
-  /* scroll reveal */
 
   opacity: 0;
 
@@ -276,63 +254,67 @@ main {
 
 
 
-/* número fantasma detrás */
+.service-card.open {
 
-.service-card::before {
-
-  content: "0" counter(card-counter);
-
-  position: absolute;
-
-  right: 3rem;
-
-  top: 50%;
-
-  transform: translateY(-50%);
-
-  font-family: 'Playfair Display', serif;
-
-  font-size: 5rem;
-
-  font-weight: 700;
-
-  color: var(--white);
-
-  opacity: 0;
-
-  transition: opacity 0.35s ease, transform 0.35s ease;
-
-  pointer-events: none;
-
-  line-height: 1;
+  border-bottom-color: var(--pink);
 
 }
 
 
 
-.service-card:hover::before {
+/* cabecera del plato: siempre visible, dispara el acordeón */
 
-  opacity: 0.06;
-
-  transform: translateY(-50%) scale(1.1);
-
-}
-
-
-
-.card-header {
+.service-trigger {
 
   display: flex;
 
-  justify-content: space-between;
-
   align-items: center;
+
+  gap: clamp(1rem, 3vw, 2rem);
+
+  padding: 2rem 0;
+
+  cursor: pointer;
 
 }
 
 
 
-/* OUTFIT: títulos de servicios (Aperitivos, Entrantes, Plato Fuerte...) */
+/* OUTFIT: numeral grande de la carta */
+
+.service-num {
+
+  font-family: 'Outfit', sans-serif;
+
+  font-weight: 600;
+
+  font-size: clamp(3rem, 7vw, 5.5rem);
+
+  line-height: 1;
+
+  width: clamp(65px, 9vw, 105px);
+
+  flex-shrink: 0;
+
+  color: rgba(255, 255, 255, 0.14);
+
+  transition: color 0.35s ease;
+
+}
+
+
+
+.service-trigger:hover .service-num,
+
+.service-card.open .service-num {
+
+  color: rgba(248, 160, 123, 0.4);
+
+}
+
+
+
+/* OUTFIT: títulos de servicios (Entrantes, Plato Fuerte, Postres...) */
 
 .service-card h3 {
 
@@ -340,45 +322,119 @@ main {
 
   color: var(--white);
 
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
 
-  font-weight: 500;
+  font-weight: 600;
 
-  text-transform: capitalize;
+  text-transform: uppercase;
 
-  transition: letter-spacing 0.3s ease;
+  letter-spacing: 0.04em;
 
   font-family: 'Outfit', sans-serif;
 
-}
+  flex-shrink: 0;
 
-
-
-.service-card:hover h3 {
-
-  letter-spacing: 0.03em;
+  transition: color 0.3s ease;
 
 }
 
 
 
-.plus {
+.service-trigger:hover h3,
 
-  font-size: 2rem;
+.service-card.open h3 {
 
   color: var(--pink);
 
-  opacity: 0;
+}
 
-  transform: translateX(10px) rotate(-45deg);
 
-  transition: 0.35s ease;
+
+/* leader de carta: línea de puntos entre el plato y el ícono */
+
+.card-leader {
+
+  flex: 1;
+
+  min-width: 24px;
+
+  align-self: center;
+
+  border-bottom: 2px dotted var(--white-20);
+
+  transition: border-color 0.3s ease;
+
+}
+
+
+
+.service-trigger:hover .card-leader,
+
+.service-card.open .card-leader {
+
+  border-color: rgba(233, 30, 99, 0.5);
+
+}
+
+
+
+/* ícono +/× del acordeón */
+
+.service-icon {
+
+  font-size: 1.7rem;
 
   font-weight: 300;
 
+  color: var(--pink);
+
+  line-height: 1;
+
   flex-shrink: 0;
 
-  margin-left: 1rem;
+  transition: transform 0.3s ease;
+
+}
+
+
+
+.service-card.open .service-icon {
+
+  transform: rotate(45deg);
+
+}
+
+
+
+/* panel desplegable: animado con grid-template-rows, sin JS midiendo alturas */
+
+.service-panel {
+
+  display: grid;
+
+  grid-template-rows: 0fr;
+
+  transition: grid-template-rows 0.4s ease;
+
+}
+
+
+
+.service-card.open .service-panel {
+
+  grid-template-rows: 1fr;
+
+}
+
+
+
+.service-panel-inner {
+
+  overflow: hidden;
+
+  min-height: 0;
+
+  padding: 0.2rem 0 2rem 4.5rem;
 
 }
 
@@ -388,21 +444,17 @@ main {
 
 .subtitle {
 
-  margin-top: 0.5rem;
+  margin: 0 0 1.2rem;
 
-  font-size: 0.82rem;
+  font-size: 0.9rem;
 
   color: var(--white-60);
 
   font-weight: 300;
 
-  opacity: 0;
+  font-style: italic;
 
-  transform: translateY(8px);
-
-  transition: 0.35s ease;
-
-  max-width: 70%;
+  max-width: 85%;
 
   font-family: 'Urbanist', sans-serif;
 
@@ -410,31 +462,165 @@ main {
 
 
 
-.service-card:hover {
+/* OUTFIT: botón "Pedir este plato" */
 
-  border-bottom-color: var(--pink);
+.service-cta {
 
-  padding-left: 0.5rem;
+  display: inline-block;
+
+  background: var(--pink);
+
+  color: var(--white);
+
+  border: none;
+
+  padding: 10px 22px;
+
+  border-radius: 8px;
+
+  font-family: 'Outfit', sans-serif;
+
+  font-weight: 600;
+
+  font-size: 0.82rem;
+
+  letter-spacing: 0.03em;
+
+  cursor: pointer;
+
+  transition: background 0.25s ease, transform 0.2s ease;
 
 }
 
 
 
-.service-card:hover .plus {
+.service-cta:hover {
 
-  opacity: 1;
+  background: var(--pink-dark);
 
-  transform: translateX(0) rotate(0deg);
+  transform: scale(1.02);
 
 }
 
 
 
-.service-card:hover .subtitle {
+/* ── CONDIMENTO ── */
+
+.condimento-block {
+
+  max-width: 820px;
+
+  margin: 1rem auto 3.5rem;
+
+  padding: 2.4rem 2rem;
+
+  border-top: 1px dashed var(--white-20);
+
+  border-bottom: 1px dashed var(--white-20);
+
+  text-align: center;
+
+  opacity: 0;
+
+  transform: translateY(16px);
+
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+}
+
+
+
+.condimento-block.visible {
 
   opacity: 1;
 
   transform: translateY(0);
+
+}
+
+
+
+/* OUTFIT: eyebrow "Condimento" */
+
+.condimento-label {
+
+  display: block;
+
+  font-family: 'Outfit', sans-serif;
+
+  font-style: italic;
+
+  font-weight: 600;
+
+  font-size: 0.85rem;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+
+  color: #F8A07B;
+
+  margin-bottom: 0.9rem;
+
+}
+
+
+
+/* URBANIST: copy del condimento */
+
+.condimento-text {
+
+  font-family: 'Urbanist', sans-serif;
+
+  font-weight: 300;
+
+  font-size: 0.98rem;
+
+  line-height: 1.7;
+
+  color: var(--white-60);
+
+  max-width: 520px;
+
+  margin: 0 auto 1.5rem;
+
+}
+
+
+
+.condimento-cta {
+
+  background: transparent;
+
+  border: 1px solid #F8A07B;
+
+  color: #F8A07B;
+
+  border-radius: 20px;
+
+  padding: 9px 22px;
+
+  font-family: 'Outfit', sans-serif;
+
+  font-weight: 600;
+
+  font-size: 0.8rem;
+
+  letter-spacing: 0.03em;
+
+  cursor: pointer;
+
+  transition: background 0.25s ease, color 0.25s ease;
+
+}
+
+
+
+.condimento-cta:hover {
+
+  background: #F8A07B;
+
+  color: var(--bg);
 
 }
 
@@ -574,9 +760,9 @@ main {
 
   font-size: 10px;
 
-  font-weight: 600;
+  font-weight: 700;
 
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
 
   text-transform: uppercase;
 
@@ -948,13 +1134,17 @@ body.modal-open {
 
   .service-card h3 { font-size: 1.2rem !important; }
 
-  .subtitle, .plus { opacity: 1 !important; transform: none !important; }
+  .service-num { font-size: 2.2rem !important; width: 46px !important; }
 
-  .service-card { padding-left: 0 !important; }
+  .card-leader { display: none; }
 
-  .service-card::before { display: none; }
+  .service-panel-inner { padding-left: 0; }
+
+  .subtitle { max-width: 100%; }
 
 
+
+  main { margin-top: 24px; }
 
   .packs-section { padding: 1rem 1.25rem 4rem; }
 
@@ -963,6 +1153,8 @@ body.modal-open {
   .intro-block { padding: 2rem 1.25rem 1rem; }
 
   .menu-divider { padding: 1.5rem 1.25rem 0; }
+
+  .condimento-block { padding: 2rem 1.25rem; margin: 0.5rem auto 2.5rem; }
 
 }
 
@@ -1044,58 +1236,65 @@ body.modal-open {
 
 
 
-  <!-- SERVICES LIST -->
+  <!-- SERVICES LIST (acordeón) -->
 
-  <section class="services">
+<section class="services">
 
-    <a href="aperitivos.html" class="service-card">
+    <div class="service-card" data-plato="Entrantes">
+        <div class="service-trigger" role="button" tabindex="0" aria-expanded="false">
+            <span class="service-num">01</span>
+            <h3>Entrantes</h3>
+            <span class="card-leader"></span>
+            <span class="service-icon">+</span>
+        </div>
+        <div class="service-panel">
+            <div class="service-panel-inner">
+                <p class="subtitle">Naming, logotipo y material gráfico esencial</p>
+                <button type="button" class="service-cta">Pedir este plato</button>
+            </div>
+        </div>
+    </div>
 
-      <div class="card-header"><h3>Aperitivos</h3><span class="plus">+</span></div>
+    <div class="service-card" data-plato="Plato Fuerte">
+        <div class="service-trigger" role="button" tabindex="0" aria-expanded="false">
+            <span class="service-num">02</span>
+            <h3>Plato Fuerte</h3>
+            <span class="card-leader"></span>
+            <span class="service-icon">+</span>
+        </div>
+        <div class="service-panel">
+            <div class="service-panel-inner">
+                <p class="subtitle">Identidad de marca completa, web, papelería y packaging</p>
+                <button type="button" class="service-cta">Pedir este plato</button>
+            </div>
+        </div>
+    </div>
 
-      <p class="subtitle">Posters, Flyers & Material gráfico</p>
+    <div class="service-card" data-plato="Postres">
+        <div class="service-trigger" role="button" tabindex="0" aria-expanded="false">
+            <span class="service-num">03</span>
+            <h3>Postres</h3>
+            <span class="card-leader"></span>
+            <span class="service-icon">+</span>
+        </div>
+        <div class="service-panel">
+            <div class="service-panel-inner">
+                <p class="subtitle">Fotografía, vídeo, motion y automatización</p>
+                <button type="button" class="service-cta">Pedir este plato</button>
+            </div>
+        </div>
+    </div>
 
-    </a>
+</section>
 
-    <a href="aperitivos.html" class="service-card">
 
-      <div class="card-header"><h3>Entrantes</h3><span class="plus">+</span></div>
 
-      <p class="subtitle">Logotipo básico & Creación de nombre</p>
+  <!-- CONDIMENTO -->
 
-    </a>
-
-    <a href="aperitivos.html" class="service-card">
-
-      <div class="card-header"><h3>Plato Fuerte</h3><span class="plus">+</span></div>
-
-      <p class="subtitle">Identidad visual ligera, Web onePage, Papelería corporativa & Diseño de packaging</p>
-
-    </a>
-
-    <a href="aperitivos.html" class="service-card">
-
-      <div class="card-header"><h3>Especialidades</h3><span class="plus">+</span></div>
-
-      <p class="subtitle">Identidad visual completa, Sitio web completo, Manual de marca & Diseño de apps móviles</p>
-
-    </a>
-
-    <a href="aperitivos.html" class="service-card">
-
-      <div class="card-header"><h3>Postres</h3><span class="plus">+</span></div>
-
-      <p class="subtitle">Fotografía, Clips de video, Motion graphics & Modelado 3D</p>
-
-    </a>
-
-    <a href="aperitivos.html" class="service-card">
-
-      <div class="card-header"><h3>Sugerencias de cocina</h3><span class="plus">+</span></div>
-
-      <p class="subtitle">Automatizaciones visuales/operativas & Gestión de impresión</p>
-
-    </a>
-
+  <section class="condimento-block">
+    <span class="condimento-label">Condimento</span>
+    <p class="condimento-text">¿Ya tienen un logo, una web o una identidad armada? No hace falta empezar de cero: nosotros les ponemos el sazón que les falta.</p>
+    <button type="button" class="condimento-cta">Cuéntennos qué tienen</button>
   </section>
 
 
@@ -1118,7 +1317,7 @@ body.modal-open {
 
         <span class="pack-badge">Esencial</span>
 
-        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776439994/manu_1_esencial_idwed6.png" alt="Pack Esencial">
+        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1779888167/manu_1_esencial_idwed6.png" alt="Pack Esencial">
 
         <ul class="pack-list">
 
@@ -1140,7 +1339,7 @@ body.modal-open {
 
         <span class="pack-badge">Completo</span>
 
-        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776440085/menu_2_completo_hzjjtr.png" alt="Pack Completo">
+        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1779888459/menu_2_completo_hzjjtr.png" alt="Pack Completo">
 
         <ul class="pack-list">
 
@@ -1162,7 +1361,7 @@ body.modal-open {
 
         <span class="pack-badge">Chiskey</span>
 
-        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776440126/menu_3_chiskey_v1zsb1.png" alt="Pack Chiskey">
+        <img class="pack-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1779888422/menu_3_chiskey_v1zsb1.png" alt="Pack Chiskey">
 
         <ul class="pack-list">
 
@@ -1188,35 +1387,52 @@ body.modal-open {
 
   <!-- MODAL SERVICIOS -->
 
-  <div id="serviceModal" class="modal-service">
-
-    <div class="modal-service-content">
-
-      <span class="close-service" id="closeXServicio">&times;</span>
-
-      <h2 id="modalTitle"></h2>
-
-      <p id="modalSubtitle" class="modal-subtitle-text"></p>
-
-      <hr class="modal-divider">
-
-      <p id="modalDescription" class="modal-description"></p>
-
-      <form id="quickReservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="quick-form">
-
-        <input type="hidden" name="servicio_interes" id="hiddenServiceField">
-
-        <input type="text" name="nombre" placeholder="Tu nombre" required>
-
-        <input type="email" name="correo" placeholder="Tu correo" required>
-
-        <button type="submit" class="btn-quick-reserva">Reserva rápida</button>
-
-      </form>
-
+ <div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <div id="formContainer">
+            <div class="comanda-pasos">
+                <span class="paso activo">rellena la comanda</span>
+                <span class="sep">→</span>
+                <span class="paso">te contactamos</span>
+                <span class="sep">→</span>
+                <span class="paso">la cocinamos</span>
+            </div>
+            <div class="comanda-form-header">
+                <span class="comanda-form-title">La comanda</span>
+                <span class="comanda-form-folio">Folio ♥</span>
+            </div>
+            <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
+            <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="comanda-form">
+                <div class="comanda-row">
+                    <label>Comensal</label>
+                    <input type="text" name="nombre" placeholder="tu nombre" required>
+                </div>
+                <div class="comanda-row">
+                    <label>Mail</label>
+                    <input type="email" name="correo" placeholder="tu correo" required>
+                </div>
+                <div class="comanda-row">
+                    <label>Teléfono</label>
+                    <input type="tel" name="movil" placeholder="tu móvil" required>
+                </div>
+                <div class="comanda-row">
+                    <label>Ciudad</label>
+                    <input type="text" name="ciudad" placeholder="dónde estás">
+                </div>
+                <div class="comanda-row comanda-row--idea">
+                    <label>Concepto</label>
+                    <textarea name="idea" rows="3" placeholder="cuéntanos tu idea" required></textarea>
+                </div>
+                <button type="submit">Enviar comanda</button>
+            </form>
+        </div>
+        <div id="mensajeGracias" class="gracias-box" style="display:none;">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="Gracias" class="gracias-img">
+            <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
+        </div>
     </div>
-
-  </div>
+</div>
 
 
 
@@ -1227,11 +1443,18 @@ body.modal-open {
 <!-- FOOTER: sin tocar -->
 
 <footer class="footer">
+    <div class="social-icons overlay-social-icons">
+  <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
 
-  ©2025 chiskey cocina digital creativa
+  <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
 
+  <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"></a>
+
+  <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
+
+    </div>
+    <span>©2025</span>
 </footer>
-
 
 
 <!-- MODAL RESERVAS (heredado) -->
@@ -1274,17 +1497,7 @@ body.modal-open {
 
 <!-- SOCIAL ICONS -->
 
-<div class="social-icons overlay-social-icons">
 
-  <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
-
-  <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
-
-  <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"></a>
-
-  <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
-
-</div>
 
 
 
@@ -1344,9 +1557,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  // Divisor y título de packs
+  // Divisor, título de packs y condimento
 
-  document.querySelectorAll('.menu-divider, .packs-title').forEach(el => {
+  document.querySelectorAll('.menu-divider, .packs-title, .condimento-block').forEach(el => {
 
     revealObserver.observe(el);
 
@@ -1354,63 +1567,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  // ── MODAL SERVICIOS ──
+  // ── ABRIR MODAL DE RESERVAS (reutiliza openModal() de main.js, mismo modal, misma lógica) ──
 
-  const serviceModal = document.getElementById("serviceModal");
+  const ideaField = document.querySelector('#myModal textarea[name="idea"]');
 
-  const closeX = document.getElementById("closeXServicio");
+  function abrirReserva(mensaje) {
 
-  const body = document.body;
+    if (ideaField && mensaje) ideaField.value = mensaje;
 
-
-
-  const infoServicios = {
-
-    "aperitivos": "Impacto visual rápido y efectivo. Diseñamos piezas que captan la atención al instante.",
-
-    "entrantes": "Cocinamos tu nombre y tu marca desde el nacimiento.",
-
-    "plato fuerte": "Presencia profesional completa pero ágil para tu negocio.",
-
-    "especialidades": "Transformación digital profunda y personalizada.",
-
-    "postres": "El toque final que hace que tu marca brille.",
-
-    "sugerencias de cocina": "Optimizamos tu forma de trabajar visualmente."
-
-  };
-
-
-
-  function closeModal() {
-
-    serviceModal.style.display = "none";
-
-    body.classList.remove('modal-open');
+    if (typeof openModal === 'function') openModal();
 
   }
 
 
 
-  document.querySelectorAll('.service-card').forEach(card => {
+  // ── ACORDEÓN DE PLATOS ──
 
-    card.addEventListener('click', function (e) {
+  const serviceCards = document.querySelectorAll('.service-card');
 
-      e.preventDefault();
+  serviceCards.forEach(card => {
 
-      const title = this.querySelector('h3').innerText;
+    const trigger = card.querySelector('.service-trigger');
 
-      document.getElementById('modalTitle').innerText = title;
 
-      document.getElementById('modalSubtitle').innerText = this.querySelector('.subtitle').innerText;
 
-      document.getElementById('modalDescription').innerText = infoServicios[title.trim().toLowerCase()] || "Información personalizada.";
+    function toggleCard() {
 
-      document.getElementById('hiddenServiceField').value = title;
+      const isOpen = card.classList.contains('open');
 
-      serviceModal.style.display = "flex";
+      serviceCards.forEach(c => {
 
-      body.classList.add('modal-open');
+        c.classList.remove('open');
+
+        c.querySelector('.service-trigger').setAttribute('aria-expanded', 'false');
+
+      });
+
+      if (!isOpen) {
+
+        card.classList.add('open');
+
+        trigger.setAttribute('aria-expanded', 'true');
+
+      }
+
+    }
+
+
+
+    trigger.addEventListener('click', toggleCard);
+
+    trigger.addEventListener('keydown', (e) => {
+
+      if (e.key === 'Enter' || e.key === ' ') {
+
+        e.preventDefault();
+
+        toggleCard();
+
+      }
 
     });
 
@@ -1418,39 +1633,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  if (closeX) {
+  // ── BOTÓN "PEDIR ESTE PLATO" DENTRO DEL ACORDEÓN ──
 
-    closeX.addEventListener('click', function (e) {
+  document.querySelectorAll('.service-cta').forEach(button => {
 
-      e.preventDefault();
+    button.addEventListener('click', function (e) {
 
       e.stopPropagation();
 
-      closeModal();
+      const plato = this.closest('.service-card')?.dataset.plato || 'un plato';
+
+      abrirReserva('Me interesa: ' + plato);
 
     });
 
-  }
-
-
-
-  window.addEventListener('click', function (e) {
-
-    if (e.target === serviceModal) closeModal();
-
   });
 
 
 
-  document.addEventListener('keydown', (e) => {
-
-    if (e.key === "Escape") closeModal();
-
-  });
-
-
-
-  // ── BOTONES RESERVAR EN PACKS ──
+  // ── BOTONES RESERVAR EN PACKS (clic directo, sin acordeón) ──
 
   document.querySelectorAll('.btn-reservar').forEach(button => {
 
@@ -1458,27 +1659,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
       e.preventDefault();
 
-      e.stopPropagation();
-
       const packBadge = this.closest('.pack-card')?.querySelector('.pack-badge')?.innerText || "Pack";
 
-      const title = "Reserva — " + packBadge;
-
-      document.getElementById('modalTitle').innerText = title;
-
-      document.getElementById('modalSubtitle').innerText = "Has seleccionado el pack " + packBadge + ".";
-
-      document.getElementById('modalDescription').innerText = "Completa tus datos y te contactamos en menos de 24h.";
-
-      document.getElementById('hiddenServiceField').value = title;
-
-      serviceModal.style.display = "flex";
-
-      body.classList.add('modal-open');
+      abrirReserva('Me interesa: Pack ' + packBadge);
 
     });
 
   });
+
+
+
+  // ── CONDIMENTO ──
+
+  const condimentoCta = document.querySelector('.condimento-cta');
+
+  if (condimentoCta) {
+
+    condimentoCta.addEventListener('click', function (e) {
+
+      abrirReserva('Ya tenemos algo hecho, queremos ponerle sazón');
+
+    });
+
+  }
 
 
 

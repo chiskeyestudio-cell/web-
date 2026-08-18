@@ -5,16 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chiskey estudio</title>
     <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
-    <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- ============================================================
+         FIX RESPONSIVE HOME  (solo afecta a index.html)
+         Layout en flujo/columna que llena la pantalla real, imagen
+         limitada por alto y ancho, cinta autónoma sin desfase y
+         redes dentro del footer. Reglas puestas después de styles.css
+         y con más especificidad para ganar sin tocar el compartido.
+         ============================================================ -->
+    <style>
+        html { height: 100%; }
+
+        /* body de la home: columna que llena la pantalla real */
+        body.page-index {
+            min-height: 100vh;      /* fallback navegadores viejos */
+            min-height: 100dvh;     /* altura REAL en móvil, sin recorte por las barras */
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* zona central: imagen pegada arriba */
+        body.page-index .content-body {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: clamp(14px, 3vh, 34px);
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: clamp(10px, 2.5vh, 28px) clamp(16px, 5vw, 60px);
+            box-sizing: border-box;
+        }
+
+        /* imagen hero: grande pero limitada por alto para no desbordar */
+        body.page-index .main-image {
+            width: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        body.page-index .main-image img {
+            width: 100%;
+            height: auto;
+            max-width: 1255px;   /* ancho máximo en desktop */
+            max-height: 58dvh;   /* tamaño de la imagen: subí/bajá este número */
+            object-fit: contain;
+            margin: 0;
+        }
+
+        /* barra inferior: contiene la cinta (order 2 = va debajo de la imagen) */
+        body.page-index .bottom-fixed-container {
+            order: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(20px, 4vh, 40px) 0;
+        }
+
+        /* ── CINTA CONTINUA (bulletproof: cada grupo llena la pantalla) ── */
+        body.page-index .cinta {
+            display: flex;
+            width: 80%;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+        }
+        body.page-index .cinta__grupo {
+            flex: 0 0 auto;
+            min-width: 100%;            /* cada grupo mide al menos todo el ancho: nunca queda vacío */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: clamp(18px, 2.5vw, 36px);
+            animation: cinta-scroll 20s linear infinite;   /* velocidad: más s = más lenta */
+        }
+        body.page-index .cinta__grupo span {
+            white-space: nowrap;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #F8A07B;
+            font-size: clamp(0.6rem, 1.2vw, 0.9rem);   /* tamaño de la cinta */
+        }
+        @keyframes cinta-scroll {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-100%); }
+        }
+
+        /* footer: iconos arriba, ©2025 abajo (order 3 = al final) */
+        body.page-index .footer {
+            order: 3;
+            position: static;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0px;
+            padding: 14px 0 18px;
+        }
+        body.page-index .footer .social-icons {
+            position: static;
+            inset: auto;
+            transform: none;
+            justify-content: center;
+            margin: 0;
+        }
+
+        /* la comanda sigue fija; se oculta en pantallas muy chicas para no tapar la imagen */
+        @media (max-width: 480px) {
+            body.page-index .comanda { display: none; }
+        }
+
+
+/* ── AJUSTES SOLO MÓVIL (home) ── */
+@media (max-width: 768px) {
+    /* subir imagen + cinta: menos aire arriba */
+    body.page-index .content-body {
+        padding-top: 30px;
+    }
+    body.page-index .main-image img {
+        padding-top: 20px;   /* anula el padding-top:60px que styles.css mete en móvil */
+    }
+
+    /* subir la cinta un poco (menos separación arriba/abajo) */
+    body.page-index .bottom-fixed-container {
+        padding: 16px 0;
+    }
+
+    /* letra de la cinta más grande en móvil */
+    body.page-index .cinta__grupo span {
+        font-size: clamp(0.85rem, 3.2vw, 1.1rem);
+    }
+}
+
+    </style>
 </head>
 <body class="page-index">
-    
-    <header class="navbar"> 
+
+    <header class="navbar">
         <div class="logo">
-            <a href="index.html"> 
+            <a href="index.html">
                 <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo de la Empresa">
             </a>
-        </div> 
+        </div>
         <nav class="menu">
             <a href="#" id="menu-toggle" data-content="menu">MENU</a>
         </nav>
@@ -22,21 +161,10 @@
     </header>
 
     <div class="content-body">
-    <div class="main-image">
-            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776432061/horizontalintro_qdydoc.svg" class="img-desktop">
-            
-            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1776435760/verticalintro_iaatot.svg" class="img-mobile">
+        <div class="main-image">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1787073834/chiskeyhome_ebfzhi.png" class="img-desktop">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1787076418/imagen_movil_chis-01_gqmgjd.png" class="img-mobile">
         </div>
-
-            <div class="scrolling-text-container">
-                <div class="scrolling-track">
-                    <span>LOGOS | BRANDING | NAMING | IDENTIDAD VISUAL | CARTELERÍA | ILUSTRACIÓN | FOTOGRAFÍA | WEB | APPS | AUTOMATIZACIÓN | 3D | AUDIOVISUAL | </span>
-                    <span>LOGOS | BRANDING | NAMING | IDENTIDAD VISUAL | CARTELERÍA | ILUSTRACIÓN | FOTOGRAFÍA | WEB | APPS | AUTOMATIZACIÓN | 3D | AUDIOVISUAL | </span>
-                </div>
-          
-
-        </div>
-
     </div>
 
     <div class="bottom-right-element"></div>
@@ -45,27 +173,44 @@
         <div class="modal-content">
             <span class="close-btn">&times;</span>
 
-            <!-- Contenedor original del formulario -->
             <div id="formContainer">
-                <h2>¡Haz tu reserva!</h2>
+                <div class="comanda-pasos">
+                    <span class="paso activo">rellena la comanda</span>
+                    <span class="sep">→</span>
+                    <span class="paso">te contactamos</span>
+                    <span class="sep">→</span>
+                    <span class="paso">la cocinamos</span>
+                </div>
+
+                <div class="comanda-form-header">
+                    <span class="comanda-form-title">La comanda</span>
+                    <span class="comanda-form-folio">Folio ♥</span>
+                </div>
+
                 <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
-                <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" required>
 
-                    <label for="movil">Móvil:</label>
-                    <input type="tel" id="movil" name="movil" required>
-
-                    <label for="correo">Correo:</label>
-                    <input type="email" id="correo" name="correo" required>
-
-                    <label for="ciudad">Ciudad:</label>
-                    <input type="text" id="ciudad" name="ciudad">
-
-                    <label for="idea">Cuéntanos tu idea:</label>
-                    <textarea id="idea" name="idea" rows="4" required></textarea>
-
-                    <button type="submit">Enviar</button>
+                <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="comanda-form">
+                    <div class="comanda-row">
+                        <label>Comensal</label>
+                        <input type="text" name="nombre" placeholder="tu nombre" required>
+                    </div>
+                    <div class="comanda-row">
+                        <label>Mail</label>
+                        <input type="email" name="correo" placeholder="tu correo" required>
+                    </div>
+                    <div class="comanda-row">
+                        <label>Teléfono</label>
+                        <input type="tel" name="movil" placeholder="tu móvil" required>
+                    </div>
+                    <div class="comanda-row">
+                        <label>Ciudad</label>
+                        <input type="text" name="ciudad" placeholder="dónde estás">
+                    </div>
+                    <div class="comanda-row comanda-row--idea">
+                        <label>Concepto</label>
+                        <textarea name="idea" rows="3" placeholder="cuéntanos tu idea" required></textarea>
+                    </div>
+                    <button type="submit">Enviar comanda</button>
                 </form>
             </div>
 
@@ -77,19 +222,19 @@
         </div>
     </div>
 
-    <footer class="footer">©2025</footer>
-
-    <script src="main.js"></script> 
-
-    <!-- Contenedor fijo abajo para móviles: cinta scrolling + iconos sociales -->
-    <div class="bottom-fixed-container">
-        <div class="scrolling-text-container">
-            <div class="scrolling-track">
-                <span>LOGOS | BRANDING | NAMING | IDENTIDAD VISUAL | CARTELERÍA | ILUSTRACIÓN | FOTOGRAFÍA | WEB | APPS | AUTOMATIZACIÓN | 3D | AUDIOVISUAL | </span>
-                <span>LOGOS | BRANDING | NAMING | IDENTIDAD VISUAL | CARTELERÍA | ILUSTRACIÓN | FOTOGRAFÍA | WEB | APPS | AUTOMATIZACIÓN | 3D | AUDIOVISUAL | </span>
-            </div>
+    <!-- COMANDA: último plato servido -->
+    <a href="proyectos.html" class="comanda" id="comanda" aria-label="Ver proyectos">
+        <div class="comanda__papel">
+            <span class="comanda__label">salida de cocina</span>
+            <span class="comanda__num" id="comandaNum">COMANDA #003</span>
+            <span class="comanda__plato" id="comandaPlato">el hogar</span>
+            <span class="comanda__desc" id="comandaDesc">identidad de marca</span>
+            <span class="comanda__estado">servido ✓</span>
+            <span class="comanda__cta">ver plato →</span>
         </div>
+    </a>
 
+    <footer class="footer">
         <div class="social-icons overlay-social-icons">
             <a href="https://www.instagram.com/chiskey.estudio/" target="_blank">
                 <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
@@ -104,8 +249,22 @@
                 <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
             </a>
         </div>
+        <span>©2025</span>
+    </footer>
+
+    <script src="main.js"></script>
+
+    <!-- Contenedor abajo: cinta continua -->
+    <div class="bottom-fixed-container">
+        <div class="cinta">
+            <div class="cinta__grupo">
+    </span><span>IDENTIDAD</span><span>|</span><span>LOGO</span><span>|</span><span>NAMING</span><span>|</span><span>UX/UI</span><span>|</span><span>IDENTIDAD</span><span>|</span><span>LOGO</span><span>|</span><span>NAMING</span><span>|</span><span>UX/UI</span><span>|</span><span>IDENTIDAD</span><span>|</span><span>LOGO</span><span>|</span><span>NAMING</span><span>|</span><span>UX/UI</span><span>|</span><span>IDENTIDAD</span><span>|</span><span>LOGO</span><span>|</span><span>NAMING</span><span>|</span><span>UX/UI</span><span>|</span><span>
+</div>
+<div class="cinta__grupo" aria-hidden="true">
+    </span><span>IDENTIDAD</span><span>|</span><span>LOGO</span><span>|</span><span>NAMING</span><span>|</span><span>UX/UI</span><span>|</span><span>IDENTIDAD</span><span>|</span><span>LOGO</span><span>|</span><span>NAMING</span><span>|</span><span>UX/UI</span><span>|</span><span>IDENTIDAD</span><span>|</span><span>LOGO</span><span>|</span><span>NAMING</span><span>|</span><span>UX/UI</span><span>|</span><span>IDENTIDAD</span><span>|</span><span>LOGO</span><span>|</span><span>NAMING</span><span>|</span><span>UX/UI</span><span>|</span><span>
+</div>
+        </div>
     </div>
 
 </body>
-
 </html>

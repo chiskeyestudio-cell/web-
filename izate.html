@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Izate — Chiskey</title>
+  <title>Izate</title>
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Urbanist:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
+   .page *, .page *::before, .page *::after { box-sizing: border-box; }
 
     html, body {
       overflow-x: hidden !important;
@@ -380,6 +380,7 @@
     .social-icons a:hover img { opacity: 1; }
 
     @media (max-width: 768px) {
+      main { margin-top: 24px; }
       .page { padding: 0 1.5rem 4rem; }
       .hero { flex-direction: column; align-items: flex-start; padding: 2.5rem 0 2rem; }
       .section, .section.reverse { grid-template-columns: 1fr; gap: 2rem; }
@@ -389,6 +390,25 @@
       .gallery-item.wide { grid-column: span 1; aspect-ratio: 4/3; }
       .related-grid { grid-template-columns: 1fr 1fr; }
     }
+
+    #myModal .modal-content {
+    padding: 50px !important;
+    max-width: 420px !important;
+    width: 100% !important;
+}
+
+#myModal .comanda-form,
+#myModal #formContainer {
+    width: 100% !important;
+}
+
+#myModal .comanda-row {
+    display: grid !important;
+    grid-template-columns: 90px 1fr !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
   </style>
 </head>
 <body>
@@ -530,35 +550,71 @@ El despacho gestiona bajo un mismo techo los desafíos más críticos, eliminand
 
   <!-- FOOTER: sin tocar -->
   <footer class="footer">
+    <div class="social-icons overlay-social-icons">
+      <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
+      <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
+      <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"></a>
+      <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
+    </div>
     ©2025 chiskey cocina digital creativa
   </footer>
 
   <!-- MODAL RESERVAS (heredado) -->
-  <div id="myModal" class="modal" style="display: none;">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <div id="formContainer">
-        <h2>¡Haz tu reserva!</h2>
-        <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="modal-form">
-          <input type="text" name="nombre" placeholder="Nombre" required>
-          <input type="tel" name="movil" placeholder="Móvil" required>
-          <input type="email" name="correo" placeholder="Correo" required>
-          <textarea name="idea" rows="4" placeholder="Cuéntanos tu idea" required></textarea>
-          <button type="submit">Enviar</button>
-        </form>
-      </div>
+     <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+
+         <div id="formContainer">
+    <div class="comanda-pasos">
+        <span class="paso activo">rellena la comanda</span>
+        <span class="sep">→</span>
+        <span class="paso">te contactamos</span>
+        <span class="sep">→</span>
+        <span class="paso">la cocinamos</span>
     </div>
-  </div>
+
+    <div class="comanda-form-header">
+        <span class="comanda-form-title">La comanda</span>
+        <span class="comanda-form-folio">Folio ♥</span>
+    </div>
+
+    <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
+
+    <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="comanda-form">
+        <div class="comanda-row">
+            <label>Comensal</label>
+            <input type="text" name="nombre" placeholder="tu nombre" required>
+        </div>
+        <div class="comanda-row">
+            <label>Mail</label>
+            <input type="email" name="correo" placeholder="tu correo" required>
+        </div>
+        <div class="comanda-row">
+            <label>Teléfono</label>
+            <input type="tel" name="movil" placeholder="tu móvil" required>
+        </div>
+        <div class="comanda-row">
+            <label>Ciudad</label>
+            <input type="text" name="ciudad" placeholder="dónde estás">
+        </div>
+        <div class="comanda-row comanda-row--idea">
+            <label>Concepto</label>
+            <textarea name="idea" rows="3" placeholder="cuéntanos tu idea" required></textarea>
+        </div>
+        <button type="submit">Enviar comanda</button>
+    </form>
+</div>
+    
+
+    <!-- Contenedor del mensaje de gracias -->
+            <div id="mensajeGracias" class="gracias-box" style="display:none;">
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="Gracias" class="gracias-img">
+                <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
+            </div>
+        </div>
+    </div>
 
   <script src="main.js"></script>
-
-  <!-- SOCIAL ICONS -->
-  <div class="social-icons overlay-social-icons">
-    <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
-    <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
-    <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"></a>
-    <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
-  </div>
 
   <script>
     const observer = new IntersectionObserver((entries) => {
