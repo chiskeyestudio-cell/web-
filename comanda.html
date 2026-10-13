@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>La comanda | chiskey estudio</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- ============================================================
+         COMANDA COMPARTIBLE  (solo afecta a comanda.html)
+         El formulario del modal de reservas, servido directo en la
+         página: tarjeta blanca centrada entre header y footer.
+         Reutiliza las clases .comanda-* de styles.css sin tocarlas.
+         ============================================================ -->
+    <style>
+        html { height: 100%; }
+
+        /* body: columna que llena la pantalla real */
+        body.page-comanda {
+            min-height: 100vh;      /* fallback navegadores viejos */
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* zona central: centra la tarjeta en el espacio libre */
+        body.page-comanda .comanda-page {
+            flex: 1 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: clamp(16px, 4vh, 48px) 16px;
+            box-sizing: border-box;
+        }
+
+        /* la "hoja" de la comanda: mismo look que .modal-content */
+        body.page-comanda .comanda-card {
+            background-color: #ffffff;
+            color: #5B6C8F;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px 40px 44px;
+            border-radius: 2px;
+            box-sizing: border-box;
+            font-family: 'Urbanist', sans-serif;
+            font-weight: 900;
+            font-size: 0.9rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        body.page-comanda .footer {
+            flex-shrink: 0;
+        }
+
+        /* ── MÓVIL ── */
+        @media (max-width: 768px) {
+            body.page-comanda .comanda-card {
+                padding: 28px 22px 32px;
+            }
+
+            /* styles.css oculta los pasos en móvil (pensado para el modal);
+               acá hay espacio, así que se muestran, más compactos */
+            body.page-comanda .comanda-pasos {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 4px 8px;
+            }
+            body.page-comanda .comanda-pasos .paso,
+            body.page-comanda .comanda-pasos .sep {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            body.page-comanda .comanda-row,
+            body.page-comanda .comanda-row--idea {
+                grid-template-columns: 78px 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="page-comanda">
+
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo de la Empresa">
+            </a>
+        </div>
+        <nav class="menu">
+            <a href="#" id="menu-toggle" data-content="menu">MENU</a>
+        </nav>
+    </header>
+
+    <main class="comanda-page">
+        <div class="comanda-card">
+
+            <div id="formContainer">
+                <div class="comanda-pasos">
+                    <span class="paso activo">rellena la comanda</span>
+                    <span class="sep">→</span>
+                    <span class="paso">te contactamos</span>
+                    <span class="sep">→</span>
+                    <span class="paso">la cocinamos</span>
+                </div>
+
+                <div class="comanda-form-header">
+                    <span class="comanda-form-title">La comanda</span>
+                    <span class="comanda-form-folio">Folio ♥</span>
+                </div>
+
+                <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
+
+                <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="comanda-form">
+                    <div class="comanda-row">
+                        <label>Comensal</label>
+                        <input type="text" name="nombre" placeholder="tu nombre" required>
+                    </div>
+                    <div class="comanda-row">
+                        <label>Mail</label>
+                        <input type="email" name="correo" placeholder="tu correo" required>
+                    </div>
+                    <div class="comanda-row">
+                        <label>Teléfono</label>
+                        <input type="tel" name="movil" placeholder="tu móvil" required>
+                    </div>
+                    <div class="comanda-row">
+                        <label>Ciudad</label>
+                        <input type="text" name="ciudad" placeholder="dónde estás">
+                    </div>
+                    <div class="comanda-row comanda-row--idea">
+                        <label>Concepto</label>
+                        <textarea name="idea" rows="3" placeholder="cuéntanos tu idea" required></textarea>
+                    </div>
+                    <button type="submit">Enviar comanda</button>
+                </form>
+            </div>
+
+            <!-- Contenedor del mensaje de gracias -->
+            <div id="mensajeGracias" class="gracias-box" style="display:none;">
+                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="Gracias" class="gracias-img">
+                <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="social-icons overlay-social-icons">
+            <a href="https://www.instagram.com/chiskey.estudio/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+            </a>
+            <a href="https://www.tiktok.com/@chiskey.estudio?is_from_webapp=1&sender_device=pc" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok">
+            </a>
+            <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
+            </a>
+        </div>
+        <span>©2025</span>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // en el home los pasos arrancan al abrir el modal; acá, al cargar
+        iniciarPasos();
+    </script>
+
+</body>
+</html>
