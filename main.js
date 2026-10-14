@@ -112,19 +112,19 @@ if (!overlay) {
     overlayContent.classList.add('overlay-content');
 
     const text1 = document.createElement('a');
-    text1.href = 'servicios.html';
+    text1.href = '/servicios/';
     text1.innerHTML = '<span>La carta</span>';
 
     const text2 = document.createElement('a');
-    text2.href = 'proyectos.html';
+    text2.href = '/proyectos/';
     text2.innerHTML = '<span>Proyectos</span>';
 
     const text3 = document.createElement('a');
-    text3.href = 'sobreck.html';
+    text3.href = '/sobreck/';
     text3.innerHTML = '<span>Sobre ck</span>';
 
     const text4 = document.createElement('a');
-    text4.href = 'tupedido.html';
+    text4.href = '/tupedido/';
     text4.innerHTML = '<span>Tu pedido</span>';
 
     overlayContent.append(text1, text2, text3, text4);
