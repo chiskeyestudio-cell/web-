@@ -1,0 +1,692 @@
+{
+  "nota_global": "Los precios se muestran sin IVA. La impresión y producción física (packaging) se cotizan aparte.",
+  "menus": [
+    {
+      "id": "branding",
+      "titulo": "Menú Branding",
+      "icono": "✶",
+      "intro": "Tres opciones según tu hambre. ¿Falta o sobra algo? Arma tu menú plato por plato.",
+      "packs": [
+        {
+          "id": "brand-completo",
+          "nombre": "Completo",
+          "precio": "1.550 €",
+          "descripcion": "Naming, logotipo y versiones, paleta, sistema tipográfico, manual completo, plantillas para redes, papelería, grafismos, merch y mockups. La marca redonda, lista para abrir.",
+          "monto": 1550,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-esencial",
+          "nombre": "Esencial",
+          "precio": "850 €",
+          "descripcion": "Logotipo y versiones, paleta, sistema tipográfico, manual simple y plantillas para redes. Imagen sólida y lista para salir a vender.",
+          "monto": 850,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-simple",
+          "nombre": "Simple",
+          "precio": "420 €",
+          "descripcion": "Logotipo y versiones, paleta y sistema tipográfico. La base limpia de una marca.",
+          "monto": 420,
+          "periodo": "unico"
+        }
+      ],
+      "platos": [
+        {
+          "id": "brand-naming",
+          "nombre": "Naming",
+          "precio": "150 €",
+          "descripcion": "Nombre con criterio: nicho, opciones y chequeo de que esté libre.",
+          "monto": 150,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-logo",
+          "nombre": "Logotipo",
+          "precio": "300 €",
+          "descripcion": "Marca principal + versiones (horizontal, reducida, negativo) y archivos listos.",
+          "monto": 300,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-paleta",
+          "nombre": "Paleta de color",
+          "precio": "80 €",
+          "descripcion": "Colores de marca con códigos para pantalla e impresión.",
+          "monto": 80,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-tipo",
+          "nombre": "Sistema tipográfico",
+          "precio": "80 €",
+          "descripcion": "Tipografías de marca y cómo se usan (títulos, texto, jerarquías).",
+          "monto": 80,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-redes",
+          "nombre": "Soportes para redes",
+          "precio": "220 €",
+          "descripcion": "Kit de plantillas editables para posts y stories, en tu estilo.",
+          "monto": 220,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-papeleria",
+          "nombre": "Papelería",
+          "precio": "180 €",
+          "descripcion": "Tarjeta, firma de correo y membrete.",
+          "monto": 180,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-merch",
+          "nombre": "Vestimenta y merch",
+          "precio": "200 €",
+          "descripcion": "Marca aplicada a prendas, bolsas y stickers, con mockups.",
+          "monto": 200,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-patron",
+          "nombre": "Patrón y grafismos",
+          "precio": "150 €",
+          "descripcion": "Elementos gráficos y patrón de apoyo para dar aire a la marca.",
+          "monto": 150,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-manual-s",
+          "nombre": "Manual simple",
+          "precio": "200 €",
+          "descripcion": "Mini guía de uso: logo, color y tipografía en lo básico.",
+          "monto": 200,
+          "periodo": "unico"
+        },
+        {
+          "id": "brand-manual-c",
+          "nombre": "Manual completo",
+          "precio": "500 €",
+          "descripcion": "Guía extensa: usos correctos e incorrectos, aplicaciones y sistema.",
+          "monto": 500,
+          "periodo": "unico"
+        }
+      ]
+    },
+    {
+      "id": "web",
+      "titulo": "Menú Web / App",
+      "icono": "▣",
+      "intro": "Tres opciones según tu hambre. Arma tu menú plato por plato.",
+      "aclaracion": "Algunos platos (desarrollo, tienda online y mantenimiento) parten de un diseño o una web ya existente.",
+      "packs": [
+        {
+          "id": "web-completo",
+          "nombre": "Completo",
+          "precio": "2.200 €",
+          "descripcion": "Estrategia y arquitectura, diseño UX/UI a medida (hasta 6 secciones), desarrollo responsive, animaciones, SEO base, formularios y panel editable. Con opción de tienda online. Tu sitio completo.",
+          "monto": 2200,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-esencial",
+          "nombre": "Esencial",
+          "precio": "1.200 €",
+          "descripcion": "Web de hasta 4 secciones, diseño a medida, responsive, SEO base y formulario de contacto. Una web sólida que vende desde el primer día.",
+          "monto": 1200,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-simple",
+          "nombre": "Simple",
+          "precio": "650 €",
+          "descripcion": "One page a medida, responsive, con tus textos e imágenes. La carta en una sola página, limpia y directa.",
+          "monto": 650,
+          "periodo": "unico"
+        }
+      ],
+      "platos": [
+        {
+          "id": "web-arq",
+          "nombre": "Arquitectura y wireframes",
+          "precio": "180 €",
+          "descripcion": "El plano de tu sitio: qué va, dónde y por qué. Se puede pedir solo.",
+          "monto": 180,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-pagina",
+          "nombre": "Diseño de página (por sección)",
+          "precio": "150 €",
+          "descripcion": "Diseño UX/UI a medida de una sección.",
+          "monto": 150,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-dev",
+          "nombre": "Desarrollo responsive (por página)",
+          "precio": "160 €",
+          "descripcion": "Tu diseño programado, perfecto en móvil y escritorio.",
+          "monto": 160,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-tienda",
+          "nombre": "Tienda online (carrito)",
+          "precio": "700 €",
+          "descripcion": "Carrito, pago y envíos sobre tu web. Parte de una web base.",
+          "monto": 700,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-seo",
+          "nombre": "SEO base",
+          "precio": "150 €",
+          "descripcion": "Lo necesario para que Google te encuentre bien.",
+          "monto": 150,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-cms",
+          "nombre": "Blog o sección editable (CMS)",
+          "precio": "250 €",
+          "descripcion": "Un panel para que actualices contenido tú mismo.",
+          "monto": 250,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-form",
+          "nombre": "Formulario a medida",
+          "precio": "90 €",
+          "descripcion": "Contacto, reservas o lo que tu negocio necesite.",
+          "monto": 90,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-banner-s",
+          "nombre": "Banner estático",
+          "precio": "45 €",
+          "descripcion": "Pieza gráfica fija para web o campaña.",
+          "monto": 45,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-banner-i",
+          "nombre": "Banner interactivo (HTML5)",
+          "precio": "120 €",
+          "descripcion": "Banner animado e interactivo, más vistoso.",
+          "monto": 120,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-puesta",
+          "nombre": "Puesta a punto (web existente)",
+          "precio": "180 €",
+          "descripcion": "Afinamos velocidad, móvil y detalles de tu web actual.",
+          "monto": 180,
+          "periodo": "unico"
+        },
+        {
+          "id": "web-mant",
+          "nombre": "Mantenimiento mensual",
+          "precio": "90 €/mes",
+          "descripcion": "Actualizaciones, copias de seguridad y pequeños cambios.",
+          "monto": 90,
+          "periodo": "mes"
+        }
+      ],
+      "extra": {
+        "titulo": "App",
+        "platos": [
+          {
+            "id": "app-ui",
+            "nombre": "Diseño UI de app (por pantalla)",
+            "precio": "120 €",
+            "descripcion": "Diseño a medida de una pantalla de tu app.",
+            "monto": 120,
+            "periodo": "unico"
+          },
+          {
+            "id": "app-proto",
+            "nombre": "Prototipo navegable",
+            "precio": "400 €",
+            "descripcion": "Flujo completo para probar la app antes de desarrollar.",
+            "monto": 400,
+            "periodo": "unico"
+          },
+          {
+            "id": "app-sistema",
+            "nombre": "Sistema de diseño de app",
+            "precio": "300 €",
+            "descripcion": "Componentes y estilos para que crezca ordenada.",
+            "monto": 300,
+            "periodo": "unico"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecommerce",
+      "titulo": "Menú Ecommerce",
+      "icono": "◷",
+      "intro": "Vende en Amazon o en tu propia plataforma. Arma tu menú plato por plato.",
+      "nota": {
+        "titulo": "¿Quieres tu propia tienda online?",
+        "texto": "Si prefieres vender desde tu propia web (carrito, pago y envíos), eso se cocina en el Menú Web."
+      },
+      "packs": [
+        {
+          "id": "eco-completo",
+          "nombre": "Completo",
+          "precio": "1.900 €",
+          "descripcion": "Puesta en marcha en Amazon o tu plataforma: alta u optimización de fichas (hasta 20 productos), contenido A+, diseño de escaparate, imágenes de producto y guía para administrar.",
+          "monto": 1900,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-esencial",
+          "nombre": "Esencial",
+          "precio": "1.000 €",
+          "descripcion": "Fichas optimizadas (hasta 10 productos), imágenes de producto y escaparate básico. Tus productos, bien servidos.",
+          "monto": 1000,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-simple",
+          "nombre": "Simple",
+          "precio": "450 €",
+          "descripcion": "Puesta a punto de hasta 5 fichas (textos e imágenes). Para ordenar y mejorar lo que ya vendes.",
+          "monto": 450,
+          "periodo": "unico"
+        }
+      ],
+      "platos": [
+        {
+          "id": "eco-ficha",
+          "nombre": "Ficha de producto (por 5)",
+          "precio": "120 €",
+          "descripcion": "Textos e imágenes que ayudan a decidir y comprar.",
+          "monto": 120,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-aplus",
+          "nombre": "Contenido A+ / ficha enriquecida",
+          "precio": "150 €",
+          "descripcion": "Página de producto ampliada, estilo Amazon A+.",
+          "monto": 150,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-img",
+          "nombre": "Imágenes de producto (por 10)",
+          "precio": "120 €",
+          "descripcion": "Fotos y montajes listos para la ficha.",
+          "monto": 120,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-store",
+          "nombre": "Diseño de escaparate / Tienda de Amazon",
+          "precio": "350 €",
+          "descripcion": "Tu página de marca dentro de Amazon.",
+          "monto": 350,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-kw",
+          "nombre": "Investigación de palabras clave",
+          "precio": "120 €",
+          "descripcion": "Las búsquedas por las que te deben encontrar.",
+          "monto": 120,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-seo",
+          "nombre": "Optimización SEO de fichas",
+          "precio": "130 €",
+          "descripcion": "Mejor posición y más visitas a tus productos.",
+          "monto": 130,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-banner",
+          "nombre": "Banner o pieza de campaña",
+          "precio": "90 €",
+          "descripcion": "Para rebajas, lanzamientos o temporada.",
+          "monto": 90,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-form",
+          "nombre": "Formación para administrar (1h)",
+          "precio": "60 €",
+          "descripcion": "Te enseñamos a mover tu catálogo sin miedo.",
+          "monto": 60,
+          "periodo": "unico"
+        },
+        {
+          "id": "eco-gestion",
+          "nombre": "Gestión mensual",
+          "precio": "150 €/mes",
+          "descripcion": "Seguimiento, ajustes y soporte al mes.",
+          "monto": 150,
+          "periodo": "mes"
+        }
+      ]
+    },
+    {
+      "id": "packaging",
+      "titulo": "Menú Packaging",
+      "icono": "❑",
+      "intro": "Tres opciones según tu hambre. Arma tu menú plato por plato.",
+      "aclaracion": "Los precios son solo de diseño y archivos listos para imprenta. La impresión y producción física se cotizan aparte; si quieres, la gestionamos.",
+      "packs": [
+        {
+          "id": "pack-completo",
+          "nombre": "Completo",
+          "precio": "1.200 €",
+          "descripcion": "Concepto, diseño de empaque (hasta 3 formatos), etiquetas, línea gráfica, artes finales para imprenta y mockups. El traje completo para tu producto.",
+          "monto": 1200,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-esencial",
+          "nombre": "Esencial",
+          "precio": "650 €",
+          "descripcion": "Diseño de empaque (1 formato) con su etiqueta, artes finales y mockup. Un empaque que se nota en el anaquel.",
+          "monto": 650,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-simple",
+          "nombre": "Simple",
+          "precio": "320 €",
+          "descripcion": "Diseño de la etiqueta de un producto, con su arte final listo para imprimir. Ideal si solo necesitas vestir un producto.",
+          "monto": 320,
+          "periodo": "unico"
+        }
+      ],
+      "platos": [
+        {
+          "id": "pack-concepto",
+          "nombre": "Concepto de línea",
+          "precio": "200 €",
+          "descripcion": "La idea gráfica que une todos tus productos.",
+          "monto": 200,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-empaque",
+          "nombre": "Diseño de empaque (por formato)",
+          "precio": "300 €",
+          "descripcion": "Caja, bolsa o envase diseñado a medida.",
+          "monto": 300,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-etiqueta",
+          "nombre": "Etiqueta de producto",
+          "precio": "150 €",
+          "descripcion": "Etiqueta con toda la información y buen gusto.",
+          "monto": 150,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-sticker",
+          "nombre": "Sticker o sello",
+          "precio": "70 €",
+          "descripcion": "Detalle adhesivo para cerrar o firmar tu producto.",
+          "monto": 70,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-secundario",
+          "nombre": "Packaging secundario",
+          "precio": "180 €",
+          "descripcion": "Bolsa, caja de envío o envoltorio de apoyo.",
+          "monto": 180,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-artes",
+          "nombre": "Artes finales para imprenta",
+          "precio": "90 €",
+          "descripcion": "Archivos listos, con sangrados y troqueles.",
+          "monto": 90,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-mockups",
+          "nombre": "Mockups de producto",
+          "precio": "80 €",
+          "descripcion": "Imágenes realistas para mostrar y vender.",
+          "monto": 80,
+          "periodo": "unico"
+        },
+        {
+          "id": "pack-imprenta",
+          "nombre": "Gestión de impresión",
+          "precio": "100 €",
+          "descripcion": "Buscamos imprenta, pedimos pruebas y cuidamos que salga bien. La impresión se paga a la imprenta.",
+          "monto": 100,
+          "periodo": "unico"
+        }
+      ]
+    },
+    {
+      "id": "redes",
+      "titulo": "Menú Redes",
+      "icono": "◎",
+      "intro": "Tres planes mensuales según tu hambre. Arma tu menú plato por plato.",
+      "packs": [
+        {
+          "id": "redes-completo",
+          "nombre": "Completo",
+          "precio": "600 €/mes",
+          "descripcion": "Estrategia de contenido, 12 a 16 piezas al mes (posts y stories), diseño a medida, calendario, textos y hashtags. Tu cocina siempre encendida.",
+          "monto": 600,
+          "periodo": "mes"
+        },
+        {
+          "id": "redes-esencial",
+          "nombre": "Esencial",
+          "precio": "380 €/mes",
+          "descripcion": "8 piezas al mes, diseño a medida, calendario y textos. Presencia constante, sin que te quite el sueño.",
+          "monto": 380,
+          "periodo": "mes"
+        },
+        {
+          "id": "redes-simple",
+          "nombre": "Simple",
+          "precio": "220 €/mes",
+          "descripcion": "4 piezas al mes, diseño y textos. Lo justo para no desaparecer.",
+          "monto": 220,
+          "periodo": "mes"
+        }
+      ],
+      "platos": [
+        {
+          "id": "redes-kit",
+          "nombre": "Kit de plantillas editables",
+          "precio": "220 €",
+          "descripcion": "Plantillas en tu estilo para que publiques tú.",
+          "monto": 220,
+          "periodo": "unico"
+        },
+        {
+          "id": "redes-post",
+          "nombre": "Diseño de post (por pieza)",
+          "precio": "35 €",
+          "descripcion": "Una pieza suelta, lista para publicar.",
+          "monto": 35,
+          "periodo": "unico"
+        },
+        {
+          "id": "redes-carrusel",
+          "nombre": "Diseño de carrusel",
+          "precio": "60 €",
+          "descripcion": "Varias tarjetas para contar algo con calma.",
+          "monto": 60,
+          "periodo": "unico"
+        },
+        {
+          "id": "redes-story",
+          "nombre": "Diseño de story",
+          "precio": "25 €",
+          "descripcion": "Pieza vertical para el día a día.",
+          "monto": 25,
+          "periodo": "unico"
+        },
+        {
+          "id": "redes-calendario",
+          "nombre": "Calendario de contenido (mensual)",
+          "precio": "120 €",
+          "descripcion": "Qué publicar y cuándo, ordenado para el mes.",
+          "monto": 120,
+          "periodo": "unico"
+        },
+        {
+          "id": "redes-copys",
+          "nombre": "Redacción de textos (por 8)",
+          "precio": "90 €",
+          "descripcion": "Copys con tu voz, listos para copiar y pegar.",
+          "monto": 90,
+          "periodo": "unico"
+        },
+        {
+          "id": "redes-highlights",
+          "nombre": "Portadas de destacados",
+          "precio": "60 €",
+          "descripcion": "Ordena tu perfil con highlights a juego.",
+          "monto": 60,
+          "periodo": "unico"
+        },
+        {
+          "id": "redes-fotos",
+          "nombre": "Sesión de fotos para contenido",
+          "precio": "250 €",
+          "descripcion": "Fotos reales de tu negocio, nada de banco de imágenes.",
+          "monto": 250,
+          "periodo": "unico"
+        },
+        {
+          "id": "redes-reel",
+          "nombre": "Reel o edición de video (por pieza)",
+          "precio": "80 €",
+          "descripcion": "Un video corto, editado a tu estilo.",
+          "monto": 80,
+          "periodo": "unico"
+        }
+      ]
+    },
+    {
+      "id": "editorial",
+      "titulo": "Menú Editorial",
+      "icono": "▤",
+      "intro": "Tres opciones según tu hambre. Arma tu menú plato por plato.",
+      "packs": [
+        {
+          "id": "edi-completo",
+          "nombre": "Completo",
+          "precio": "1.400 €",
+          "descripcion": "Concepto editorial, diseño y maquetación completa (hasta 48 páginas), portada, sistema tipográfico, tratamiento de imagen y artes finales.",
+          "monto": 1400,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-esencial",
+          "nombre": "Esencial",
+          "precio": "750 €",
+          "descripcion": "Maquetación de hasta 24 páginas, portada y artes finales sobre tu contenido. Orden y buena mesa para tus páginas.",
+          "monto": 750,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-simple",
+          "nombre": "Simple",
+          "precio": "380 €",
+          "descripcion": "Maquetación de hasta 12 páginas o díptico/tríptico, con arte final. Un documento bien servido.",
+          "monto": 380,
+          "periodo": "unico"
+        }
+      ],
+      "platos": [
+        {
+          "id": "edi-rejilla",
+          "nombre": "Concepto y rejilla editorial",
+          "precio": "200 €",
+          "descripcion": "La estructura que ordena toda la publicación.",
+          "monto": 200,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-maqueta",
+          "nombre": "Maquetación (por 8 páginas)",
+          "precio": "160 €",
+          "descripcion": "Tu contenido, bien compuesto y legible.",
+          "monto": 160,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-portada",
+          "nombre": "Diseño de portada",
+          "precio": "180 €",
+          "descripcion": "La primera impresión, resuelta con criterio.",
+          "monto": 180,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-folleto",
+          "nombre": "Díptico o tríptico",
+          "precio": "150 €",
+          "descripcion": "Folleto plegable para informar o promocionar.",
+          "monto": 150,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-catalogo",
+          "nombre": "Catálogo (por 12 páginas)",
+          "precio": "240 €",
+          "descripcion": "Tus productos o servicios, ordenados y claros.",
+          "monto": 240,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-imagen",
+          "nombre": "Tratamiento de imagen (por 10)",
+          "precio": "90 €",
+          "descripcion": "Fotos ajustadas para que impriman bien.",
+          "monto": 90,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-info",
+          "nombre": "Infografía o gráfico",
+          "precio": "90 €",
+          "descripcion": "Datos que se entienden de un vistazo.",
+          "monto": 90,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-artes",
+          "nombre": "Artes finales para imprenta",
+          "precio": "90 €",
+          "descripcion": "Archivos listos, con sangrados y marcas.",
+          "monto": 90,
+          "periodo": "unico"
+        },
+        {
+          "id": "edi-digital",
+          "nombre": "Versión digital (PDF interactivo)",
+          "precio": "120 €",
+          "descripcion": "El mismo documento, navegable en pantalla.",
+          "monto": 120,
+          "periodo": "unico"
+        }
+      ]
+    }
+  ]
+}

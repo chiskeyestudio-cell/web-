@@ -213,6 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (respuesta.ok) {
                 formContainer.style.display = "none";
                 mensajeGracias.style.display = "block";
+                // aviso para quien escuche (la carta vacía "Tu comanda")
+                document.dispatchEvent(new CustomEvent('comanda:enviada'));
             } else {
                 alert("Ocurrió un error al enviar. Intenta otra vez.");
             }
