@@ -141,6 +141,17 @@
         head.appendChild(crear('h4', 'carta-pack-nombre', pack.nombre));
         head.appendChild(crear('span', 'carta-precio', pack.precio));
         card.appendChild(head);
+
+        // señuelo: "plato por plato" vs pack (solo si el pack trae `suelto` y sale más caro suelto)
+        if (typeof pack.suelto === 'number' && pack.suelto > pack.monto) {
+            const comp = crear('p', 'carta-pack-suelto');
+            comp.appendChild(document.createTextNode('Plato por plato '));
+            comp.appendChild(crear('span', 'carta-pack-suelto-tachado', euros(pack.suelto)));
+            comp.appendChild(document.createTextNode(' · '));
+            comp.appendChild(crear('span', 'carta-pack-suelto-ahorro', 'Ahorras ' + euros(pack.suelto - pack.monto)));
+            card.appendChild(comp);
+        }
+
         card.appendChild(crear('p', 'carta-pack-desc', pack.descripcion));
 
         const btn = crear('button', 'carta-agregar', 'Agregar');

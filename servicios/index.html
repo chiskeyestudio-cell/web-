@@ -60,6 +60,8 @@ body.page-servicios .carta-layout {
 body.page-servicios .carta-layout *,
 body.page-servicios .carta-layout *::before,
 body.page-servicios .carta-layout *::after { box-sizing: border-box; }
+/* que [hidden] gane a los display:flex de la carta (ej. "Mensual" sin items mensuales) */
+body.page-servicios [hidden] { display: none !important; }
 
 /* la hoja de la carta */
 body.page-servicios .carta {
@@ -230,6 +232,18 @@ body.page-servicios .carta-precio {
   white-space: nowrap;
 }
 body.page-servicios .carta-pack .carta-precio { font-size: 1.05rem; }
+body.page-servicios .carta-pack-suelto {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 0.78rem;
+  color: var(--blue-60);
+  margin: 0 0 0.9rem;
+}
+body.page-servicios .carta-pack-suelto-tachado { text-decoration: line-through; }
+body.page-servicios .carta-pack-suelto-ahorro {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  color: var(--pink);
+}
 body.page-servicios .carta-pack-desc {
   font-family: 'Urbanist', sans-serif;
   font-size: 0.85rem;
