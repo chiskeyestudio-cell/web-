@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presupuesto · Chiskey</title>
+<meta name="description" content="Pide presupuesto para la web de vuestra boda en 2 minutos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--slate:#5B6C8F;--pink:#E91E63;--pink-ink:#C2185B;--peach:#F8A07B;--white:#FFFFFF;--ink:#26304A;--muted:#5B6C8F;--line:#D9DEE8;--peach-soft:#FEEEE6;--err:#B0123F}
+*{box-sizing:border-box}
+html{scroll-padding-top:16px}
+body{margin:0;background:var(--slate);color:var(--ink);font:500 17px/1.55 "Urbanist",system-ui,sans-serif;min-height:100vh}
+main{max-width:640px;margin:0 auto;padding:28px 20px 56px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.brand{display:block;line-height:0}
+.brand img{height:64px;width:auto;max-width:100%;display:block}
+.count{color:var(--white);font-size:15px;font-weight:600}
+.bar{height:6px;background:rgba(255,255,255,.28);border-radius:6px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;width:0;background:var(--peach);border-radius:6px;transition:width .35s ease}
+form,.done{background:var(--white);border-radius:22px;padding:30px 26px}
+@media(max-width:520px){form,.done{padding:24px 18px}}
+h1{font:600 clamp(26px,6vw,36px)/1.15 "Outfit",system-ui,sans-serif;margin:0 0 8px;color:var(--ink)}
+.lead{color:var(--muted);margin:0 0 26px}
+.step{display:none;border:0;padding:0;margin:0}
+.step.on{display:block}
+label.f{display:block;font-weight:600;margin:0 0 18px}
+label.f small{font-weight:500;color:var(--muted);display:block}
+input[type=text],input[type=tel],input[type=date],input[type=number],textarea{width:100%;margin-top:6px;padding:13px 14px;font:inherit;color:var(--ink);background:var(--white);border:2px solid var(--line);border-radius:12px}
+textarea{min-height:110px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible,.opt:focus-within{outline:3px solid var(--pink);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.row{grid-template-columns:1fr}}
+.opt{display:flex;gap:14px;align-items:flex-start;padding:16px;margin-bottom:12px;background:var(--white);border:2px solid var(--line);border-radius:14px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--pink);background:var(--peach-soft)}
+.opt input{margin-top:5px;accent-color:var(--pink);width:18px;height:18px;flex:none}
+.opt b{display:block;font:600 18px "Outfit",system-ui,sans-serif}
+.opt span{color:var(--muted);font-size:15px}
+.price{margin-left:auto;white-space:nowrap;font-weight:700;color:var(--pink-ink);font-size:15px;padding-left:8px}
+.err{color:var(--err);font-size:15px;font-weight:600;margin:-8px 0 14px}
+.q{font:600 19px "Outfit",system-ui,sans-serif;margin:26px 0 12px;color:var(--ink)}
+.q:first-of-type{margin-top:0}
+.q small{display:block;font:500 15px "Urbanist",sans-serif;color:var(--muted)}
+.sws{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+@media(max-width:420px){.sws{grid-template-columns:repeat(2,1fr)}}
+.sw{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--line);border-radius:14px;cursor:pointer;background:var(--white)}
+.sw input{position:absolute;opacity:0;width:1px;height:1px}
+.sw i{width:28px;height:28px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.sw span{font-size:15px;font-weight:600;line-height:1.2}
+.sw:has(input:checked){border-color:var(--pink);background:var(--peach-soft)}
+.sw:focus-within{outline:3px solid var(--pink);outline-offset:2px}
+.sw.off{opacity:.45;cursor:not-allowed}
+.nav{display:flex;gap:12px;margin-top:30px}
+button{font:600 18px "Outfit",sans-serif;padding:14px 28px;border-radius:999px;border:2px solid var(--pink);cursor:pointer}
+.next{background:var(--pink);color:var(--white);margin-left:auto}
+.back{background:transparent;color:var(--pink-ink)}
+button[disabled]{opacity:.6;cursor:wait}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+.done{text-align:center}
+.est{display:inline-block;margin:18px 0 6px;padding:14px 22px;background:var(--peach);border-radius:16px;font:700 28px "Outfit",sans-serif;color:var(--ink)}
+.note{font-size:14px;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<header><a class="brand" href="https://www.chiskey.es/"><img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="chiskey estudio" width="213" height="64"></a><span class="count" id="count" aria-live="polite"></span></header>
+<div class="bar" role="progressbar" aria-valuemin="1" aria-valuemax="5" id="pb"><i id="bar"></i></div>
+
+<form id="form" novalidate autocomplete="on">
+  <div class="hp" aria-hidden="true"><label>No rellenar<input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
+
+  <fieldset class="step on" data-step="1">
+    <h1>Hablemos de vuestra boda</h1>
+    <p class="lead">Con estos datos podemos escribiros directamente por WhatsApp.</p>
+    <label class="f">Vuestros nombres<input type="text" name="nombres" autocomplete="name" required placeholder="Ej.: Laura y Adriano"></label>
+    <div class="err" data-err="nombres"></div>
+    <label class="f">Teléfono / WhatsApp<input type="tel" name="telefono" autocomplete="tel" inputmode="tel" required placeholder="+34 600 000 000"></label>
+    <div class="err" data-err="telefono"></div>
+    <div class="row">
+      <label class="f">Fecha de la boda<small>Aproximada si aún no la sabéis</small><input type="date" name="fecha"></label>
+      <label class="f">Nº aproximado de invitados<small>&nbsp;</small><input type="number" name="invitados" min="1" max="1000" inputmode="numeric"></label>
+    </div>
+  </fieldset>
+
+  <fieldset class="step" data-step="2">
+    <h1>¿Qué formato de web queréis?</h1>
+    <p class="lead">Podréis cambiarlo más adelante, esto es solo para orientarnos.</p>
+    <label class="opt"><input type="radio" name="formato" value="landing"><div><b>Landing sencilla</b><span>Una página vertical, diseño a medida.</span></div><em class="price" style="font-style:normal">desde 150 €</em></label>
+    <label class="opt"><input type="radio" name="formato" value="completa"><div><b>Web completa</b><span>Varias secciones y una experiencia más amplia.</span></div><em class="price" style="font-style:normal">desde 300 €</em></label>
+    <label class="opt"><input type="radio" name="formato" value="medida"><div><b>A medida / No lo tenemos claro</b><span>Necesitamos asesoramiento.</span></div></label>
+    <div class="err" data-err="formato"></div>
+  </fieldset>
+
+  <fieldset class="step" data-step="3">
+    <h1>¿Cómo queréis gestionar las confirmaciones?</h1>
+    <p class="lead">Es lo que más influye en el presupuesto.</p>
+    <label class="opt"><input type="radio" name="confirmaciones" value="forms"><div><b>Formulario externo básico</b><span>Enlace a Google Forms.</span></div></label>
+    <label class="opt"><input type="radio" name="confirmaciones" value="sheets"><div><b>Confirmación directa en la web</b><span>Las respuestas llegan en tiempo real a Google Sheets.</span></div></label>
+    <label class="opt"><input type="radio" name="confirmaciones" value="personalizados"><div><b>Confirmación directa + enlaces personalizados</b><span>Cada invitado recibe un enlace con su nombre.</span></div></label>
+    <div class="err" data-err="confirmaciones"></div>
+  </fieldset>
+
+  <fieldset class="step" data-step="4">
+    <h1>¿Qué extras os gustaría?</h1>
+    <p class="lead">Marcad todos los que queráis, o ninguno.</p>
+    <label class="opt"><input type="checkbox" name="extras" value="musica"><div><b>Música de fondo</b></div></label>
+    <label class="opt"><input type="checkbox" name="extras" value="mapa"><div><b>Mapa interactivo y recomendaciones</b><span>Alojamiento, peluquería, etc.</span></div></label>
+    <label class="opt"><input type="checkbox" name="extras" value="formdetallado"><div><b>Formulario detallado</b><span>Autobús, alergias, intolerancias, canciones.</span></div></label>
+    <label class="opt"><input type="checkbox" name="extras" value="bilingue"><div><b>Web bilingüe / multi-idioma</b></div><em class="price" style="font-style:normal">desde ~400 €</em></label>
+    <label class="opt"><input type="checkbox" name="extras" value="galeria"><div><b>Galería de fotos compartida</b><span>Los invitados suben sus fotos.</span></div></label>
+    <label class="opt"><input type="checkbox" name="extras" value="invitacion"><div><b>Invitación física a juego</b><span>De regalo con la web.</span></div></label>
+  </fieldset>
+
+  <fieldset class="step" data-step="5">
+    <h1>Contadnos cómo sois</h1>
+    <p class="lead">Así diseñamos una web que se parezca a vosotros.</p>
+
+    <p class="q">¿Cómo imagináis vuestra boda?</p>
+    <label class="opt"><input type="radio" name="estilo" value="Elegante y clásica"><div><b>Elegante y clásica</b><span>Sofisticada, atemporal, con aire de gala.</span></div></label>
+    <label class="opt"><input type="radio" name="estilo" value="Romántica y delicada"><div><b>Romántica y delicada</b><span>Suave, luminosa, con mucho detalle.</span></div></label>
+    <label class="opt"><input type="radio" name="estilo" value="Moderna y minimalista"><div><b>Moderna y minimalista</b><span>Líneas limpias y pocos elementos.</span></div></label>
+    <label class="opt"><input type="radio" name="estilo" value="Informal y desenfadada"><div><b>Informal y desenfadada</b><span>Cercana, alegre, sin demasiado protocolo.</span></div></label>
+    <label class="opt"><input type="radio" name="estilo" value="Mezcla de todo"><div><b>Un poco de todo</b><span>Elegante pero con toques divertidos.</span></div></label>
+
+    <p class="q">¿Cómo queréis que suene la web?</p>
+    <label class="opt"><input type="radio" name="tono" value="Formal"><div><b>Formal</b><span>Textos cuidados y solemnes.</span></div></label>
+    <label class="opt"><input type="radio" name="tono" value="Cercano"><div><b>Cercano</b><span>Como si hablarais con vuestros invitados.</span></div></label>
+    <label class="opt"><input type="radio" name="tono" value="Divertido"><div><b>Divertido</b><span>Con humor y guiños entre vosotros.</span></div></label>
+
+    <p class="q">¿Qué colores os representan?<small>Elegid hasta 3.</small></p>
+    <div class="sws" id="sws">
+      <label class="sw"><input type="checkbox" name="colores" value="Blanco roto"><i style="background:#F6F1E7"></i><span>Blanco roto</span></label>
+      <label class="sw"><input type="checkbox" name="colores" value="Verde salvia"><i style="background:#9CAF98"></i><span>Verde salvia</span></label>
+      <label class="sw"><input type="checkbox" name="colores" value="Rosa empolvado"><i style="background:#E3B7B4"></i><span>Rosa empolvado</span></label>
+      <label class="sw"><input type="checkbox" name="colores" value="Terracota"><i style="background:#C26A4A"></i><span>Terracota</span></label>
+      <label class="sw"><input type="checkbox" name="colores" value="Azul"><i style="background:#4A6FA5"></i><span>Azul</span></label>
+      <label class="sw"><input type="checkbox" name="colores" value="Burdeos"><i style="background:#6D1F34"></i><span>Burdeos</span></label>
+      <label class="sw"><input type="checkbox" name="colores" value="Dorado"><i style="background:#C9A24B"></i><span>Dorado</span></label>
+      <label class="sw"><input type="checkbox" name="colores" value="Lavanda"><i style="background:#B7A6D6"></i><span>Lavanda</span></label>
+      <label class="sw"><input type="checkbox" name="colores" value="Negro"><i style="background:#1E1E1E"></i><span>Negro</span></label>
+    </div>
+    <label class="f">¿Otro color o paleta?<small>Por ejemplo: "el amarillo de la casa de la abuela".</small><input type="text" name="colorOtro" placeholder="Opcional"></label>
+
+    <label class="f" style="margin-top:22px">Comentarios o ideas especiales<small>Algo que os encante, o que no queráis ver ni en pintura.</small><textarea name="comentarios" placeholder="Cualquier cosa que queráis contarnos"></textarea></label>
+  </fieldset>
+
+  <div class="err" id="sendErr" role="alert"></div>
+  <div class="nav">
+    <button type="button" class="back" id="back" hidden>Atrás</button>
+    <button type="button" class="next" id="next">Continuar</button>
+  </div>
+</form>
+
+<section id="done" class="done" hidden>
+  <h1>¡Gracias, <span id="dn"></span>!</h1>
+  <p class="lead">Hemos recibido vuestra solicitud. Os escribiremos por WhatsApp muy pronto.</p>
+  <div id="estBox" hidden><div class="est" id="est"></div><p class="note">Estimación orientativa. El precio final se confirma tras hablar con vosotros.</p></div>
+</section>
+</main>
+
+<script>
+// ====== CONFIGURACIÓN ======
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbyOVRsLbjVSMA2fv93LlwSVXhH8_oEvQ9I_ueNLpFcXJwGFW2F6cLacDrCg_lq1diEQ/exec"; // termina en /exec
+const SHOW_ESTIMATE_TO_CLIENT = true;                    // false = solo lo recibes tú
+const PRICES = {
+  formato: { landing:150, completa:300, medida:300 },
+  confirmaciones: { forms:0, sheets:50, personalizados:100 },
+  extras: { musica:0, mapa:30, formdetallado:40, bilingue:100, galeria:60, invitacion:0 }
+};
+const RANGE = 0.15; // ±15 % para el rango orientativo
+// ===========================
+
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const form = $("#form"), steps = $$(".step"), TOTAL = steps.length;
+let cur = 0;
+const val = n => (form.elements[n].value || "").trim();
+const radio = n => (form.querySelector(`input[name=${n}]:checked`) || {}).value || "";
+const colores = () => [...$$("input[name=colores]:checked").map(i=>i.value), val("colorOtro")].filter(Boolean).join(", ");
+const extras = () => $$("input[name=extras]:checked").map(i => i.value);
+
+function estimate(){
+  const f = radio("formato"), c = radio("confirmaciones"), ex = extras();
+  const total = (PRICES.formato[f]||0) + (PRICES.confirmaciones[c]||0) + ex.reduce((s,e)=>s+(PRICES.extras[e]||0),0);
+  return { total, min: Math.round(total*(1-RANGE)/10)*10, max: Math.round(total*(1+RANGE)/10)*10 };
+}
+function show(i){
+  cur = i;
+  steps.forEach((s,k)=>s.classList.toggle("on",k===i));
+  $("#back").hidden = i===0;
+  $("#next").textContent = i===TOTAL-1 ? "Enviar solicitud" : "Continuar";
+  $("#count").textContent = `Paso ${i+1} de ${TOTAL}`;
+  $("#bar").style.width = ((i+1)/TOTAL*100)+"%";
+  $("#pb").setAttribute("aria-valuenow", i+1);
+  $("#sendErr").textContent = "";
+  window.scrollTo({top:0,behavior:"smooth"});
+  const first = steps[i].querySelector("input,textarea"); if(first && i===0) first.focus({preventScroll:true});
+}
+function setErr(k,msg){ const e=$(`[data-err=${k}]`); if(e) e.textContent=msg||""; }
+function validate(i){
+  let ok = true;
+  if(i===0){
+    const n = val("nombres"), t = val("telefono").replace(/[\s.\-()]/g,"");
+    setErr("nombres", n.length<2 ? "Escribid vuestros nombres." : "");
+    setErr("telefono", /^\+?\d{9,15}$/.test(t) ? "" : "Introducid un teléfono válido, por ejemplo +34 600 000 000.");
+    ok = n.length>=2 && /^\+?\d{9,15}$/.test(t);
+  }
+  if(i===1){ ok = !!radio("formato"); setErr("formato", ok?"":"Elegid una opción para continuar."); }
+  if(i===2){ ok = !!radio("confirmaciones"); setErr("confirmaciones", ok?"":"Elegid una opción para continuar."); }
+  return ok;
+}
+async function submit(){
+  const est = estimate();
+  const data = {
+    nombres:val("nombres"), telefono:val("telefono"), fecha:val("fecha"), invitados:val("invitados"),
+    formato:radio("formato"), confirmaciones:radio("confirmaciones"), extras:extras().join(", "),
+    estilo:radio("estilo"), tono:radio("tono"), colores:colores(), comentarios:val("comentarios"),
+    presupuesto_estimado:est.total, rango:`${est.min}-${est.max}`, web:val("web"),
+    origen:location.href
+  };
+  const btn = $("#next"); btn.disabled = true; btn.textContent = "Enviando…";
+  try{
+    if(!ENDPOINT.startsWith("https://")) throw new Error("Endpoint sin configurar");
+    // text/plain evita el preflight CORS con Apps Script
+    await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
+    form.hidden = true; $(".bar").hidden = true; $("#count").hidden = true;
+    $("#dn").textContent = data.nombres;
+    if(SHOW_ESTIMATE_TO_CLIENT && est.total>0){
+      $("#est").textContent = `${est.min} € – ${est.max} €`; $("#estBox").hidden = false;
+    }
+    $("#done").hidden = false; window.scrollTo({top:0});
+  }catch(e){
+    $("#sendErr").textContent = "No hemos podido enviar el formulario. Probad de nuevo o escribidnos por WhatsApp.";
+    btn.disabled = false; btn.textContent = "Enviar solicitud";
+  }
+}
+$("#next").addEventListener("click",()=>{ if(!validate(cur)) return; cur<TOTAL-1 ? show(cur+1) : submit(); });
+$("#back").addEventListener("click",()=>show(cur-1));
+form.addEventListener("keydown",e=>{ if(e.key==="Enter" && e.target.tagName!=="TEXTAREA"){ e.preventDefault(); $("#next").click(); } });
+$$("input[type=radio]").forEach(r=>r.addEventListener("change",()=>{ setErr(r.name,""); }));
+$$("input[name=colores]").forEach(c=>c.addEventListener("change",()=>{
+  const on=$$("input[name=colores]:checked");
+  if(on.length>3) c.checked=false;
+  const full=$$("input[name=colores]:checked").length>=3;
+  $$("input[name=colores]").forEach(i=>i.closest(".sw").classList.toggle("off",full&&!i.checked));
+}));
+show(0);
+</script>
+</body>
+</html>
