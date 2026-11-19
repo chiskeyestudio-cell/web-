@@ -2,60 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- /comanda/ (QR y enlaces antiguos): la home con La comanda de Reservas abierta.
+         La abre /inicio.js al ver ?comanda=1. Se conservan los demás parámetros y el #. -->
+    <meta http-equiv="refresh" content="0; url=/?comanda=1">
+    <link rel="canonical" href="https://www.chiskey.es/">
     <meta name="robots" content="noindex">
-    <title>La comanda | chiskey estudio</title>
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
-    <link rel="stylesheet" href="/styles.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- la hoja de La comanda (la misma que abre el botón Reservas): /reserva/ -->
-    <link rel="stylesheet" href="/reserva/reserva.css">
-    <!-- solo /comanda/: la hoja centrada en la página -->
-    <link rel="stylesheet" href="/comanda/comanda.css">
+    <title>chiskey estudio</title>
+    <script>
+        (function () {
+            var q = new URLSearchParams(location.search);
+            q.set('comanda', '1');
+            location.replace('/?' + q.toString() + location.hash);
+        })();
+    </script>
 </head>
-<body class="page-comanda">
-
-    <header class="navbar">
-        <div class="logo">
-            <a href="/">
-                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo de la Empresa">
-            </a>
-        </div>
-        <nav class="menu">
-            <a href="#" id="menu-toggle" data-content="menu">Índice</a>
-        </nav>
-    </header>
-
-    <main class="comanda-page">
-        <!-- Copia del modal de Reservas: si cambia el modal, actualizar aquí también.
-             (No es una copia del HTML: es la misma hoja de /reserva/reserva.js en modo "en página".
-              reserva.js la construye dentro de este contenedor; data-origen va como campo oculto.) -->
-        <div class="comanda-hoja" data-reserva-en-pagina data-origen="pagina-comanda"></div>
-    </main>
-
-    <footer class="footer">
-        <div class="social-icons overlay-social-icons">
-            <a href="https://www.instagram.com/chiskey.estudio/" target="_blank">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
-            </a>
-            <a href="https://www.tiktok.com/@chiskey.estudio?is_from_webapp=1&sender_device=pc" target="_blank">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok">
-            </a>
-            <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
-            </a>
-        </div>
-        <span>©2025</span>
-    </footer>
-
-    <script src="/reserva/reserva.js"></script>
-    <script src="/main.js"></script>
-
+<body>
+    <a href="/?comanda=1">Abrir la comanda de chiskey →</a>
 </body>
 </html>

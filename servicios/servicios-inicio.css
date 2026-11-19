@@ -369,16 +369,24 @@ body.page-servicios .servicios-inicio-capa .servicios-inicio-etiqueta--comanda {
 .servicios-inicio-enviar:disabled { opacity: 0.6; cursor: progress; }
 
 /* gracias */
-.servicios-inicio-gracias { text-align: center; padding: 24px 0 8px; }
-.servicios-inicio-gracias-img { width: 140px; max-width: 50%; height: auto; }
+/* solo texto: "Comanda / en cocina" en dos líneas; texto y plazo en azul */
+.servicios-inicio-gracias { text-align: center; padding: 32px 0 12px; }
 .servicios-inicio-gracias-titulo {
   font-family: 'Outfit', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 6vw, 2.8rem);
-  line-height: 1;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vw, 3.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
   color: var(--rosa);
-  margin: 14px 0 12px;
+  margin: 0 0 18px;
   outline: none;
+}
+.servicios-inicio-gracias-titulo span { display: block; }
+/* recibe el foco al enviar (para el lector), sin recuadro */
+.servicios-inicio-capa .servicios-inicio-gracias-titulo:focus,
+.servicios-inicio-capa .servicios-inicio-gracias-titulo:focus-visible { outline: none; }
+@media (max-width: 640px) {
+  .servicios-inicio-gracias:not([hidden]) { flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center; }
 }
 .servicios-inicio-gracias p {
   font-size: 1rem;

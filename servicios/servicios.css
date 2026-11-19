@@ -1103,23 +1103,29 @@ body.page-servicios .cmd-copiar {
 body.page-servicios .cmd-copiar:hover { color: var(--rosa); }
 
 /* gracias */
+/* gracias, solo texto: "Comanda / en cocina" en dos líneas; texto y plazo en azul */
 body.page-servicios .cmd-gracias {
   text-align: center;
-  padding: 24px 0 8px;
-}
-body.page-servicios .cmd-gracias-img {
-  width: 140px;
-  max-width: 50%;
-  height: auto;
+  padding: 32px 0 12px;
 }
 body.page-servicios .cmd-gracias-titulo {
   font-family: 'Outfit', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 6vw, 2.8rem);
-  line-height: 1;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vw, 3.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
   color: var(--rosa);
-  margin: 14px 0 12px;
+  margin: 0 0 18px;
   outline: none;
+}
+body.page-servicios .cmd-gracias-titulo span { display: block; }
+/* recibe el foco al enviar (para el lector), sin recuadro */
+body.page-servicios .cmd-capa .cmd-gracias-titulo:focus,
+body.page-servicios .cmd-capa .cmd-gracias-titulo:focus-visible { outline: none; }
+/* en móvil la hoja es pantalla completa: el bloque de gracias, centrado en vertical */
+@media (max-width: 640px) {
+  body.page-servicios .cmd-papel:has(.cmd-gracias:not([hidden])) { display: flex; flex-direction: column; }
+  body.page-servicios .cmd-gracias:not([hidden]) { flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center; }
 }
 body.page-servicios .cmd-gracias p {
   font-size: 1rem;

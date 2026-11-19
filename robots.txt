@@ -1,0 +1,7 @@
+# Todo se puede rastrear. Las páginas privadas (/tupedido/, /servicios-completos/,
+# /comanda/ y las redirecciones .html) llevan <meta name="robots" content="noindex">;
+# no se bloquean aquí para que Google pueda leer esa etiqueta.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.chiskey.es/sitemap.xml

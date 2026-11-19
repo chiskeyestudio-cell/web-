@@ -2,14 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- URL antigua: redirige a la nueva ruta sin .html -->
-    <meta http-equiv="refresh" content="0; url=/comanda/">
-    <link rel="canonical" href="https://www.chiskey.es/comanda/">
+    <!-- URL antigua: directo a la home con La comanda abierta (sin pasar por /comanda/) -->
+    <meta http-equiv="refresh" content="0; url=/?comanda=1">
+    <link rel="canonical" href="https://www.chiskey.es/">
     <meta name="robots" content="noindex">
     <title>chiskey estudio</title>
-    <script>location.replace('/comanda/' + location.search + location.hash);</script>
+    <script>
+        (function () {
+            var q = new URLSearchParams(location.search);
+            q.set('comanda', '1');
+            location.replace('/?' + q.toString() + location.hash);
+        })();
+    </script>
 </head>
 <body>
-    <a href="/comanda/">Seguir a chiskey →</a>
+    <a href="/?comanda=1">Abrir la comanda de chiskey →</a>
 </body>
 </html>

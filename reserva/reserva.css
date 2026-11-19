@@ -5,8 +5,7 @@
    servicios.css (.cmd-*) a clases propias .rsv-*. Lógica: /reserva/reserva.js
    Todo cuelga de .rsv-capa: no toca nada fuera de la comanda.
    ============================================================ */
-.rsv-capa,
-.rsv-en-pagina {
+.rsv-capa {
   --azul: #5B6C8F;
   --rosa: #E91E63;
   --crema-claro: #FBF8F2;
@@ -14,25 +13,17 @@
   --linea: rgba(91, 108, 143, 0.28);
   --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .25 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-}
-.rsv-capa {
+
   position: fixed;
   inset: 0;
   z-index: 95000;                 /* sobre el header (91000), bajo el cursor fuego */
   text-align: left;
 }
 .rsv-capa[hidden] { display: none !important; }
-.rsv-capa [hidden],
-.rsv-en-pagina [hidden] { display: none !important; }
+.rsv-capa [hidden] { display: none !important; }
 .rsv-capa *,
 .rsv-capa *::before,
-.rsv-capa *::after,
-.rsv-en-pagina *,
-.rsv-en-pagina *::before,
-.rsv-en-pagina *::after { box-sizing: border-box; }
-/* modo en página (/comanda/): la hoja dentro del flujo (ajustes de cada página en su css) */
-.rsv-en-pagina { text-align: left; }
-.rsv-en-pagina .rsv-volver { display: inline-flex; align-items: center; text-decoration: none; }
+.rsv-capa *::after { box-sizing: border-box; }
 
 /* con la comanda abierta, la página de atrás no se mueve */
 html.rsv-abierta,
@@ -47,13 +38,10 @@ html.rsv-abierta body { overflow: hidden !important; }
   white-space: nowrap;
   border: 0;
 }
-.rsv-capa :focus-visible,
-.rsv-en-pagina :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
+.rsv-capa :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
 /* la hoja recibe el foco al abrirse (para el teclado y el lector), sin recuadro */
 .rsv-capa .rsv-papel:focus,
-.rsv-capa .rsv-papel:focus-visible,
-.rsv-en-pagina .rsv-papel:focus,
-.rsv-en-pagina .rsv-papel:focus-visible { outline: none; }
+.rsv-capa .rsv-papel:focus-visible { outline: none; }
 
 .rsv-fondo {
   position: absolute;
@@ -407,24 +395,25 @@ html.rsv-abierta body { overflow: hidden !important; }
 .rsv-enviar:disabled { opacity: 0.6; cursor: progress; }
 
 /* gracias */
+/* solo texto: título "Comanda / en cocina" en dos líneas, texto y plazo en azul, Cerrar */
 .rsv-gracias {
   text-align: center;
-  padding: 24px 0 8px;
-}
-.rsv-gracias-img {
-  width: 140px;
-  max-width: 50%;
-  height: auto;
+  padding: 32px 0 12px;
 }
 .rsv-gracias-titulo {
   font-family: 'Outfit', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 6vw, 2.8rem);
-  line-height: 1;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vw, 3.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
   color: var(--rosa);
-  margin: 14px 0 12px;
+  margin: 0 0 18px;
   outline: none;
 }
+.rsv-gracias-titulo span { display: block; }
+/* recibe el foco al enviar (para el lector), sin recuadro */
+.rsv-capa .rsv-gracias-titulo:focus,
+.rsv-capa .rsv-gracias-titulo:focus-visible { outline: none; }
 .rsv-gracias p {
   font-size: 1rem;
   font-weight: 600;
@@ -538,6 +527,7 @@ html.rsv-abierta body { overflow: hidden !important; }
   .rsv-campos { flex: 1 0 auto; grid-template-rows: repeat(4, auto) 1fr; }
   .rsv-campo--indicaciones textarea { height: 100%; }
   .rsv-campo--indicaciones label { align-items: flex-start; padding-top: 10px; }
+  .rsv-gracias:not([hidden]) { flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center; }
   /* el mismo aire arriba y abajo de la tabla: Indicaciones → Concepto = Concepto → botón */
   .rsv-tabla-wrap { margin-top: 30px; }
   .rsv-acciones { padding-top: 18px; }   /* + 12px de margen propio = 30px */

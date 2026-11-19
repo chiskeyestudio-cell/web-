@@ -58,3 +58,37 @@
     new MutationObserver(intentar).observe(entrada, { attributes: true, attributeFilter: ['class'] });
     intentar();
 })();
+
+// ── ?comanda=1 (QR y /comanda/): la home con La comanda de Reservas abierta ──
+// Espera a que la página esté lista (inicio-listo; tope 1,5 s) y pulsa por código el
+// botón Reservas de la cabecera: el mismo camino de siempre (main.js → Reserva.abrir()).
+// Marca el envío con origen="qr-comanda" y limpia el parámetro de la URL.
+(function () {
+    const url = new URL(location.href);
+    if (url.searchParams.get('comanda') !== '1') return;
+    const html = document.documentElement;
+    let hecho = false;
+
+    function abrir() {
+        if (hecho) return;
+        hecho = true;
+        const boton = document.querySelector('.navbar .reservas-btn, .reservas-btn');
+        if (boton) boton.click();
+        // el formulario de la hoja existe ya (reserva.js lo construye al abrir): campo oculto de origen
+        const form = document.querySelector('.rsv-form');
+        if (form && !form.querySelector('input[name="origen"]')) {
+            const origen = document.createElement('input');
+            origen.type = 'hidden';
+            origen.name = 'origen';
+            origen.value = 'qr-comanda';
+            form.appendChild(origen);
+        }
+        url.searchParams.delete('comanda');
+        history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+    }
+
+    if (html.classList.contains('inicio-listo')) { abrir(); return; }
+    const obs = new MutationObserver(() => { if (html.classList.contains('inicio-listo')) { obs.disconnect(); abrir(); } });
+    obs.observe(html, { attributes: true, attributeFilter: ['class'] });
+    setTimeout(() => { obs.disconnect(); abrir(); }, 1500);
+})();
