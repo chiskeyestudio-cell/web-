@@ -8,7 +8,10 @@
 //  - "Ver la carta" está siempre a mano para añadir o cambiar platos.
 // En /servicios/ no se carga: allí Reservas abre la comanda de la carta (servicios.js).
 // main.js llama a Reserva.abrir() desde openModal().
-// Estilos: /reserva/reserva.css (todo bajo .rsv-capa).
+// MODO EN PÁGINA (/comanda/): si la página tiene <div data-reserva-en-pagina>, la misma hoja
+// se pinta ahí, fija, sin capa, sin cerrar y sin bloquear el scroll. data-origen="…" añade
+// un campo oculto "origen" al envío. En gracias, "Cerrar" pasa a ser "Volver al inicio".
+// Estilos: /reserva/reserva.css (todo bajo .rsv-capa o .rsv-en-pagina).
 // ==========================================================
 (function () {
     const FORMSPREE = 'https://formspree.io/f/xyzovndj';   // el mismo destino de siempre
@@ -23,6 +26,8 @@
     let filasEl = null, pieEl = null, indicacionesEl = null, indicReqEl = null, pedidoEl = null;
     let ivaEl = null, subtotalEl = null, ivaFilaEl = null, ivaValorEl = null, totalEl = null, mensualFilaEl = null, mensualEl = null;
     let abierta = false, opener = null;
+    // modo en página: el contenedor donde se pinta la hoja (null = hoja flotante de siempre)
+    const enPagina = document.querySelector('[data-reserva-en-pagina]');
 
     // ── platos guardados desde la carta ─────────────────────
     let itemsPorId = null;      // se llena con menus-data.json la primera vez que hace falta
@@ -169,18 +174,13 @@
 
     // ── la hoja (se construye la primera vez que se abre) ───
     function construir() {
-        capa = crear('div', 'rsv-capa');
-        capa.hidden = true;
-        const fondo = crear('div', 'rsv-fondo');
-        fondo.setAttribute('data-rsv-cerrar', '');
-        const scroll = crear('div', 'rsv-scroll');
-        scroll.setAttribute('data-rsv-cerrar', '');
-
-        papel = crear('div', 'rsv-papel');
-        papel.setAttribute('role', 'dialog');
-        papel.setAttribute('aria-modal', 'true');
+        papel = crear(enPagina ? 'section' : 'div', 'rsv-papel');
         papel.setAttribute('aria-labelledby', 'rsv-titulo');
         papel.tabIndex = -1;
+        if (!enPagina) {
+            papel.setAttribute('role', 'dialog');
+            papel.setAttribute('aria-modal', 'true');
+        }
 
         const barra = crear('div', 'rsv-barra');
         const cerrarBtn = crear('button', 'rsv-cerrar');
@@ -205,6 +205,12 @@
         asunto.value = 'Reserva desde la web (' + (location.pathname || '/') + ')';
         pedidoEl = entrada('hidden', 'pedido');
         form.append(asunto, pedidoEl);
+        // en página: de dónde viene la comanda (p. ej. origen="pagina-comanda")
+        if (enPagina && enPagina.dataset.origen) {
+            const origen = entrada('hidden', 'origen');
+            origen.value = enPagina.dataset.origen;
+            form.appendChild(origen);
+        }
 
         const campos = crear('div', 'rsv-campos');
         indicacionesEl = document.createElement('textarea');
@@ -284,19 +290,45 @@
         img.alt = '';
         tituloGracias = crear('h2', 'rsv-gracias-titulo', 'Comanda en cocina');
         tituloGracias.tabIndex = -1;
-        const volver = crear('button', 'rsv-volver', 'Cerrar');
-        volver.type = 'button';
-        volver.addEventListener('click', cerrar);
+        // en página no hay nada que cerrar: el botón pasa a ser un enlace al inicio
+        let volver;
+        if (enPagina) {
+            volver = crear('a', 'rsv-volver', 'Volver al inicio');
+            volver.href = '/';
+        } else {
+            volver = crear('button', 'rsv-volver', 'Cerrar');
+            volver.type = 'button';
+            volver.addEventListener('click', cerrar);
+        }
         vistaGracias.append(img, tituloGracias,
             crear('p', null, 'Gracias por tu reserva. Te contestaremos lo antes posible.'),
             crear('p', 'rsv-respuesta', 'Tiempo de respuesta: 2 horas'),
             volver);
 
+        if (enPagina) {
+            // sin capa ni botón de cerrar: la hoja vive en la página
+            papel.append(vistaForm, vistaGracias);
+            enPagina.classList.add('rsv-en-pagina');
+            enPagina.appendChild(papel);
+            return;
+        }
         papel.append(barra, vistaForm, vistaGracias);
+        capa = crear('div', 'rsv-capa');
+        capa.hidden = true;
+        const fondo = crear('div', 'rsv-fondo');
+        fondo.setAttribute('data-rsv-cerrar', '');
+        const scroll = crear('div', 'rsv-scroll');
+        scroll.setAttribute('data-rsv-cerrar', '');
         scroll.appendChild(papel);
         capa.append(fondo, scroll);
         capa.addEventListener('click', e => { if (e.target.hasAttribute('data-rsv-cerrar')) cerrar(); });
         document.body.appendChild(capa);
+    }
+    // sube al principio de la hoja (en la capa, su scroll interno; en página, la ventana)
+    function alPrincipio() {
+        if (capa) { capa.querySelector('.rsv-scroll').scrollTop = 0; return; }
+        const quieta = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        papel.scrollIntoView({ behavior: quieta ? 'auto' : 'smooth', block: 'start' });
     }
 
     // ── pintar lo pedido ────────────────────────────────────
@@ -419,8 +451,8 @@
             if (seleccion.length) { try { localStorage.setItem(STORAGE_KEY, '[]'); } catch (e2) {} }
             vistaForm.hidden = true;
             vistaGracias.hidden = false;
-            capa.querySelector('.rsv-scroll').scrollTop = 0;
-            tituloGracias.focus();
+            alPrincipio();
+            tituloGracias.focus({ preventScroll: !!enPagina });
         } catch (err) {
             errorEl.textContent = 'No pudimos enviar la comanda. Revisen la conexión e intenten de nuevo, o escríbannos a estudio@chiskey.com.';
             errorEl.hidden = false;
@@ -428,6 +460,18 @@
             enviarEl.disabled = false;
             enviarEl.textContent = 'Enviar comanda';
         }
+    }
+
+    if (enPagina) {
+        // la hoja se pinta al cargar; Reserva.abrir() solo la trae a la vista
+        construir();
+        pintarPedido();
+        if (leerGuardado().length) cargarCarta().then(() => { if (vistaGracias.hidden) pintarPedido(); });
+        window.Reserva = {
+            abrir: () => { alPrincipio(); papel.focus({ preventScroll: true }); },
+            cerrar: () => {}
+        };
+        return;
     }
 
     window.Reserva = { abrir, cerrar };

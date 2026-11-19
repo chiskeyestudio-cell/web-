@@ -5,7 +5,8 @@
    servicios.css (.cmd-*) a clases propias .rsv-*. Lógica: /reserva/reserva.js
    Todo cuelga de .rsv-capa: no toca nada fuera de la comanda.
    ============================================================ */
-.rsv-capa {
+.rsv-capa,
+.rsv-en-pagina {
   --azul: #5B6C8F;
   --rosa: #E91E63;
   --crema-claro: #FBF8F2;
@@ -13,17 +14,25 @@
   --linea: rgba(91, 108, 143, 0.28);
   --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .25 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-
+}
+.rsv-capa {
   position: fixed;
   inset: 0;
   z-index: 95000;                 /* sobre el header (91000), bajo el cursor fuego */
   text-align: left;
 }
 .rsv-capa[hidden] { display: none !important; }
-.rsv-capa [hidden] { display: none !important; }
+.rsv-capa [hidden],
+.rsv-en-pagina [hidden] { display: none !important; }
 .rsv-capa *,
 .rsv-capa *::before,
-.rsv-capa *::after { box-sizing: border-box; }
+.rsv-capa *::after,
+.rsv-en-pagina *,
+.rsv-en-pagina *::before,
+.rsv-en-pagina *::after { box-sizing: border-box; }
+/* modo en página (/comanda/): la hoja dentro del flujo (ajustes de cada página en su css) */
+.rsv-en-pagina { text-align: left; }
+.rsv-en-pagina .rsv-volver { display: inline-flex; align-items: center; text-decoration: none; }
 
 /* con la comanda abierta, la página de atrás no se mueve */
 html.rsv-abierta,
@@ -38,10 +47,13 @@ html.rsv-abierta body { overflow: hidden !important; }
   white-space: nowrap;
   border: 0;
 }
-.rsv-capa :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
+.rsv-capa :focus-visible,
+.rsv-en-pagina :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
 /* la hoja recibe el foco al abrirse (para el teclado y el lector), sin recuadro */
 .rsv-capa .rsv-papel:focus,
-.rsv-capa .rsv-papel:focus-visible { outline: none; }
+.rsv-capa .rsv-papel:focus-visible,
+.rsv-en-pagina .rsv-papel:focus,
+.rsv-en-pagina .rsv-papel:focus-visible { outline: none; }
 
 .rsv-fondo {
   position: absolute;
