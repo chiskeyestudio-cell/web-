@@ -1,0 +1,596 @@
+/* ============================================================
+   LA TARTA · contacto rápido por WhatsApp o llamada
+   Componente propio (no depende de styles.css ni toca main.js).
+   Lo crea /tarta/tarta.js. Todo con prefijo .tarta-
+   Capas: tarta 6000 · fondo 6001 · panel 6002
+     (bajo el overlay del menú 90000, el header 91000, la comanda de
+      servicios y el visor de proyectos 95000 y el modal global 999999)
+   ============================================================ */
+
+/* ── FLOTACIÓN EN REPOSO: ajustar aquí sin tocar la lógica ── */
+.tarta {
+  --t-flota-y: 10px;        /* cuánto sube (escritorio) */
+  --t-flota-giro: 4deg;     /* balanceo a cada lado */
+  --t-flota-ciclo: 3.6s;    /* duración de un vaivén completo */
+}
+@media (max-width: 600px) {
+  .tarta { --t-flota-y: 7px; --t-flota-giro: 3deg; }
+}
+
+/* el fondo no se desplaza mientras la hoja inferior está abierta (iOS incluido) */
+html body.tarta-lock {
+  position: fixed !important;
+  top: var(--tarta-scroll-y, 0) !important;
+  left: 0;
+  right: 0;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.tarta {
+  --t-azul: #5B6C8F;
+  --t-rosa: #E91E63;
+  --t-melocoton: #F8A07B;
+  --t-crema: #F7F3EA;
+  --t-crema-claro: #FBF8F2;
+  --t-galleta: #D9C9A8;      /* neutro de papel tostado: migas de la base */
+  --t-linea: rgba(91, 108, 143, 0.3);
+  --t-sombra: 0 18px 40px -14px rgba(46, 56, 80, 0.45);
+  --t-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-ancho: 88px;
+  --t-margen: 24px;
+  --t-alto: calc(var(--t-ancho) * 0.712);   /* proporción de la imagen recortada (264×188) */
+
+  position: fixed;
+  right: var(--t-margen);
+  bottom: calc(var(--t-margen) + env(safe-area-inset-bottom, 0px));
+  z-index: 6000;
+  font-family: 'Urbanist', sans-serif;
+  color: var(--t-azul);
+}
+.tarta *, .tarta *::before, .tarta *::after { box-sizing: border-box; }
+.tarta [hidden] { display: none !important; }
+
+/* con el menú overlay, el modal global u otra capa abierta: ni se ve ni intercepta clics */
+.tarta.tarta--oculta,
+.tarta.tarta--oculta * {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ── BOTÓN ── */
+.tarta-btn {
+  position: relative;
+  display: block;
+  width: var(--t-ancho);
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  background: none;
+  cursor: pointer;
+  transition: opacity 0.25s ease, visibility 0s linear 0s;
+  -webkit-tap-highlight-color: transparent;
+}
+/* lo que flota es el envoltorio interno: el botón (área de clic) no se mueve */
+.tarta-flota {
+  position: relative;
+  display: block;
+  filter: drop-shadow(0 6px 8px rgba(46, 56, 80, 0.18));
+  animation: tartaFlotar var(--t-flota-ciclo) ease-in-out infinite;
+}
+/* sombra en el suelo: se encoge y aclara cuando la tarta sube */
+.tarta-sombra {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: -9px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(46, 56, 80, 0.38), rgba(46, 56, 80, 0));
+  animation: tartaSombra var(--t-flota-ciclo) ease-in-out infinite;
+  pointer-events: none;
+}
+.tarta--quieta .tarta-flota,
+.tarta--quieta .tarta-sombra { animation-play-state: paused; }
+.tarta-btn:focus-visible {
+  outline: 3px solid var(--t-rosa);
+  outline-offset: 6px;
+}
+.tarta-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.35s var(--t-ease);
+  transform-origin: 50% 85%;
+}
+@keyframes tartaFlotar {
+  0%, 100% { transform: translateY(0) rotate(calc(var(--t-flota-giro) * -1)); }
+  50%      { transform: translateY(calc(var(--t-flota-y) * -1)) rotate(var(--t-flota-giro)); }
+}
+@keyframes tartaSombra {
+  0%, 100% { transform: scaleX(1);    opacity: 1; }
+  50%      { transform: scaleX(0.72); opacity: 0.5; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .tarta-btn:hover .tarta-img { transform: rotate(-8deg) scale(1.06); }
+}
+
+/* ── MORDIDA: máscara de círculos sobre la esquina superior derecha ──
+   (ellipse con % de ancho y alto = círculo en una imagen de 1,40:1) */
+.tarta-btn.is-mordida-1 .tarta-img {
+  -webkit-mask-image: var(--t-mascara);
+          mask-image: var(--t-mascara);
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+}
+/* tamaños pensados para que el mordisco se lea también a 64-76px en móvil */
+.tarta-btn.is-mordida-1 {
+  --t-mascara:
+    radial-gradient(ellipse 21% 29.5% at 95% 9%, #0000 97%, #000 100%),
+    radial-gradient(ellipse 12% 17% at 78% 3%, #0000 97%, #000 100%),
+    radial-gradient(ellipse 11% 15.5% at 99.5% 32%, #0000 97%, #000 100%);
+}
+/* apretón breve al morder */
+.tarta-btn.is-mordiendo .tarta-img { animation: tartaNam 0.24s var(--t-ease); }
+@keyframes tartaNam {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(0.9, 1.07); }
+  100% { transform: scale(1); }
+}
+
+/* migas: saltan desde el mordisco y caen (CSS puro) */
+.tarta-migas {
+  position: absolute;
+  left: 86%;
+  top: 8%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.tarta-migas i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 5px;
+  border-radius: 2px 3px 2px 3px;
+  background: var(--t-melocoton);
+  opacity: 0;
+}
+.tarta-migas i:nth-child(1) { --dx: 16px;  --sube: -14px; --cae: 24px; --r: 140deg; }
+.tarta-migas i:nth-child(2) { --dx: 4px;   --sube: -20px; --cae: 32px; --r: -100deg; background: var(--t-galleta); }
+.tarta-migas i:nth-child(3) { --dx: 22px;  --sube: -6px;  --cae: 36px; --r: 220deg; width: 4px; height: 4px; }
+.tarta-migas i:nth-child(4) { --dx: -8px;  --sube: -12px; --cae: 28px; --r: -170deg; background: var(--t-galleta); width: 5px; }
+.tarta-btn.is-migas .tarta-migas i { animation: tartaMiga 0.52s cubic-bezier(0.3, 0.6, 0.5, 1) 0.16s both; }
+@keyframes tartaMiga {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(0); }
+  12%  { opacity: 1; }
+  45%  { transform: translate(calc(var(--dx) * 0.6), var(--sube)) rotate(calc(var(--r) * 0.5)); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--cae)) rotate(var(--r)); }
+}
+
+/* ── GLOBITO ── */
+.tarta-globito {
+  position: absolute;
+  right: 6px;
+  bottom: calc(100% + 12px);
+  padding: 9px 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--t-rosa);
+  background: var(--t-crema-claro);
+  color: var(--t-azul);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.86rem;
+  white-space: nowrap;
+  box-shadow: var(--t-sombra);
+  animation: tartaGlobito 0.4s var(--t-ease) both;
+  pointer-events: none;
+}
+.tarta-globito::after {
+  content: '';
+  position: absolute;
+  right: 26px;
+  top: 100%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  background: var(--t-crema-claro);
+  border-right: 1.5px solid var(--t-rosa);
+  border-bottom: 1.5px solid var(--t-rosa);
+  transform: rotate(45deg);
+}
+@keyframes tartaGlobito {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── PANEL (escritorio: anclado sobre la tarta) ── */
+.tarta-panel {
+  position: fixed;
+  right: var(--t-margen);
+  bottom: calc(var(--t-margen) + env(safe-area-inset-bottom, 0px) + var(--t-alto) + 16px);
+  z-index: 6002;
+  width: 330px;
+  max-width: calc(100vw - 32px);
+  /* deja libre la franja del header arriba (~120px) */
+  max-height: calc(100vh - var(--t-margen) - var(--t-alto) - 16px - 120px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 22px 22px 18px;
+  border-radius: 22px;
+  background: var(--t-crema-claro);
+  color: var(--t-azul);
+  box-shadow: 0 0 0 1px var(--t-linea), var(--t-sombra), 0 30px 60px -30px rgba(46, 56, 80, 0.4);
+  animation: tartaPanel 0.35s var(--t-ease) both;
+}
+@keyframes tartaPanel {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); transform-origin: 90% 100%; }
+  to   { opacity: 1; transform: none; }
+}
+.tarta-panel:focus { outline: none; }
+.tarta-panel :focus-visible {
+  outline: 2px solid var(--t-rosa);
+  outline-offset: 2px;
+}
+.tarta-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--t-azul);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.tarta-cerrar:hover { background: rgba(91, 108, 143, 0.12); color: var(--t-rosa); }
+.tarta-cerrar svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+
+.tarta-titulo {
+  margin: 0 36px 6px 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--t-rosa);
+}
+.tarta-texto {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* selector de canal: radios reales con aspecto de pastilla */
+.tarta-canal {
+  position: relative;
+  min-width: 0;
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+}
+.tarta-canal legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.tarta-pastillas { display: flex; gap: 8px; }
+.tarta-pastillas input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+.tarta-pastillas label {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1.5px solid var(--t-azul);
+  border-radius: var(--radio-boton, 6px);
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--t-azul);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.tarta-pastillas label:hover { border-color: var(--t-rosa); color: var(--t-rosa); }
+.tarta-pastillas input:checked + label {
+  background: var(--t-rosa);
+  border-color: var(--t-rosa);
+  color: #fff;
+}
+.tarta-pastillas input:focus-visible + label {
+  outline: 2px solid var(--t-rosa);
+  outline-offset: 3px;
+}
+
+/* campos con línea azul, como la comanda */
+.tarta-campo { margin: 0 0 10px; }
+.tarta-campo label {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.tarta-campo input {
+  width: 100%;
+  padding: 8px 2px;
+  border: 0;
+  border-bottom: 1.5px solid var(--t-azul);
+  border-radius: 0;
+  background: transparent;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;           /* 16px: evita el zoom de iOS */
+  color: var(--t-azul);
+}
+.tarta-campo input::placeholder { color: var(--t-azul); opacity: 0.5; font-style: italic; font-weight: 500; }
+.tarta-campo input:focus { outline: none; border-bottom-color: var(--t-rosa); }
+.tarta-campo input[aria-invalid="true"] { border-bottom-color: var(--t-rosa); }
+.tarta-nota {
+  margin: 5px 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+.tarta-error {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--t-rosa);
+}
+
+.tarta-acepto {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  align-items: start;
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.tarta-acepto input {
+  width: 17px;
+  height: 17px;
+  margin: 1px 0 0;
+  accent-color: var(--t-rosa);
+  cursor: pointer;
+}
+.tarta-acepto a { color: var(--t-azul); font-weight: 700; text-underline-offset: 2px; }
+.tarta-acepto a:hover { color: var(--t-rosa); }
+
+.tarta-aviso {
+  margin: 12px 0 0;
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--t-melocoton);
+  background: rgba(248, 160, 123, 0.18);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.tarta-enviar {
+  width: 100%;
+  height: 46px;
+  margin-top: 14px;
+  border: 0;
+  border-radius: var(--radio-boton, 6px);
+  background: var(--t-rosa);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+.tarta-enviar:hover:not(:disabled) { background: var(--t-rosa); }
+.tarta-enviar:disabled { opacity: 0.6; cursor: progress; }
+
+.tarta-fallo {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1.5px dashed var(--t-rosa);
+}
+.tarta-fallo p {
+  margin: 0 0 8px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--t-rosa);
+}
+.tarta-fallo-acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.tarta-reintentar {
+  height: 38px;
+  padding: 0 18px;
+  border: 1.5px solid var(--t-rosa);
+  border-radius: var(--radio-boton, 6px);
+  background: transparent;
+  color: var(--t-rosa);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.tarta-reintentar:hover:not(:disabled) { background: var(--t-rosa); color: #fff; }
+.tarta-reintentar:disabled { opacity: 0.6; cursor: progress; }
+.tarta-fallo-wa { font-weight: 700; font-size: 0.85rem; color: var(--t-azul); text-underline-offset: 3px; }
+
+.tarta-exito { padding: 4px 0 2px; }
+.tarta-exito-texto {
+  margin: 0 0 14px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.35;
+  outline: none;
+}
+.tarta-listo {
+  height: 42px;
+  padding: 0 22px;
+  border: 1.5px solid var(--t-rosa);
+  border-radius: var(--radio-boton, 6px);
+  background: transparent;
+  color: var(--t-rosa);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.tarta-listo:hover { background: var(--t-rosa); color: #fff; }
+
+/* trampa anti-spam: fuera de vista para personas y lectores de pantalla */
+.tarta-trampa {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.tarta-fondo { display: none; }
+
+/* ── MÓVIL: tarta más chica y panel como hoja inferior (la tarta se desvanece detrás) ── */
+@media (max-width: 600px) {
+  .tarta {
+    --t-ancho: 64px;
+    --t-margen: 14px;
+  }
+  .tarta--panel .tarta-btn {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+  }
+  .tarta-globito { font-size: 0.8rem; padding: 8px 12px; }
+  .tarta-fondo {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 6001;
+    background: rgba(46, 56, 80, 0.45);
+    animation: tartaFundido 0.25s ease both;
+  }
+  .tarta-panel {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-width: none;
+    max-height: var(--t-hoja-max, 88vh);   /* JS la limita para no meterse bajo el header */
+    padding: 24px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    border-radius: 22px 22px 0 0;
+    animation-name: tartaHoja;
+  }
+  @keyframes tartaHoja {
+    from { transform: translateY(100%); }
+    to   { transform: none; }
+  }
+}
+@keyframes tartaFundido { from { opacity: 0; } to { opacity: 1; } }
+
+/* ============================================================
+   MODO "SOLO GLOBO" (la home): sin tarta. El globo es el disparador,
+   abajo a la derecha, con su ✕; el panel se ancla donde estaba el globo.
+   Solo aplica con .tarta--globo (data-tarta-modo="globo" en el <script>).
+   ============================================================ */
+.tarta--globo {
+  right: calc(var(--t-margen) + env(safe-area-inset-right, 0px));
+}
+/* el globito de la home con el aspecto de la píldora de "Tu comanda" de /servicios/
+   (valores copiados de servicios.css: .cr-flotante), solo con el texto */
+.tarta--globo .tarta-globito {
+  position: static;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio-bloque, 12px);
+  background: none;
+  box-shadow: none;
+  pointer-events: auto;
+  animation: tartaGloboFundido 0.6s ease-out backwards;   /* entrada sutil: solo fundido (backwards: al acabar no fija la opacidad) */
+}
+.tarta--globo .tarta-globito::after { display: none; }    /* sin cola: no hay tarta a la que apuntar */
+.tarta--globo .tarta-globo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 0;
+  border-radius: var(--radio-bloque, 12px);
+  background: var(--t-azul);
+  color: var(--t-crema-claro);
+  box-shadow: 0 0 0 2px var(--t-crema-claro), 0 14px 34px rgba(46, 56, 80, 0.32);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;                 /* el texto principal de la píldora de servicios */
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+/* hover como en servicios: el fondo pasa a azul oscuro (#4A5A7A, token de servicios) */
+@media (hover: hover) and (pointer: fine) {
+  .tarta--globo .tarta-globo-btn:hover { background: #4A5A7A; }
+}
+.tarta--globo .tarta-globo-btn:focus-visible {
+  outline: 2px solid var(--t-rosa);
+  outline-offset: 3px;
+}
+@keyframes tartaGloboFundido { from { opacity: 0; } to { opacity: 1; } }
+/* con el footer a la vista, el globo se aparta (no tapa iconos ni contacto) */
+/* (solo con opacidad, no visibility: así el teclado lo sigue alcanzando al final del orden de tabulación) */
+.tarta--globo.tarta--sin-globo .tarta-globito {
+  opacity: 0;
+  pointer-events: none;
+}
+/* con el foco de teclado dentro se ve aunque el footer esté a la vista */
+.tarta--globo.tarta--sin-globo .tarta-globito:focus-within {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* panel de escritorio: anclado donde estaba el globo */
+.tarta--globo .tarta-panel {
+  right: calc(var(--t-margen) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--t-margen) + env(safe-area-inset-bottom, 0px));
+  max-height: calc(100vh - var(--t-margen) - 120px);
+}
+@media (max-width: 600px) {
+  /* píldora un poco más compacta en móvil */
+  .tarta--globo .tarta-globo-btn { padding: 10px 18px; font-size: 0.88rem; }
+  /* en móvil sigue siendo la hoja inferior de siempre */
+  .tarta--globo .tarta-panel { right: 0; bottom: 0; max-height: var(--t-hoja-max, 88vh); }
+}
+
+/* ── MOVIMIENTO REDUCIDO: sin animaciones ── */
+@media (prefers-reduced-motion: reduce) {
+  .tarta,
+  .tarta-btn,
+  .tarta-flota,
+  .tarta-sombra,
+  .tarta-cerrar,
+  .tarta-btn.is-mordiendo .tarta-img,
+  .tarta-btn.is-migas .tarta-migas i,
+  .tarta-globito,
+  .tarta--globo .tarta-globito,
+  .tarta--globo .tarta-globo-btn,
+  .tarta-panel,
+  .tarta-fondo { animation: none !important; transition: none !important; }
+  .tarta-img { transition: none; }
+  .tarta-btn:hover .tarta-img { transform: none; }
+}

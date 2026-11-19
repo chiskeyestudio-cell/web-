@@ -6,31 +6,32 @@
       "titulo": "Menú Branding",
       "icono": "✶",
       "intro": "Tres opciones según tu hambre o arma tu menú plato por plato.",
+      "intro_menus": "Tres opciones según tu hambre.",
       "packs": [
         {
           "id": "brand-completo",
           "nombre": "Completo",
-          "precio": "1.550 €",
+          "precio": "1.400 €",
           "descripcion": "Naming, logotipo y versiones, paleta, sistema tipográfico, manual completo, plantillas para redes, papelería, grafismos, merch y mockups. La marca redonda, lista para abrir.",
-          "monto": 1550,
+          "monto": 1400,
           "periodo": "unico",
           "suelto": 2200
         },
         {
           "id": "brand-esencial",
           "nombre": "Esencial",
-          "precio": "850 €",
+          "precio": "750 €",
           "descripcion": "Logotipo y versiones, paleta, sistema tipográfico, manual simple y plantillas para redes. Imagen sólida y lista para salir a vender.",
-          "monto": 850,
+          "monto": 750,
           "periodo": "unico",
           "suelto": 1070
         },
         {
           "id": "brand-simple",
           "nombre": "Simple",
-          "precio": "420 €",
+          "precio": "380 €",
           "descripcion": "Logotipo y versiones, paleta y sistema tipográfico. La base limpia de una marca.",
-          "monto": 420,
+          "monto": 380,
           "periodo": "unico",
           "suelto": 540
         }
@@ -123,32 +124,37 @@
       "titulo": "Menú Web / App",
       "icono": "▣",
       "intro": "Tres opciones según tu hambre o arma tu menú plato por plato.",
+      "intro_menus": "Tres opciones según tu hambre.",
       "aclaracion": "Algunos platos (desarrollo, tienda online y mantenimiento) parten de un diseño o una web ya existente.",
+      "aclaracion_menus": "",
       "packs": [
         {
           "id": "web-completo",
           "nombre": "Completo",
-          "precio": "2.200 €",
+          "precio": "1.800 €",
           "descripcion": "Estrategia y arquitectura, diseño UX/UI a medida (hasta 6 secciones), desarrollo responsive, animaciones, SEO base, formularios y panel editable. Con opción de tienda online. Tu sitio completo.",
-          "monto": 2200,
+          "app": "Diseño UI a medida de tus pantallas, prototipo navegable para probarla antes de desarrollar y sistema de diseño para que crezca ordenada.",
+          "monto": 1800,
           "periodo": "unico",
           "suelto": 2770
         },
         {
           "id": "web-esencial",
           "nombre": "Esencial",
-          "precio": "1.200 €",
+          "precio": "950 €",
           "descripcion": "Web de hasta 4 secciones, diseño a medida, responsive, SEO base y formulario de contacto. Una web sólida que vende desde el primer día.",
-          "monto": 1200,
+          "app": "Diseño UI a medida de tus pantallas principales y prototipo navegable para probarla antes de desarrollar.",
+          "monto": 950,
           "periodo": "unico",
           "suelto": 1820
         },
         {
           "id": "web-simple",
           "nombre": "Simple",
-          "precio": "650 €",
+          "precio": "400 €",
           "descripcion": "One page a medida, responsive, con tus textos e imágenes. La carta en una sola página, limpia y directa.",
-          "monto": 650,
+          "app": "Diseño UI a medida de una pantalla de tu app.",
+          "monto": 400,
           "periodo": "unico",
           "suelto": 870
         }
@@ -244,7 +250,7 @@
         }
       ],
       "extra": {
-        "titulo": "App",
+        "titulo": "app",
         "platos": [
           {
             "id": "app-ui",
@@ -278,6 +284,7 @@
       "titulo": "Menú Ecommerce",
       "icono": "◷",
       "intro": "Vende en Amazon o en tu propia plataforma. Arma tu menú plato por plato.",
+      "intro_menus": "Vende en Amazon o en tu propia plataforma.",
       "nota": {
         "titulo": "¿Quieres tu propia tienda online?",
         "texto": "Si prefieres vender desde tu propia web (carrito, pago y envíos), eso se cocina en el Menú Web."
@@ -286,25 +293,25 @@
         {
           "id": "eco-completo",
           "nombre": "Completo",
-          "precio": "1.900 €",
+          "precio": "1.600 €",
           "descripcion": "Puesta en marcha en Amazon o tu plataforma: alta u optimización de fichas (hasta 20 productos), contenido A+, diseño de escaparate, imágenes de producto y guía para administrar.",
-          "monto": 1900,
+          "monto": 1600,
           "periodo": "unico"
         },
         {
           "id": "eco-esencial",
           "nombre": "Esencial",
-          "precio": "1.000 €",
+          "precio": "800 €",
           "descripcion": "Fichas optimizadas (hasta 10 productos), imágenes de producto y escaparate básico. Tus productos, bien servidos.",
-          "monto": 1000,
+          "monto": 800,
           "periodo": "unico"
         },
         {
           "id": "eco-simple",
           "nombre": "Simple",
-          "precio": "450 €",
+          "precio": "350 €",
           "descripcion": "Puesta a punto de hasta 5 fichas (textos e imágenes). Para ordenar y mejorar lo que ya vendes.",
-          "monto": 450,
+          "monto": 350,
           "periodo": "unico"
         }
       ],
@@ -388,32 +395,33 @@
       "titulo": "Menú Packaging",
       "icono": "❑",
       "intro": "Tres opciones según tu hambre o arma tu menú plato por plato.",
+      "intro_menus": "Tres opciones según tu hambre.",
       "aclaracion": "Los precios son solo de diseño y archivos listos para imprenta. La impresión y producción física se cotizan aparte; si quieres, la gestionamos.",
       "packs": [
         {
           "id": "pack-completo",
           "nombre": "Completo",
-          "precio": "1.200 €",
+          "precio": "1.000 €",
           "descripcion": "Concepto, diseño de empaque (hasta 3 formatos), etiquetas, línea gráfica, artes finales para imprenta y mockups. El traje completo para tu producto.",
-          "monto": 1200,
+          "monto": 1000,
           "periodo": "unico",
           "suelto": 1450
         },
         {
           "id": "pack-esencial",
           "nombre": "Esencial",
-          "precio": "650 €",
+          "precio": "500 €",
           "descripcion": "Diseño de empaque (1 formato) con su etiqueta, artes finales y mockup. Un empaque que se nota en el anaquel.",
-          "monto": 650,
+          "monto": 500,
           "periodo": "unico",
           "suelto": 730
         },
         {
           "id": "pack-simple",
           "nombre": "Simple",
-          "precio": "320 €",
+          "precio": "200 €",
           "descripcion": "Diseño de la etiqueta de un producto, con su arte final listo para imprimir. Ideal si solo necesitas vestir un producto.",
-          "monto": 320,
+          "monto": 200,
           "periodo": "unico"
         }
       ],
@@ -489,29 +497,30 @@
       "titulo": "Menú Redes",
       "icono": "◎",
       "intro": "Tres planes mensuales según tu hambre o arma tu menú plato por plato.",
+      "intro_menus": "Tres planes mensuales según tu hambre.",
       "packs": [
         {
           "id": "redes-completo",
           "nombre": "Completo",
-          "precio": "600 €/mes",
+          "precio": "400 €/mes",
           "descripcion": "Estrategia de contenido, 12 a 16 piezas al mes (posts y stories), diseño a medida, calendario, textos y hashtags. Tu cocina siempre encendida.",
-          "monto": 600,
+          "monto": 400,
           "periodo": "mes"
         },
         {
           "id": "redes-esencial",
           "nombre": "Esencial",
-          "precio": "380 €/mes",
+          "precio": "290 €/mes",
           "descripcion": "8 piezas al mes, diseño a medida, calendario y textos. Presencia constante, sin que te quite el sueño.",
-          "monto": 380,
+          "monto": 290,
           "periodo": "mes"
         },
         {
           "id": "redes-simple",
           "nombre": "Simple",
-          "precio": "220 €/mes",
+          "precio": "180 €/mes",
           "descripcion": "4 piezas al mes, diseño y textos. Lo justo para no desaparecer.",
-          "monto": 220,
+          "monto": 180,
           "periodo": "mes"
         }
       ],
@@ -595,31 +604,32 @@
       "titulo": "Menú Editorial",
       "icono": "▤",
       "intro": "Tres opciones según tu hambre o arma tu menú plato por plato.",
+      "intro_menus": "Tres opciones según tu hambre.",
       "packs": [
         {
           "id": "edi-completo",
           "nombre": "Completo",
-          "precio": "1.400 €",
+          "precio": "1.000 €",
           "descripcion": "Concepto editorial, diseño y maquetación completa (hasta 48 páginas), portada, sistema tipográfico, tratamiento de imagen y artes finales.",
-          "monto": 1400,
+          "monto": 1000,
           "periodo": "unico",
           "suelto": 1750
         },
         {
           "id": "edi-esencial",
           "nombre": "Esencial",
-          "precio": "750 €",
+          "precio": "550 €",
           "descripcion": "Maquetación de hasta 24 páginas, portada y artes finales sobre tu contenido. Orden y buena mesa para tus páginas.",
-          "monto": 750,
+          "monto": 550,
           "periodo": "unico",
           "suelto": 890
         },
         {
           "id": "edi-simple",
           "nombre": "Simple",
-          "precio": "380 €",
+          "precio": "280 €",
           "descripcion": "Maquetación de hasta 12 páginas o díptico/tríptico, con arte final. Un documento bien servido.",
-          "monto": 380,
+          "monto": 280,
           "periodo": "unico"
         }
       ],

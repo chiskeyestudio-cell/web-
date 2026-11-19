@@ -1,0 +1,407 @@
+/* ============================================================
+   INICIO · la home (/) — todo con scope body.page-index
+   Fondo crema de arriba abajo, cabecera como en servicios (sin tocar
+   su HTML). <main>: dos cintas gigantes ("chiskey" / "no cheesecake"),
+   "cocina digital creativa", la tarta girando, la presentación, los
+   servicios con puntos y los cocineros → footer común → globo.
+   Puerta de carga en el <head>; pausas y limpieza en /inicio.js.
+   No toca styles.css ni main.js.
+   ============================================================ */
+
+/* ── AJUSTES: velocidades, tamaños y tiempos (cambiarlos aquí) ───── */
+:root {
+  /* cintas: duración de un grupo entero. Los grupos miden distinto
+     ("chiskey" ×4 = 14,58em, "no cheesecake" ×3 = 20,82em), así que
+     la línea 2 dura 1,428 veces más para ir al MISMO ritmo (~70 px/s a 1280) */
+  --inicio-cinta-a: 26s;
+  --inicio-cinta-b: calc(var(--inicio-cinta-a) * 1.428);
+  --inicio-cinta-fundido: 400ms;    /* aparición de las cintas al abrirse la puerta */
+
+  --inicio-tarta-vuelta: 14s;       /* una vuelta completa de la tarta (sentido horario) */
+  --inicio-tarta-entrada: 1000ms;   /* entrada "de atrás hacia delante" con rebote */
+  --inicio-orbita-radio: 14px;      /* variante órbita (clase inicio-tarta--orbita) */
+  /* el tope de 1,2 s de la puerta está en el script del <head> */
+}
+
+/* respaldo de Outfit 800 si la fuente tarda más que el tope de la puerta:
+   Arial ajustada para que "chiskey" mida lo mismo y la línea tenga el mismo alto */
+@font-face {
+  font-family: 'Outfit fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Arial');
+  font-weight: 800;
+  size-adjust: 94.3%;
+  ascent-override: 106%;        /* = alto de Outfit (1,00em) tras el size-adjust */
+  descent-override: 27.6%;      /* = 0,26em de Outfit */
+  line-gap-override: 0%;
+}
+
+body.page-index {
+  /* tokens: los mismos valores que servicios.css */
+  --azul: #5B6C8F;
+  --rosa: #E91E63;
+  --melocoton: #F8A07B;
+  --crema: #F7F3EA;
+  --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .25 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* convierte una imagen a #E91E63 (logo e iconos del footer, como en servicios) */
+  --a-rosa: brightness(0) saturate(100%) invert(22%) sepia(92%) saturate(4870%) hue-rotate(331deg) brightness(93%) contrast(95%);
+  --outfit: 'Outfit', 'Outfit fallback', sans-serif;
+
+  /* el mismo margen lateral que la cabecera (styles.css) */
+  --eje: clamp(20px, 8vw, 140px);
+  /* cintas: "chiskey" mide 3,46em → 9,6vw = 33% de la ventana (como en la maqueta) */
+  --cinta-fs: clamp(3rem, 9.6vw, 16rem);
+  /* tarta: ancho de la tarta visible (la imagen trae márgenes transparentes) */
+  --tarta-tinta: min(19vw, 420px);
+  /* texto: proporción de la maqueta (1.ª frase = 1495 px a 1890 px) */
+  --texto-fs: clamp(1.05rem, 1.85vw, 2.25rem);
+}
+
+/* ── FONDO Y BODY ─────────────────────────────────────────────────
+   Crema desde el primer píxel (también detrás de la cabecera, como
+   servicios). Fuera el overflow-y:hidden de .page-index y el body en
+   columna con alto mínimo (el bug del hueco grande en ≤480 px). */
+/* como servicios: el recorte horizontal va en <html> y el body no es contenedor de scroll */
+html:has(body.page-index) { background-color: #F7F3EA; overflow-x: hidden; }
+html body.page-index {
+  display: block;
+  min-height: 0;
+  overflow: visible;
+  background-color: var(--crema);
+  background-image: var(--grano);
+  color: var(--azul);
+}
+
+/* Reservas sin destello SOLO en la home (ya hay mucho movimiento: cintas + tarta).
+   La onda es el ::before de .reservas-btn en styles.css; aquí solo se apaga ese
+   pseudo. El botón no cambia y en el resto de páginas sigue pulsando. */
+body.page-index .reservas-btn::before { animation: none; display: none; }
+
+/* cabecera sobre crema: logo y [ MENU ] en rosa, igual que servicios (el HTML no se toca) */
+body.page-index .logo img { filter: var(--a-rosa); }
+body.page-index .menu a { color: var(--rosa); }
+
+body.page-index main,
+body.page-index main *,
+body.page-index main *::before,
+body.page-index main *::after { box-sizing: border-box; }
+
+body.page-index .sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.page-index .inicio-main {
+  padding: var(--contenido-inicio, 48px) var(--eje) clamp(56px, 6vw, 120px);
+  overflow-x: clip;
+}
+
+/* ============================================================
+   1. LAS DOS CINTAS (a todo lo ancho de la página)
+      dos grupos idénticos por línea (flex:0 0 auto, min-width:100%),
+      translateX(0 → -100%) linear infinite; la línea --derecha va al revés.
+      Cada unidad lleva su margen derecho (también la última del grupo):
+      la costura entre grupos es exacta.
+   ============================================================ */
+body.page-index .inicio-cintas {
+  margin-inline: calc(var(--eje) * -1);   /* a todo lo ancho de la página, de borde a borde */
+  margin-top: -0.07em;                    /* el interlineado bajo deja 0,07em sobre las letras: así la tinta cae en --contenido-inicio */
+  font-family: var(--outfit);
+  font-weight: 800;
+  font-size: var(--cinta-fs);
+  line-height: 0.88;
+  color: var(--rosa);
+}
+body.page-index .inicio-cinta {
+  display: flex;
+  overflow: hidden;                 /* sale y entra al ras de los bordes de la página, sin fundido */
+}
+body.page-index .inicio-cinta-grupo {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 100%;
+  white-space: nowrap;
+  will-change: transform;
+}
+body.page-index .inicio-cinta-unidad {
+  flex: 0 0 auto;
+  margin-right: 0.185em;            /* = el espacio de palabra de Outfit 800 */
+}
+/* "no cheesecake", tachado: una línea a la mitad exacta de la "o".
+   Con line-height 0.88 la línea base cae a 0,81em del borde superior y la "o"
+   mide 0,5em: su centro está a 0,56em; la línea (0,07em) va centrada ahí. */
+body.page-index .inicio-cinta--b .inicio-cinta-unidad {
+  position: relative;
+  --tachado-grosor: 0.07em;
+  --tachado-centro: 0.56em;          /* subirla: menos; bajarla: más */
+}
+body.page-index .inicio-cinta--b .inicio-cinta-unidad::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--tachado-centro) - var(--tachado-grosor) / 2);
+  height: var(--tachado-grosor);
+  background: currentColor;
+  pointer-events: none;
+}
+@keyframes inicio-cinta {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+/* se mueven solo con JS y con la puerta abierta (sin JS: quietas) */
+html.js.inicio-listo body.page-index .inicio-cinta--a .inicio-cinta-grupo {
+  animation: inicio-cinta var(--inicio-cinta-a) linear infinite;
+}
+html.js.inicio-listo body.page-index .inicio-cinta--b .inicio-cinta-grupo {
+  animation: inicio-cinta var(--inicio-cinta-b) linear infinite;
+}
+/* dirección: --derecha avanza de izquierda a derecha (quitar la clase para invertirla) */
+html.js.inicio-listo body.page-index .inicio-cinta--derecha .inicio-cinta-grupo { animation-direction: reverse; }
+html.js.inicio-listo body.page-index .inicio-cintas {
+  animation: inicio-fundido var(--inicio-cinta-fundido) ease-out both;
+}
+@keyframes inicio-fundido { from { opacity: 0; } to { opacity: 1; } }
+
+/* ============================================================
+   2. "cocina digital creativa": izquierda / centro exacto / derecha
+   ============================================================ */
+body.page-index .inicio-lema {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  margin: clamp(18px, 3.4vw, 64px) 0 0;
+  font-family: var(--outfit);
+  font-weight: 800;
+  font-size: clamp(1.2rem, 1.8vw, 2rem);
+  line-height: 1.2;
+  color: var(--azul);                       /* azul sobre crema: 4,76:1 */
+}
+body.page-index .inicio-lema span:nth-child(1) { justify-self: start; }
+body.page-index .inicio-lema span:nth-child(2) { justify-self: center; }
+body.page-index .inicio-lema span:nth-child(3) { justify-self: end; }
+
+/* ============================================================
+   3. LA TARTA
+      cuadrado (reserva el sitio) > entrada > giro > imagen.
+      La imagen tiene márgenes transparentes: gira sobre el centro de la
+      tarta visible y el cuadrado mide el círculo que barre al girar
+      (1,235 × su ancho visible), así nunca pisa el texto ni se recorta.
+   ============================================================ */
+body.page-index .inicio-tarta {
+  position: relative;
+  width: calc(var(--tarta-tinta) * 1.235);
+  aspect-ratio: 1;
+  margin: clamp(12px, 2.2vw, 56px) auto clamp(24px, 3.6vw, 80px);
+}
+body.page-index .inicio-tarta-entrada,
+body.page-index .inicio-tarta-gira {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+}
+body.page-index .inicio-tarta picture { display: contents; }
+/* la imagen colocada para que el centro de la tarta visible caiga en el centro del cuadrado */
+body.page-index .inicio-tarta-img {
+  position: absolute;
+  left: 7.8%;
+  top: 17.55%;
+  width: 89.3%;
+  height: auto;
+  aspect-ratio: 1451 / 1084;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* giro continuo, horario (solo con JS y la puerta abierta) */
+html.js.inicio-listo body.page-index .inicio-tarta-gira {
+  animation: inicio-tarta-gira var(--inicio-tarta-vuelta) linear infinite;
+}
+@keyframes inicio-tarta-gira {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+/* VARIANTE ÓRBITA (sin activar): añadir la clase inicio-tarta--orbita al contenedor .inicio-tarta.
+   Recorre un círculo de --inicio-orbita-radio sin cambiar de orientación. */
+html.js.inicio-listo body.page-index .inicio-tarta--orbita .inicio-tarta-gira {
+  animation-name: inicio-tarta-orbita;
+}
+@keyframes inicio-tarta-orbita {
+  from { transform: rotate(0deg) translateX(var(--inicio-orbita-radio)) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(var(--inicio-orbita-radio)) rotate(-360deg); }
+}
+
+/* entrada: de atrás hacia delante con rebote de resorte (solo transform y opacity) */
+html.js body.page-index .inicio-tarta-entrada { opacity: 0; }
+/* el rebote ya no sale con la carga: lo dispara /inicio.js (clase inicio-tarta-entra)
+   cuando la tarta entra en pantalla, con la puerta abierta y la imagen decodificada.
+   Mientras espera queda en su estado inicial (pequeña, girada y con opacidad 0), sin animar. */
+html.js body.page-index .inicio-tarta-entrada:not(.inicio-tarta-entra) { transform: scale(0.15) rotate(-10deg); }
+html.js.inicio-listo body.page-index .inicio-tarta-entrada.is-lista.inicio-tarta-entra {
+  animation: inicio-tarta-entra var(--inicio-tarta-entrada) both;
+}
+html.js.inicio-listo:not(.inicio-fin) body.page-index .inicio-tarta-entrada.inicio-tarta-entra { will-change: transform, opacity; }
+@keyframes inicio-tarta-entra {
+  0%   { opacity: 0; transform: scale(0.15) rotate(-10deg); animation-timing-function: cubic-bezier(0.2, 0.7, 0.35, 1); }
+  12%  { opacity: 1; }
+  35%  { opacity: 1; transform: scale(1.16) rotate(3deg);    animation-timing-function: ease-in-out; }
+  58%  { transform: scale(0.93) rotate(-1.5deg);             animation-timing-function: ease-in-out; }
+  80%  { transform: scale(1.04) rotate(0.6deg);              animation-timing-function: ease-in-out; }
+  100% { opacity: 1; transform: none; }
+}
+
+/* fuera de pantalla o con la pestaña oculta: en pausa (/inicio.js pone .is-pausa) */
+html.js.inicio-listo body.page-index .inicio-cintas.is-pausa .inicio-cinta-grupo,
+html.js.inicio-listo body.page-index .inicio-tarta.is-pausa .inicio-tarta-gira { animation-play-state: paused; }
+
+/* ============================================================
+   4. PRESENTACIÓN (azul, Outfit normal, a todo el ancho)
+   ============================================================ */
+body.page-index .inicio-texto p {
+  margin: 0;
+  font-family: var(--outfit);
+  font-weight: 400;
+  font-size: var(--texto-fs);
+  line-height: 1.3;
+  color: var(--azul);
+}
+body.page-index .inicio-texto p + p { margin-top: 1.2em; }   /* una línea en blanco */
+
+/* ============================================================
+   5. LO QUE COCINAMOS y COCINEROS · la estética de la carta de /servicios/
+      cabecera de bloque como "PACKS" (Outfit 800 en mayúsculas + línea
+      cortada azul) y filas como los packs (nombre grande en mayúsculas,
+      separador cortado). En los cocineros, el botón redondo de la carta.
+   ============================================================ */
+body.page-index .inicio-servicios { margin-top: clamp(48px, 7vw, 130px); }
+body.page-index .inicio-cocineros { margin-top: clamp(40px, 5.5vw, 100px); }
+
+body.page-index .inicio-bloque-head {
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid var(--azul);
+  border-image: repeating-linear-gradient(90deg, var(--azul) 0 6px, transparent 6px 10px) 0 0 1 0 / 0 0 1.5px 0;
+}
+body.page-index .inicio-bloque-titulo {
+  margin: 0;
+  font-family: var(--outfit);
+  font-weight: 800;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: var(--azul);
+}
+body.page-index .inicio-filas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+body.page-index .inicio-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  padding: clamp(14px, 1.6vw, 22px) 4px;
+  border-bottom: 1px solid rgba(91, 108, 143, 0.28);
+  border-image: repeating-linear-gradient(90deg, rgba(91, 108, 143, 0.28) 0 6px, transparent 6px 10px) 0 0 1 0 / 0 0 1px 0;
+  color: var(--azul);
+}
+body.page-index .inicio-fila-nombre {
+  font-family: var(--outfit);
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2.6vw, 2rem);   /* como los packs de la carta */
+  line-height: 1;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+/* cocineros: la fila entera es el enlace, con el botón redondo de la carta a la derecha */
+body.page-index .inicio-fila--enlace {
+  text-decoration: none;
+  transition: background-color 0.25s ease;
+}
+body.page-index .inicio-fila-ir {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--rosa);
+  border-radius: 50%;
+  color: var(--rosa);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+body.page-index .inicio-fila-ir svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (hover: hover) and (pointer: fine) {
+  body.page-index .inicio-fila--enlace:hover { background: rgba(233, 30, 99, 0.05); }
+  body.page-index .inicio-fila--enlace:hover .inicio-fila-nombre { color: var(--rosa); }
+  body.page-index .inicio-fila--enlace:hover .inicio-fila-ir { background: var(--rosa); color: #fff; }
+}
+body.page-index .inicio-fila--enlace:focus-visible {
+  outline: 2px solid var(--azul);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   7. FOOTER: el común, igual que en /servicios/ (papel crema, rosa)
+   styles.css trae para la home, en ≤768px, un footer con 100px de aire
+   y flex !important: aquí se anula para que quede idéntico.
+   ============================================================ */
+html body.page-index .footer { color: var(--rosa); }
+body.page-index .footer .social-icons img { filter: var(--a-rosa) !important; }
+@media (max-width: 768px) {
+  html body.page-index .footer {
+    gap: 6px !important;
+    padding: 20px 0 14px !important;
+  }
+  html body.page-index .footer:has(.pie-contacto) {
+    display: grid !important;
+    padding: 20px var(--pie-pad) 14px !important;
+  }
+}
+
+/* ============================================================
+   8. MÓVIL (≤768 px): mismo orden, cintas más grandes
+   ============================================================ */
+@media (max-width: 768px) {
+  body.page-index {
+    --cinta-fs: 17.3vw;           /* "chiskey" ≈ 60% del ancho */
+    --tarta-tinta: 50vw;          /* la tarta, un pelín más chica en móvil */
+  }
+}
+
+/* ============================================================
+   9. PUERTA DE CARGA y MOVIMIENTO REDUCIDO
+   ============================================================ */
+/* <main> oculto hasta que estén Outfit y la tarta (tope 1,2 s); sin JS se ve directamente */
+html.js:not(.inicio-listo) body.page-index .inicio-main { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js:not(.inicio-listo) body.page-index .inicio-main { opacity: 1; }
+  html.js body.page-index .inicio-cintas,
+  html.js body.page-index .inicio-cinta-grupo,
+  html.js body.page-index .inicio-tarta-entrada,
+  html.js body.page-index .inicio-tarta-gira { animation: none !important; opacity: 1; will-change: auto; }
+  /* la tarta ya puesta: sin el estado de espera del rebote */
+  html.js body.page-index .inicio-tarta-entrada { transform: none !important; }
+  /* una sola unidad por línea, a la izquierda */
+  body.page-index .inicio-cinta-grupo + .inicio-cinta-grupo,
+  body.page-index .inicio-cinta-unidad + .inicio-cinta-unidad { display: none; }
+  /* quietas: la unidad arranca en el margen del logo, no pegada al borde */
+  body.page-index .inicio-cinta { padding-inline: var(--eje); }
+  body.page-index .inicio-fila--enlace,
+  body.page-index .inicio-fila-nombre,
+  body.page-index .inicio-fila-ir { transition: none; }
+}

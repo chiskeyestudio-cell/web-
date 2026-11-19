@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La carta completa de servicios</title>
+<!-- versión completa (packs y platos individuales): fuera de buscadores y sin enlaces desde el sitio -->
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://www.chiskey.es/servicios-completos/">
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
+<link rel="stylesheet" href="/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- estilos propios de La Carta (todo con scope body.page-servicios) -->
+<link rel="stylesheet" href="/servicios/servicios.css">
+<!-- tarta flotante: pedir que te llamemos -->
+<link rel="stylesheet" href="/tarta/tarta.css">
+<!-- pie con contacto (solo en las páginas rediseñadas) -->
+<link rel="stylesheet" href="/pie/pie.css">
+<!-- entrada: fundido común y gestos (se apagan con ENTRADA_ACTIVA en /entrada.js) -->
+<link rel="stylesheet" href="/entrada.css">
+<script src="/entrada.js"></script>
+</head>
+<body class="page-servicios" data-modo="completo">
+<!-- HEADER: el del sitio, sin tocar (el color rosa lo pone servicios.css) -->
+<header class="navbar">
+  <div class="logo">
+    <a href="/">
+      <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763596790/LOGO_AZUL_CHISKEY_yu3mqz.png" alt="Chiskey estudio">
+    </a>
+  </div>
+  <nav class="menu">
+    <a href="#" id="menu-toggle" data-content="menu">Índice</a>
+  </nav>
+  <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+</header>
+
+<main>
+  <!-- LA CARTA: papel crema a todo el ancho. Contenido: /servicios/menus-data.json · Lógica: /servicios/servicios.js -->
+  <section class="cr-carta" aria-label="La carta">
+
+    <!-- cápsula de menús (sticky dentro del papel) -->
+    <div class="cr-capsula-wrap">
+      <nav class="cr-capsula" aria-label="Menús de la carta">
+        <div class="cr-tabs" id="cr-tabs" role="tablist" aria-label="Menús"></div>
+        <!-- flechas: solo aparecen cuando no caben todas las opciones (las pestañas también se recorren con ← →) -->
+        <button type="button" class="cr-flecha cr-flecha--izq" id="cr-flecha-izq" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button type="button" class="cr-flecha cr-flecha--der" id="cr-flecha-der" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <div class="cr-contenido">
+      <div class="cr-panel" id="cr-panel" role="tabpanel" tabindex="-1">
+        <p class="cr-cargando">Preparando la carta…</p>
+      </div>
+      <p class="cr-nota-global" id="cr-nota-global" hidden></p>
+    </div>
+
+    <!-- CUÉNTANOS TU PROYECTO (antes "Condimento"): abre la comanda general de Reservas -->
+    <section class="cr-condimento" aria-labelledby="cr-condimento-titulo">
+      <div class="cr-condimento-caja">
+        <h2 class="cr-condimento-titulo" id="cr-condimento-titulo">¿Prefieres contarnos tu proyecto?</h2>
+        <p class="cr-condimento-texto">¿Ya tienes un logo, una web o una identidad armada? No hace falta empezar de cero: nosotros le ponemos el sazón que le falta.</p>
+        <button type="button" class="cr-condimento-cta" id="cr-condimento-cta" aria-haspopup="dialog">Cuéntanos tu proyecto</button>
+      </div>
+    </section>
+  </section>
+
+  <!-- botón flotante: abre La comanda -->
+  <button type="button" class="cr-flotante" id="cr-flotante" aria-haspopup="dialog" aria-controls="cmd-capa">
+    <span class="cr-flotante-texto">
+      <span class="cr-flotante-label">Tu comanda</span>
+      <span class="cr-flotante-resumen" id="cr-flotante-resumen">vacía</span>
+    </span>
+    <span class="cr-flotante-badge" id="cr-flotante-badge" aria-hidden="true">0</span>
+  </button>
+
+  <!-- aviso breve al sumar o quitar -->
+  <div class="cr-toast" id="cr-toast" role="status" aria-live="polite"></div>
+
+  <!-- LA COMANDA: única hoja para revisar, completar y enviar -->
+  <div class="cmd-capa" id="cmd-capa" hidden>
+    <div class="cmd-fondo" data-cmd-cerrar></div>
+    <div class="cmd-scroll" data-cmd-cerrar>
+      <div class="cmd-papel" id="cmd-papel" role="dialog" aria-modal="true" aria-labelledby="cmd-titulo" tabindex="-1">
+        <div class="cmd-barra">
+          <button type="button" class="cmd-cerrar" id="cmd-cerrar" aria-label="Cerrar la comanda">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div id="cmd-vista-form">
+          <div class="cmd-cabecera">
+            <h2 class="cmd-titulo" id="cmd-titulo">La comanda</h2>
+            <span class="cmd-folio">Folio 2027</span>
+          </div>
+          <p class="cmd-respuesta">Tiempo de respuesta: 2 horas</p>
+
+          <form class="cmd-form" id="cmd-form" action="https://formspree.io/f/xyzovndj" method="POST">
+            <input type="hidden" name="_subject" value="Comanda desde La Carta">
+            <input type="hidden" name="pedido" id="cmd-pedido" value="">
+
+            <div class="cmd-campos">
+              <div class="cmd-campo cmd-campo--comensal">
+                <label for="cmd-nombre">Comensal <span class="cmd-req" aria-hidden="true">*</span></label>
+                <input type="text" id="cmd-nombre" name="nombre" autocomplete="name" placeholder="nombre" required>
+              </div>
+              <div class="cmd-campo cmd-campo--mail">
+                <label for="cmd-correo">Mail <span class="cmd-req" aria-hidden="true">*</span></label>
+                <input type="email" id="cmd-correo" name="correo" autocomplete="email" placeholder="correo" required>
+              </div>
+              <div class="cmd-campo cmd-campo--tel">
+                <label for="cmd-movil">Teléfono <span class="cmd-req" aria-hidden="true">*</span></label>
+                <input type="tel" id="cmd-movil" name="movil" autocomplete="tel" placeholder="móvil" required>
+              </div>
+              <div class="cmd-campo cmd-campo--marca">
+                <label for="cmd-marca">Marca</label>
+                <input type="text" id="cmd-marca" name="marca" autocomplete="organization" placeholder="o proyecto">
+              </div>
+              <div class="cmd-campo cmd-campo--indicaciones">
+                <label for="cmd-indicaciones">Indicaciones <span class="cmd-req" id="cmd-indicaciones-req" aria-hidden="true" hidden>*</span></label>
+                <textarea id="cmd-indicaciones" name="indicaciones" rows="1" placeholder="qué necesitan o qué ya tienen"></textarea>
+              </div>
+            </div>
+
+            <div class="cmd-tabla-wrap">
+              <table class="cmd-tabla">
+                <caption class="cr-sr">Platos de la comanda</caption>
+                <colgroup><col class="cmd-col-cant"><col><col class="cmd-col-imp"></colgroup>
+                <thead>
+                  <tr><th scope="col">Cantidad</th><th scope="col">Concepto</th><th scope="col">Importe</th></tr>
+                </thead>
+                <tbody id="cmd-filas"></tbody>
+              </table>
+            </div>
+
+            <div class="cmd-pie">
+              <label class="cmd-iva">
+                <input type="checkbox" id="cmd-iva">
+                <span>incluir IVA (21%)</span>
+              </label>
+              <dl class="cmd-totales" id="cmd-totales">
+                <div class="cmd-total-fila"><dt>Subtotal</dt><dd id="cmd-subtotal">0 €</dd></div>
+                <div class="cmd-total-fila" id="cmd-iva-fila" hidden><dt>IVA (21%)</dt><dd id="cmd-iva-valor">0 €</dd></div>
+                <div class="cmd-total-fila cmd-total-fila--total"><dt>Total</dt><dd id="cmd-total">0 €</dd></div>
+                <div class="cmd-total-fila" id="cmd-mensual-fila" hidden><dt>Mensual</dt><dd id="cmd-mensual">0 €/mes</dd></div>
+              </dl>
+            </div>
+            <p class="cmd-honesto">Estimado orientativo. Cerramos el precio final al sentarnos a la mesa.</p>
+
+            <p class="cmd-error" id="cmd-error" role="alert" hidden></p>
+
+            <div class="cmd-acciones">
+              <button type="submit" class="cmd-enviar" id="cmd-enviar">Enviar comanda</button>
+              <button type="button" class="cmd-copiar" id="cmd-copiar">copiar resumen</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="cmd-gracias" id="cmd-vista-gracias" hidden>
+          <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="" class="cmd-gracias-img">
+          <h2 class="cmd-gracias-titulo" tabindex="-1" id="cmd-gracias-titulo">Comanda en cocina</h2>
+          <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
+          <p class="cmd-respuesta">Tiempo de respuesta: 2 horas</p>
+          <button type="button" class="cmd-volver" data-cmd-volver>Volver a la carta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER: el del sitio, sin tocar -->
+<footer class="footer">
+    <address class="pie-contacto">
+      <a href="mailto:estudio@chiskey.com">estudio@chiskey.com</a>
+      <a href="tel:+34623035107">+34 623 035 107</a>
+    </address>
+    <div class="social-icons overlay-social-icons">
+  <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+  <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+  <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok"></a>
+  <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+    </div>
+    <span>cocina digital creativa ©2027</span>
+</footer>
+
+<script src="/main.js"></script>
+<script src="/servicios/servicios.js"></script>
+<script src="/tarta/tarta.js" defer></script>
+</body>
+</html>

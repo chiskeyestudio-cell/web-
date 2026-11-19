@@ -1,0 +1,27 @@
+/* ==========================================================
+   ENTRADA · fundido común de las páginas interiores
+   (/servicios/, /proyectos/, /izate/, /el_hogar/, /oliv_ia/, /proceso/, /tupedido/)
+   - Solo CSS: corre al pintar, una vez, y termina en opacity 1.
+     Nada se oculta de antemano: si algo falla, todo se ve.
+   - Se aplica con la clase .fade-entrada a los bloques SIN gesto propio.
+   - Apagado: ENTRADA_ACTIVA en /entrada.js (pone html.entrada-off).
+   - Usa translate (no transform) para no pisar giros ni escalas de cada página.
+   ========================================================== */
+:root {
+  --fade-duracion: 500ms;        /* cuánto dura el fundido */
+  --fade-desplazamiento: 10px;   /* cuánto sube el bloque mientras aparece */
+  --fade-curva: cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes fade-entrada {
+  from { opacity: 0; translate: 0 var(--fade-desplazamiento); }
+  to   { opacity: 1; translate: none; }
+}
+
+html:not(.entrada-off) .fade-entrada {
+  animation: fade-entrada var(--fade-duracion) var(--fade-curva) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html .fade-entrada { animation: none; }
+}

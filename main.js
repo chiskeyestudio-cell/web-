@@ -61,11 +61,16 @@ menuLinks.forEach(link => link.addEventListener('click', e => e.preventDefault()
 // PARTE 4: MODAL (CONTROL DE APERTURA)
 // ==========================================================
 function openModal() {
+    // La comanda: en /servicios/ la de la carta (con sus platos, servicios.js);
+    // en el resto, la de Reservas (/reserva/reserva.js). El modal viejo queda solo de respaldo.
+    if (window.ComandaCarta) { window.ComandaCarta.abrir(); return; }
+    if (window.Reserva) { window.Reserva.abrir(); return; }
     if (modal) modal.style.display = 'flex';
      iniciarPasos();   // ← añade esta línea
 }
 
 function closeModal() {
+    if (window.Reserva) window.Reserva.cerrar();
     if (modal) modal.style.display = 'none';
 }
 
@@ -120,12 +125,12 @@ if (!overlay) {
     text2.innerHTML = '<span>Proyectos</span>';
 
     const text3 = document.createElement('a');
-    text3.href = '/sobreck/';
-    text3.innerHTML = '<span>Sobre ck</span>';
+    text3.href = '/proceso/';
+    text3.innerHTML = '<span>Proceso</span>';
 
     const text4 = document.createElement('a');
     text4.href = '/tupedido/';
-    text4.innerHTML = '<span>Tu pedido</span>';
+    text4.innerHTML = '<span>Pedido</span>';
 
     overlayContent.append(text1, text2, text3, text4);
     overlay.appendChild(overlayContent);
@@ -137,7 +142,7 @@ const socialIcons = document.querySelectorAll('.social-icons img');
 // Footers del overlay
 let overlayFooterLeft = document.createElement('div');
 overlayFooterLeft.classList.add('overlay-footer');
-overlayFooterLeft.textContent = '©2025 chiskey | Base en Valencia Esp';
+overlayFooterLeft.textContent = 'Base en Valencia Esp';
 overlay.appendChild(overlayFooterLeft);
 
 let overlayFooterRight = document.createElement('div');
@@ -166,7 +171,7 @@ if (menuToggle) {
 
         overlay.classList.toggle('open');
         document.body.classList.toggle('overlay-open', !isOpen);
-        menuToggle.textContent = isOpen ? 'MENU' : 'X';
+        menuToggle.textContent = isOpen ? 'Índice' : 'X';
         menuToggle.classList.toggle('active');
         if (logo) logo.src = isOpen ? logoOriginal : logoBlanco;
 

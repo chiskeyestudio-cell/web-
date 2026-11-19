@@ -1,632 +1,230 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>El hogar</title>
-  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Urbanist:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-
-  <style>
-    .page *, .page *::before, .page *::after { box-sizing: border-box; }
-
-    html, body {
-      overflow-x: hidden !important; 
-      overflow-y: auto !important;
-      height: auto !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      background-color: #5B6C8F;
-      -webkit-overflow-scrolling: touch;
-    
-    }
-
-    :root {
-      --bg: #5B6C8F;
-      --surface: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.12);
-      --border-strong: rgba(255,255,255,0.22);
-      --text: #ffffff;
-      --text-muted: rgba(255,255,255,0.6);
-      --text-faint: rgba(255,255,255,0.35);
-      --pink: #E91E63;
-      --pink-dark: #c2185b;
-      --font-display: 'Playfair Display', Georgia, serif;
-      --font-body: 'Outfit', sans-serif;
-      --font-urbanist: 'Urbanist', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    main {
-       margin-top: clamp(60px, 8vh, 80px);
-      padding-bottom: 7rem;
-    }
-
-    .page {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 3rem 6rem;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding: 1.5rem 0 2.5rem;
-     
-      gap: 2rem;
-      flex-wrap: wrap;
-      animation: fadeUp 0.7s ease both;
-    }
-
-    .hero-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(48px, 7vw, 80px);
-      font-weight: 600;
-      line-height: 1.0;
-      letter-spacing: -2px;
-      color: var(--text);
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      min-width: 200px;
-      animation: fadeUp 0.7s 0.15s ease both;
-    }
-
-    .meta-row { display: flex; flex-direction: column; gap: 3px; }
-
-    .meta-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      font-family: 'Urbanist', sans-serif;
-    }
-
-    .meta-value {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text);
-      font-family: 'Urbanist', sans-serif;
-    }
-
-    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
-
-    .tag {
-      font-size: 11px;
-      font-weight: 400;
-      padding: 3px 10px;
-      border: 0.5px solid rgba(233,30,99,0.4);
-      border-radius: 20px;
-      color: var(--white);
-      letter-spacing: 0.04em;
-      background: rgba(233,30,99,0.08);
-      font-family: 'Urbanist', sans-serif;
-    }
-
-    /* ── DIVISOR — solo línea inferior, sin la superior ── */
-    .menu-divider {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 2.5rem 0 0;
-      animation: fadeUp 0.7s 0.3s ease both;
-    }
-
-    .menu-divider-line {
-      flex: 1;
-      height: 0.5px;
-      background: var(--border-strong);
-    }
-
-    .menu-divider-label {
-      font-family: 'Outfit', sans-serif;
-      font-style: italic;
-      font-size: 1rem;
-      color: var(--text-muted);
-      white-space: nowrap;
-      letter-spacing: 0.04em;
-    }
-
-    /* ── DESCRIPCIÓN DEL PROYECTO (bajo el divisor) ── */
-   .project-intro {
-  max-width: 600px;
-  margin: 1.75rem auto 0;
-  text-align: center;
-  color: var(--text-muted);
-  font-family: 'Urbanist', sans-serif;
-  font-size: 1rem;
-  font-weight: 300;
-  line-height: 1.8;
-  animation: fadeUp 0.7s 0.4s ease both;
-}
-
-    /* ── IMAGES ── */
-    .img-hero {
-      width: 100%;
-      aspect-ratio: 16 / 7;
-      margin: 3rem 0;
-      border-radius: 8px;
-      overflow: hidden;
-      animation: fadeUp 0.7s 0.25s ease both;
-      border: 0.5px solid var(--border);
-    }
-
-    .img-hero img, .img-block img, .img-full img,
-    .gallery-item img, .related-thumb img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-
-    .ph {
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,0.04);
-      border-radius: 8px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 8px;
-      min-height: 100px;
-    }
-
-    .ph svg { opacity: 0.3; stroke: rgba(255,255,255,0.5); }
-
-    .ph span {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      font-family: 'Urbanist', sans-serif;
-    }
-
-    /* ── SECTIONS ── */
-    .section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-      padding: 4rem 0;
-      border-top: 0.5px solid var(--border);
-    }
-
-    .section.reverse .section-text { order: 2; }
-    .section.reverse .section-visual { order: 1; }
-
-    .section-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-      font-family: 'Urbanist', sans-serif;
-    }
-
-    .section-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(22px, 2.5vw, 32px);
-      font-weight: 600;
-      line-height: 1.15;
-      margin-bottom: 1.25rem;
-      letter-spacing: -0.5px;
-      color: var(--text);
-    }
-
-    .section-body {
-      font-size: 15px;
-      line-height: 1.8;
-      color: var(--text-muted);
-      font-weight: 300;
-      font-family: 'Urbanist', sans-serif;
-    }
-
-    .section-body p + p { margin-top: 1rem; }
-
-    .img-block {
-      aspect-ratio: 4 / 3;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 0.5px solid var(--border);
-    }
-
-    /* ── FULL IMAGE ── */
-    .img-full {
-      width: 100%;
-      aspect-ratio: 16 / 6;
-      border-radius: 8px;
-      overflow: hidden;
-      margin: 0 0 4rem;
-      border: 0.5px solid var(--border);
-    }
-
-    /* ── GALLERY ── */
-    .gallery {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin: 0 0 4rem;
-    }
-
-    .gallery-item {
-      border-radius: 8px;
-      overflow: hidden;
-      aspect-ratio: 4 / 3;
-      border: 0.5px solid var(--border);
-      transition: border-color 0.3s ease;
-    }
-
-    .gallery-item:hover { border-color: var(--pink); }
-    .gallery-item.wide { grid-column: span 2; aspect-ratio: 21 / 7; }
-
-    /* ── RESULTADO ── */
-    .result {
-      padding: 4rem 0;
-      border-top: 0.5px solid var(--border);
-    }
-
-    .result-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 1.25rem;
-      font-family: 'Urbanist', sans-serif;
-    }
-
-    .result-quote {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(22px, 2.8vw, 34px);
-      font-style: italic;
-      font-weight: 400;
-      line-height: 1.4;
-      max-width: 700px;
-      color: var(--text);
-    }
-
-    /* ── RELATED ── */
-    .related {
-      padding: 4rem 0 0;
-      border-top: 0.5px solid var(--border);
-    }
-
-    .related-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .related-heading {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      font-family: 'Outfit', sans-serif;
-    }
-
-    .related-all {
-      font-size: 13px;
-      color: var(--white);
-      text-decoration: none;
-      border-bottom: 0.5px solid rgba(233,30,99,0.4);
-      transition: color 0.2s, border-color 0.2s;
-      font-family: 'Outfit', sans-serif;
-    }
-
-    .related-all:hover { color: var(--text); border-color: var(--text); }
-
-    .related-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    .related-card { text-decoration: none; color: inherit; cursor: pointer; }
-
-    .related-thumb {
-      aspect-ratio: 3 / 2;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 0.75rem;
-      border: 0.5px solid var(--border);
-      transition: opacity 0.25s, border-color 0.25s;
-    }
-
-    .related-card:hover .related-thumb { opacity: 0.7; border-color: var(--pink); }
-
-    .related-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-      font-family: 'Outfit', sans-serif;
-    }
-
-    .related-cat {
-      font-size: 12px;
-      color: var(--text-faint);
-      margin-top: 3px;
-      font-family: 'Urbanist', sans-serif;
-    }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .section, .img-full, .gallery, .result, .related {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .section.visible, .img-full.visible, .gallery.visible,
-    .result.visible, .related.visible {
-      opacity: 1; transform: translateY(0);
-    }
-
-    .social-icons img {
-      filter: invert(1); width: 18px; height: 18px;
-      opacity: 0.6; transition: opacity 0.2s ease;
-    }
-    .social-icons a:hover img { opacity: 1; }
-
-    @media (max-width: 768px) {
-      main { margin-top: 24px; }
-      .page { padding: 0 1.5rem 4rem; }
-      .hero { flex-direction: column; align-items: flex-start; padding: 2.5rem 0 2rem; }
-      .section, .section.reverse { grid-template-columns: 1fr; gap: 2rem; }
-      .section.reverse .section-text { order: 1; }
-      .section.reverse .section-visual { order: 2; }
-      .gallery { grid-template-columns: 1fr; }
-      .gallery-item.wide { grid-column: span 1; aspect-ratio: 4/3; }
-      .related-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-#myModal .modal-content {
-    padding: 50px !important;
-    max-width: 420px !important;
-    width: 100% !important;
-}
-
-#myModal .comanda-form,
-#myModal #formContainer {
-    width: 100% !important;
-}
-
-#myModal .comanda-row {
-    display: grid !important;
-    grid-template-columns: 90px 1fr !important;
-    align-items: center !important;
-    width: 100% !important;
-}
-
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El hogar</title>
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
+<link rel="stylesheet" href="/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- plantilla compartida de las páginas de proyecto (scope body.page-proyecto) -->
+<link rel="stylesheet" href="/proyectos/proyecto.css">
+<!-- tarta flotante: pedir que te llamemos -->
+<link rel="stylesheet" href="/tarta/tarta.css">
+<!-- pie con contacto (solo en las páginas rediseñadas) -->
+<link rel="stylesheet" href="/pie/pie.css">
+<!-- entrada: fundido común y gestos (se apagan con ENTRADA_ACTIVA en /entrada.js) -->
+<link rel="stylesheet" href="/entrada.css">
+<script src="/entrada.js"></script>
+<!-- La comanda de Reservas (botón Reservas y "Escribirnos"): /reserva/ -->
+<link rel="stylesheet" href="/reserva/reserva.css">
 </head>
-<body>
+<body class="page-proyecto">
+<!-- HEADER: el del sitio; en las páginas de proyecto el logo pasa a ser el nombre del proyecto -->
+<header class="navbar">
+  <div class="logo">
+    <a href="/">
+      <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763596790/LOGO_AZUL_CHISKEY_yu3mqz.png" alt="Chiskey estudio">
+    </a>
+  </div>
+  <nav class="menu">
+    <a href="#" id="menu-toggle" data-content="menu">Índice</a>
+  </nav>
+  <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+</header>
 
-  <!-- HEADER: sin tocar -->
-  <header class="navbar">
-    <div class="logo">
-      <a href="/">
-        <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763595831/LOGO_BLANCO_CHISKEY_uvl5an.png" alt="Logo">
+<!--
+  ============================================================
+  DATOS DEL PROYECTO: para completar o corregir, se edita solo este
+  HTML (el diseño está en /proyectos/proyecto.css).
+    · Nombre ........... en la cinta (<div class="py-cinta">, decorativa) y en el <h1 class="py-sr"> oculto
+                         (las mayúsculas las pone el CSS)
+    · El proyecto ...... <div class="py-intro">: el texto inicial, sin título
+    · Portada .......... <figure class="py-portada"> (src, srcset, alt; --foco = encuadre)
+    · La comanda ....... Folio = año · Comensal = cliente · una fila por servicio
+                         (si un dato no existe, se borra su línea; si hay herramientas,
+                         se añade un campo "Indicaciones" en <dl class="proyecto-comanda-campos">)
+    · Textos ........... La preparación (subtítulo + párrafos) y El resultado (cita)
+    · La mesa servida .. un <li class="py-g"> por imagen, en orden. El grid se compone
+                         solo según cuántas haya. --foco = encuadre; data-full = versión grande
+    · Siguiente ........ <a class="py-siguiente">: enlace, imagen, nombre y servicios
+  Orden de la navegación: izate → oliv.ia → el hogar → izate.
+  ============================================================
+-->
+<main class="py-main">
+  <article class="py-contenido">
+
+    <h1 class="py-sr">El hogar</h1>
+    <!-- el nombre en cinta continua, como "chiskey" en la home (8 repeticiones por grupo; decorativa) -->
+    <div class="py-cinta py-cinta--derecha fade-entrada" aria-hidden="true">
+      <div class="py-cinta-grupo"><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span></div>
+      <div class="py-cinta-grupo"><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span><span class="py-cinta-unidad">El hogar</span></div>
+    </div>
+
+    <!-- EL PROYECTO: el texto de la página, tal cual, sin título visible -->
+    <div class="py-intro fade-entrada">
+      <p>Bienvenidos a un santuario diseñado para la reconexión, un espacio donde el cuerpo y la mente finalmente encuentran su centro. Creemos que el bienestar no es un destino, sino una práctica constante; por ello, nuestras sesiones de yoga y pilates, la profundidad terapéutica de nuestros masajes y nuestra selección de productos para el ritual diario no son elementos aislados, sino piezas de un mismo engranaje.</p>
+    </div>
+
+    <!-- FICHA: portada + comanda escrita (solo lectura, con los datos reales del proyecto) -->
+    <section class="py-ficha" aria-label="Ficha del proyecto">
+      <figure class="py-portada">
+        <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1200/v1777991097/elhogar_7-01_dz1bzi.png"
+              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_800/v1777991097/elhogar_7-01_dz1bzi.png 800w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1200/v1777991097/elhogar_7-01_dz1bzi.png 1200w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1800/v1777991097/elhogar_7-01_dz1bzi.png 1800w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2400/v1777991097/elhogar_7-01_dz1bzi.png 2400w"
+              sizes="(min-width: 901px) 760px, 100vw" style="--foco: 50% 50%" fetchpriority="high"
+              alt="Mujer de espaldas con la camiseta de El hogar">
+      </figure>
+
+      <div class="proyecto-comanda" role="group" aria-labelledby="pc-titulo">
+        <div class="proyecto-comanda-cabecera">
+          <h2 class="proyecto-comanda-titulo" id="pc-titulo">La comanda</h2>
+          <span class="proyecto-comanda-folio">Folio 2025</span>
+        </div>
+        <dl class="proyecto-comanda-campos">
+          <div class="proyecto-comanda-campo"><dt>Comensal</dt><dd>El hogar consciencia y movimiento</dd></div>
+        </dl>
+        <table class="proyecto-comanda-tabla">
+          <caption class="py-sr">Servicios servidos en El hogar</caption>
+          <colgroup><col><col><col></colgroup>
+          <thead>
+            <tr><th scope="col">Cantidad</th><th scope="col">Concepto</th><th scope="col">Importe</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Branding</td><td><span aria-hidden="true">✓</span><span class="py-sr">servido</span></td></tr>
+            <tr><td>2</td><td>Diseño</td><td><span aria-hidden="true">✓</span><span class="py-sr">servido</span></td></tr>
+            <tr aria-hidden="true"><td></td><td></td><td></td></tr>
+            <tr aria-hidden="true"><td></td><td></td><td></td></tr>
+            <tr aria-hidden="true"><td></td><td></td><td></td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td></td><th scope="row">Total</th><td>Servido</td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- LA PREPARACIÓN y EL RESULTADO: una columna, textos tal cual -->
+    <section class="py-textos" aria-label="La receta del proyecto">
+      <div class="py-bloque fade-entrada">
+        <h2 class="py-rotulo">La preparación</h2>
+        <h3 class="py-subtitulo">Filosofía del cuerpo consciente</h3>
+        <p>Todo en nuestro estudio convive bajo una premisa innegociable: la filosofía del cuerpo consciente. Aquí te invitamos a desacelerar el ritmo, a habitar tu estructura con presencia y a transformar tu rutina en un acto de respeto y cuidado hacia ti mismo.</p>
+      </div>
+      <div class="py-bloque fade-entrada">
+        <h2 class="py-rotulo">El resultado</h2>
+        <blockquote class="py-cita">
+          <p>"Al final, el hogar no es solo un lugar, sino el ritual de regreso a uno mismo; un espacio diseñado para que cada gesto diario sea un acto de consciencia."</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- LA MESA SERVIDA: el grid se compone solo según cuántas <li> haya (ver proyecto.css) -->
+    <section class="py-mesa" aria-labelledby="py-mesa-titulo">
+      <h2 class="py-mesa-titulo fade-entrada" id="py-mesa-titulo">La mesa servida</h2>
+      <ul class="py-galeria">
+        <li class="py-g">
+          <button type="button" class="py-g-btn" aria-label="Ampliar imagen: Mujer meditando con la camiseta de El hogar">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777836488/el_hogar_imagen-01_vyfzuh.png"
+              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_600/v1777836488/el_hogar_imagen-01_vyfzuh.png 600w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777836488/el_hogar_imagen-01_vyfzuh.png 1000w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1600/v1777836488/el_hogar_imagen-01_vyfzuh.png 1600w"
+              sizes="(min-width: 1024px) 560px, 100vw" style="--foco: 50% 50%" data-full="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2000/v1777836488/el_hogar_imagen-01_vyfzuh.png" loading="lazy" decoding="async"
+              alt="Mujer meditando con la camiseta de El hogar">
+          </button>
+        </li>
+        <li class="py-g">
+          <button type="button" class="py-g-btn" aria-label="Ampliar imagen: Bolsa de tela con el logo de El hogar">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991559/elhogar_1-01_y6klc3.png"
+              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_600/v1777991559/elhogar_1-01_y6klc3.png 600w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991559/elhogar_1-01_y6klc3.png 1000w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1600/v1777991559/elhogar_1-01_y6klc3.png 1600w"
+              sizes="(min-width: 1024px) 560px, 100vw" style="--foco: 50% 62%" data-full="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2000/v1777991559/elhogar_1-01_y6klc3.png" loading="lazy" decoding="async"
+              alt="Bolsa de tela con el logo de El hogar">
+          </button>
+        </li>
+        <li class="py-g">
+          <button type="button" class="py-g-btn" aria-label="Ampliar imagen: Tres carteles de El hogar enmarcados">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991391/elhogar_3-01_scrl0x.png"
+              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_600/v1777991391/elhogar_3-01_scrl0x.png 600w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991391/elhogar_3-01_scrl0x.png 1000w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1600/v1777991391/elhogar_3-01_scrl0x.png 1600w"
+              sizes="(min-width: 1024px) 560px, 100vw" style="--foco: 50% 50%" data-full="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2000/v1777991391/elhogar_3-01_scrl0x.png" loading="lazy" decoding="async"
+              alt="Tres carteles de El hogar enmarcados">
+          </button>
+        </li>
+        <li class="py-g">
+          <button type="button" class="py-g-btn" aria-label="Ampliar imagen: Mujer de espaldas moviendo las manos">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991751/elhogar_4-01_fq3wsr.png"
+              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_600/v1777991751/elhogar_4-01_fq3wsr.png 600w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991751/elhogar_4-01_fq3wsr.png 1000w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1600/v1777991751/elhogar_4-01_fq3wsr.png 1600w"
+              sizes="(min-width: 1024px) 560px, 100vw" style="--foco: 50% 40%" data-full="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2000/v1777991751/elhogar_4-01_fq3wsr.png" loading="lazy" decoding="async"
+              alt="Mujer de espaldas moviendo las manos">
+          </button>
+        </li>
+        <li class="py-g">
+          <button type="button" class="py-g-btn" aria-label="Ampliar imagen: Tarjetas con el logo dorado de El hogar">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991429/elhogar_2-01_gajsh0.png"
+              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_600/v1777991429/elhogar_2-01_gajsh0.png 600w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991429/elhogar_2-01_gajsh0.png 1000w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1600/v1777991429/elhogar_2-01_gajsh0.png 1600w"
+              sizes="(min-width: 1024px) 560px, 100vw" style="--foco: 50% 50%" data-full="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2000/v1777991429/elhogar_2-01_gajsh0.png" loading="lazy" decoding="async"
+              alt="Tarjetas con el logo dorado de El hogar">
+          </button>
+        </li>
+        <li class="py-g">
+          <button type="button" class="py-g-btn" aria-label="Ampliar imagen: Tarjeta de El hogar junto a piedras">
+            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991309/elhogar_5-01_togpbw.png"
+              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_600/v1777991309/elhogar_5-01_togpbw.png 600w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1000/v1777991309/elhogar_5-01_togpbw.png 1000w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1600/v1777991309/elhogar_5-01_togpbw.png 1600w"
+              sizes="(min-width: 1024px) 560px, 100vw" style="--foco: 45% 60%" data-full="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2000/v1777991309/elhogar_5-01_togpbw.png" loading="lazy" decoding="async"
+              alt="Tarjeta de El hogar junto a piedras">
+          </button>
+        </li>
+      </ul>
+    </section>
+
+    <nav class="py-nav fade-entrada" aria-label="Más proyectos">
+      <a class="py-volver" href="/proyectos/"><span aria-hidden="true">←</span> Volver a proyectos</a>
+      <a class="py-siguiente" href="/izate/">
+        <img class="py-sig-img" src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_300/v1777836504/izate_imagen_k0q4fu.png" alt="" loading="lazy" decoding="async" width="96" height="72">
+        <span class="py-sig-texto">
+          <span class="py-sig-label">Siguiente proyecto</span>
+          <span class="py-sig-nombre">Izate</span>
+          <span class="py-sig-serv">Branding · Web · Diseño · IA</span>
+        </span>
+        <span class="py-sig-flecha" aria-hidden="true">→</span>
       </a>
-    </div>
-    <nav class="menu">
-      <a href="#" id="menu-toggle" data-content="menu">MENU</a>
     </nav>
-    <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
-  </header>
 
-  <main>
-    <div class="page">
+  </article>
+</main>
 
-      <!-- HERO -->
-      <div class="hero">
-        <h1 class="hero-title">El hogar</h1>
-        <div class="hero-meta">
-          <div class="meta-row">
-            <span class="meta-label">Año</span>
-            <span class="meta-value">2025</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Cliente</span>
-            <span class="meta-value">El hogar consciencia y movimiento</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Servicios</span>
-            <div class="tags">
-              <span class="tag">Branding</span>
-              <span class="tag">Diseño</span>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DIVISOR — solo línea inferior -->
-     <div class="menu-divider">
-  <div class="menu-divider-line"></div>
-  <span class="menu-divider-label">El proyecto</span>
-  <div class="menu-divider-line"></div>
-</div>
-
-      <!-- DESCRIPCIÓN DEL PROYECTO -->
-      <p class="project-intro">
-       Bienvenidos a un santuario diseñado para la reconexión, un espacio donde el cuerpo y la mente finalmente encuentran su centro. Creemos que el bienestar no es un destino, sino una práctica constante; por ello, nuestras sesiones de yoga y pilates, la profundidad terapéutica de nuestros masajes y nuestra selección de productos para el ritual diario no son elementos aislados, sino piezas de un mismo engranaje.
-      </p>
-
-      <!-- IMAGEN PRINCIPAL -->
-      <div class="img-hero">
-        <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777991097/elhogar_7-01_dz1bzi.png" alt="Imagen principal del proyecto">
-      </div>
-
-      <!-- SECCIÓN 1: El reto -->
-      <div class="section">
-        <div class="section-text">
-          <p class="section-label">La preparación</p>
-          <h2 class="section-title">Filosofía del cuerpo consciente</h2>
-          <div class="section-body">
-            <p>Todo en nuestro estudio convive bajo una premisa innegociable: la filosofía del cuerpo consciente. Aquí te invitamos a desacelerar el ritmo, a habitar tu estructura con presencia y a transformar tu rutina en un acto de respeto y cuidado hacia ti mismo.</p>
-           
-          </div>
-        </div>
-        <div class="section-visual">
-          <div class="img-block">
-            <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777836488/el_hogar_imagen-01_vyfzuh.png" alt="El reto">
-          </div>
-        </div>
-      </div>
-
-      <!-- GALERÍA -->
-      <div class="gallery">
-        <div class="gallery-item">
-          <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777991559/elhogar_1-01_y6klc3.png" alt="Galería 1">
-        </div>
-        <div class="gallery-item">
-          <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777991309/elhogar_5-01_togpbw.png" alt="Galería 2">
-        </div>
-        <div class="gallery-item">
-          <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777991391/elhogar_3-01_scrl0x.png" alt="Galería 4">
-        </div>
-        <div class="gallery-item">
-          <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777991429/elhogar_2-01_gajsh0.png" alt="Galería 5">
-        </div>
-      </div>
-
-       <!-- IMAGEN PRINCIPAL -->
-      <div class="img-hero">
-        <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777991751/elhogar_4-01_fq3wsr.png" alt="Imagen principal del proyecto">
-      </div>
-
-
-      <!-- RESULTADO -->
-      <div class="result">
-        <p class="result-label">El resultado</p>
-        <p class="result-quote">"Al final, el hogar no es solo un lugar, sino el ritual de regreso a uno mismo; un espacio diseñado para que cada gesto diario sea un acto de consciencia."</p>
-      </div>
-
-       <!-- PROYECTOS RELACIONADOS -->
-      <div class="related">
-        <div class="related-header">
-          <span class="related-heading">Otros proyectos</span>
-          <a href="/proyectos/" class="related-all">Ver todos →</a>
-        </div>
-        <div class="related-grid">
-          <a href="/izate/" class="related-card">
-            
-            <div class="related-thumb">
-              <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777989053/izate_4-01_ncsyo6.png" alt="Proyecto A">
-
-            </div>
-            <p class="related-name">Izate</p>
-            <p class="related-cat">Branding · Web</p>
-          </a>
-          <a href="/oliv_ia/" class="related-card">
-            <div class="related-thumb">
-              <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1777981399/olivia_imagen-01_bw9rq8.png" alt="Proyecto B">
-            </div>
-                <p class="related-name">Oliv.ia</p>
-            <p class="related-cat">IA · App</p>
-          </a>
-         
-          </a>
-        </div>
-      </div>
-
-    </div><!-- /page -->
-  </main>
-
-  <!-- FOOTER: sin tocar -->
-  <footer class="footer">
+<!-- FOOTER: el del sitio, sin tocar -->
+<footer class="footer">
+    <address class="pie-contacto">
+      <a href="mailto:estudio@chiskey.com">estudio@chiskey.com</a>
+      <a href="tel:+34623035107">+34 623 035 107</a>
+    </address>
     <div class="social-icons overlay-social-icons">
-      <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
-      <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
-      <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"></a>
-      <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
+  <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+  <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+  <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok"></a>
+  <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
     </div>
-    ©2025 chiskey cocina digital creativa
-  </footer>
+    <span>cocina digital creativa ©2027</span>
+</footer>
 
-  <!-- MODAL RESERVAS (heredado) -->
-     <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
 
-         <div id="formContainer">
-    <div class="comanda-pasos">
-        <span class="paso activo">rellena la comanda</span>
-        <span class="sep">→</span>
-        <span class="paso">te contactamos</span>
-        <span class="sep">→</span>
-        <span class="paso">la cocinamos</span>
-    </div>
-
-    <div class="comanda-form-header">
-        <span class="comanda-form-title">La comanda</span>
-        <span class="comanda-form-folio">Folio ♥</span>
-    </div>
-
-    <p class="tiempo-respuesta">Tiempo de respuesta: 2 horas</p>
-
-    <form id="reservaForm" action="https://formspree.io/f/xyzovndj" method="POST" class="comanda-form">
-        <div class="comanda-row">
-            <label>Comensal</label>
-            <input type="text" name="nombre" placeholder="tu nombre" required>
-        </div>
-        <div class="comanda-row">
-            <label>Mail</label>
-            <input type="email" name="correo" placeholder="tu correo" required>
-        </div>
-        <div class="comanda-row">
-            <label>Teléfono</label>
-            <input type="tel" name="movil" placeholder="tu móvil" required>
-        </div>
-        <div class="comanda-row">
-            <label>Ciudad</label>
-            <input type="text" name="ciudad" placeholder="dónde estás">
-        </div>
-        <div class="comanda-row comanda-row--idea">
-            <label>Concepto</label>
-            <textarea name="idea" rows="3" placeholder="cuéntanos tu idea" required></textarea>
-        </div>
-        <button type="submit">Enviar comanda</button>
-    </form>
-</div>
-    
-
-    <!-- Contenedor del mensaje de gracias -->
-            <div id="mensajeGracias" class="gracias-box" style="display:none;">
-                <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1764262991/Adobe_Express_-_chiskeygif_pnho3f.gif" alt="Gracias" class="gracias-img">
-                <p>Gracias por tu reserva. Te contestaremos lo antes posible.</p>
-            </div>
-        </div>
-    </div>
-
-  <script src="/main.js"></script>
-
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
-
-    document.querySelectorAll('.section, .img-full, .gallery, .result, .related')
-      .forEach(el => observer.observe(el));
-  </script>
-
+<script src="/reserva/reserva.js"></script>
+<script src="/main.js"></script>
+<script src="/proyectos/proyecto.js"></script>
+<script src="/tarta/tarta.js" defer></script>
 </body>
 </html>

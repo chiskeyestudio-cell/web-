@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo cocinamos</title>
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763985477/Recurso_101_htujm4.png">
+<link rel="stylesheet" href="/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- estilos propios de Cómo cocinamos (todo con scope body.page-proceso) -->
+<link rel="stylesheet" href="/proceso/proceso.css">
+<!-- tarta flotante: pedir que te llamemos -->
+<link rel="stylesheet" href="/tarta/tarta.css">
+<!-- pie con contacto (como en las páginas rediseñadas) -->
+<link rel="stylesheet" href="/pie/pie.css">
+<!-- entrada: fundido común y gestos (se apagan con ENTRADA_ACTIVA en /entrada.js) -->
+<link rel="stylesheet" href="/entrada.css">
+<script src="/entrada.js"></script>
+<!-- La comanda de Reservas (botón Reservas y "Escribirnos"): /reserva/ -->
+<link rel="stylesheet" href="/reserva/reserva.css">
+</head>
+<body class="page-proceso">
+<!-- HEADER: el del sitio, igual que en servicios (el color rosa lo pone proceso.css) -->
+<header class="navbar">
+  <div class="logo">
+    <a href="/">
+      <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/v1763596790/LOGO_AZUL_CHISKEY_yu3mqz.png" alt="Chiskey estudio">
+    </a>
+  </div>
+  <nav class="menu">
+    <a href="#" id="menu-toggle" data-content="menu">Índice</a>
+  </nav>
+  <a href="#" class="reservas-btn" data-content="reservas">Reservas</a>
+</header>
+
+<main class="pc-main">
+  <div class="pc-contenido">
+
+    <!-- TÍTULO + INTRODUCCIÓN (mismos valores que /proyectos/) -->
+    <header class="pc-cabecera fade-entrada">
+      <h1 class="pc-titulo">Cómo cocinamos</h1>
+      <p class="pc-intro">Te contamos cómo trabajamos, de principio a fin. Somos una cocina abierta, aquí todo se hace a la vista y tú eres parte de cada paso.</p>
+    </header>
+
+    <!-- LOS CUATRO PASOS: el orden lo marca la secuencia y la línea cortada que los une -->
+    <ol class="pc-pasos" role="list">
+      <li class="pc-paso">
+        <h2 class="pc-paso-titulo">Conoce la carta</h2>
+        <p class="pc-paso-texto">Mira nuestros menús y elige por paquete o plato por plato. Si prefieres, escríbenos y lo armamos a tu medida.</p>
+        <a class="pc-boton" href="/servicios/">Ver la carta</a>
+      </li>
+      <li class="pc-paso">
+        <h2 class="pc-paso-titulo">Haz tu pedido</h2>
+        <p class="pc-paso-texto">Puedes hacerlo desde la carta o escribiéndonos. La carta es una guía de lo que hacemos: todo se cocina a medida, según la estrategia y tu proyecto.</p>
+        <!-- abre el modal de Reservas con el mismo botón de la cabecera (proceso.js) -->
+        <button type="button" class="pc-boton" data-abrir-reservas>Escribirnos</button>
+      </li>
+      <li class="pc-paso">
+        <h2 class="pc-paso-titulo">Habla con el cocinero</h2>
+        <p class="pc-paso-texto">El trato es directo, sin intermediarios. Es una cocina abierta: trabajamos a la vista y puedes preguntar lo que quieras.</p>
+      </li>
+      <li class="pc-paso">
+        <p class="pc-etiqueta">Lo que nos distingue</p>
+        <h2 class="pc-paso-titulo">Sigue tu pedido</h2>
+        <p class="pc-paso-texto">Cuando haces tu pedido te damos un código. Con él ves desde nuestra web en qué punto de la cocina está, paso a paso.</p>
+        <a class="pc-boton" href="/tupedido/">Seguir mi pedido</a>
+      </li>
+    </ol>
+
+    <!-- PREGUNTAS FRECUENTES: acordeón nativo, una abierta a la vez -->
+    <section class="pc-faq" aria-labelledby="pc-faq-titulo">
+      <div class="pc-bloque-head fade-entrada"><h2 class="pc-bloque-titulo" id="pc-faq-titulo">Preguntas frecuentes</h2></div>
+
+      <details class="pc-pregunta fade-entrada" name="faq">
+        <summary>¿Tengo que elegir algo de la carta?<span class="pc-signo" aria-hidden="true"></span></summary>
+        <p>No. Puedes elegir un paquete o escribirnos y armarlo a tu medida. Si tu negocio es nuevo o quieres mejorar algo, elige las opciones que se adapten a tu proyecto.</p>
+        <p><a class="pc-enlace" href="/servicios/">Ver la carta</a></p>
+      </details>
+      <details class="pc-pregunta fade-entrada" name="faq">
+        <summary>¿Puedo pedir algo que no está en la carta?<span class="pc-signo" aria-hidden="true"></span></summary>
+        <p>Sí. La carta es una guía de lo que hacemos. Todo se cocina a medida, según la estrategia y tu proyecto.</p>
+      </details>
+      <details class="pc-pregunta fade-entrada" name="faq">
+        <summary>¿Con quién voy a hablar?<span class="pc-signo" aria-hidden="true"></span></summary>
+        <p>Con <a class="pc-enlace" href="https://sotosotosoto.com" target="_blank" rel="noopener noreferrer" aria-label="Xavier (su portafolio se abre en una pestaña nueva)">Xavier</a> o con <a class="pc-enlace" href="https://luzamora.es" target="_blank" rel="noopener noreferrer" aria-label="Lucía (su portafolio se abre en una pestaña nueva)">Lucía</a>, directamente. El trato es directo, sin intermediarios, y entre los dos armamos una propuesta para tu caso.</p>
+      </details>
+      <details class="pc-pregunta fade-entrada" name="faq">
+        <summary>¿Cómo sigo mi pedido?<span class="pc-signo" aria-hidden="true"></span></summary>
+        <p>Al hacerlo te damos un código de pedido. Con él ves desde nuestra web en qué fase está, paso a paso.</p>
+        <p><a class="pc-enlace" href="/tupedido/">Seguir mi pedido</a></p>
+      </details>
+      <details class="pc-pregunta fade-entrada" name="faq">
+        <summary>¿Qué es una cocina abierta?<span class="pc-signo" aria-hidden="true"></span></summary>
+        <p>Que nuestra metodología es transparente: puedes ver cómo va tu pedido en todo momento y hablar directamente con quien lo cocina.</p>
+      </details>
+
+      <!-- PLANTILLAS PARA COMPLETAR (no se ven): quita los comentarios y escribe la respuesta.
+      <details class="pc-pregunta fade-entrada" name="faq">
+        <summary>¿Cuánto tarda?<span class="pc-signo" aria-hidden="true"></span></summary>
+        <p>RESPUESTA</p>
+      </details>
+      <details class="pc-pregunta fade-entrada" name="faq">
+        <summary>¿Cuánto cuesta?<span class="pc-signo" aria-hidden="true"></span></summary>
+        <p>RESPUESTA</p>
+      </details>
+      -->
+    </section>
+
+    <!-- CIERRE: dos accesos -->
+    <div class="pc-cierre fade-entrada">
+      <a class="pc-boton" href="/servicios/">Ver la carta</a>
+      <button type="button" class="pc-boton" data-abrir-reservas>Escribirnos</button>
+    </div>
+
+  </div>
+</main>
+
+</main>
+
+<!-- FOOTER: el del sitio, sin tocar -->
+<footer class="footer">
+    <address class="pie-contacto">
+      <a href="mailto:estudio@chiskey.com">estudio@chiskey.com</a>
+      <a href="tel:+34623035107">+34 623 035 107</a>
+    </address>
+    <div class="social-icons overlay-social-icons">
+  <a href="https://www.instagram.com/chiskey.estudio/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+  <a href="https://www.facebook.com/profile.php?id=61583073491287" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+  <a href="https://www.tiktok.com/@chiskey.estudio" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok"></a>
+  <a href="http://linkedin.com/in/chiskey-estudio-creativo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+    </div>
+    <span>cocina digital creativa ©2027</span>
+</footer>
+
+<script src="/reserva/reserva.js"></script>
+<script src="/main.js"></script>
+<script src="/proceso/proceso.js"></script>
+<script src="/tarta/tarta.js" defer></script>
+</body>
+</html>

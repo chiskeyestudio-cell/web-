@@ -74,12 +74,22 @@ body .overlay-content a {
     font-size: clamp(1.6rem, 5vw, 3rem);
 }
 
-/* con el menú abierto, la página de atrás no se mueve */
+/* el hueco de la barra de scroll queda siempre reservado: al abrir el Índice
+   la barra desaparece pero la página no se mueve hacia los lados */
+html { scrollbar-gutter: stable; }
+/* con el menú abierto, la página de atrás no se mueve: el scroll se bloquea en <html>
+   (sin fijar el body, que la devolvía arriba del todo y daba un brinco) */
+html:has(body.overlay-open) { overflow: hidden; }
+/* el body no recorta (si no, sería él el contenedor y la cabecera no se quedaría arriba) */
 body.overlay-open {
-    overflow: hidden;
-    /* opcional, refuerzo para que no rebote en móvil: */
-    position: fixed;
-    width: 100%;
+    overflow: visible;
+}
+/* con el menú abierto la cabecera se queda arriba aunque la página esté bajada,
+   para que la X siga a la vista; sticky no la saca del flujo: nada se mueve */
+body.overlay-open .navbar,
+body.overlay-open .navbar-tupedido {
+    position: sticky;
+    top: 0;
 }
 
 /* Modificación del botón */
@@ -89,8 +99,7 @@ body.overlay-open {
     font-weight: bold;
     font-size: 1em;
     transition: color 0.1s; 
-    font-family: urbanist, sans-serif;
-    text-transform: uppercase;
+    font-family: 'Urbanist', sans-serif;   /* la misma tipografía que .reservas-btn */
     cursor: default;
     display: inline-block;
     position: relative; 
@@ -396,12 +405,11 @@ body.overlay-open {
     background-color: #E91E63; 
     color: rgb(255, 255, 255); 
     text-decoration: none;
-    font-weight: 900;
+    font-weight: 700;          /* igual que "Índice" (antes 900) */
     padding: 4px 5px; 
     border-radius: 1px; 
     font-family: 'Urbanist', sans-serif;
-    text-transform: uppercase;
-    font-size: 0.9em;
+    font-size: 1em;            /* igual que "Índice" (antes 0.9em); en ≤900px ambos 14px */
     margin-left: auto; 
    /* Entrada suave */ 
     /* --- CAMBIO: Usamos fadeInDown para que caiga desde arriba --- */
@@ -637,7 +645,8 @@ body.overlay-open {
     display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
+  width: auto;
+  min-width: 60px;      /* el ancho de antes: "Índice" cabe dentro y los corchetes siguen en su sitio */
   height: 40px;
 }
 
@@ -648,22 +657,69 @@ body.overlay-open {
 }
 
 
-/* Footer: estático al final del flujo, iconos arriba + ©2025 abajo.
-   Regla única para todas las páginas menos index (que la scopea aparte). */
+/* ==========================================================================
+   FOOTER · fuente única de todas sus reglas (antes repartidas por el archivo)
+   Estático, en flujo normal, iconos arriba + © abajo. Encima, un borde de
+   papel arrancado y un tono un poco más oscuro, como la matriz de un ticket.
+   ========================================================================== */
+:root {
+    /* radios de esquina: las píldoras de la web pasan a formas más cuadradas */
+    --radio-boton: 6px;     /* botones y etiquetas pequeñas */
+    --radio-bloque: 12px;   /* píldoras grandes y contenedores en forma de píldora */
+    /* espacio entre la cabecera y lo primero visible del contenido (igual en todas las páginas).
+       Es la distancia mayor que había entre las páginas a cada ancho: ninguna se acerca a la cabecera. */
+    --contenido-inicio: clamp(43px, 6.47vw, 140px);
+    /* profundidad del borde rasgado (en móvil se usa algo menos, ver abajo) */
+    --footer-rasgado-alto: 5px;
+    /* opacidad de la capa oscura del footer: 0 = sin tono, 0.07 = más marcado */
+    --footer-tono: 0.05;
+}
+@media (max-width: 768px) {
+    :root {
+        --footer-rasgado-alto: 3.5px;
+        --contenido-inicio: clamp(43px, 7.01vw, 54px);
+    }
+}
+
 .footer {
-    position: static;
+    position: relative;            /* referencia del borde rasgado (no mueve nada) */
+    isolation: isolate;            /* el tono queda detrás de iconos y texto */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 6px;
     min-height: 0;
+    margin-top: auto;              /* en páginas con body en columna (home, comanda) baja al fondo */
     padding: 20px 0 14px;
     background: transparent;
     color: white;
     font-size: 0.75em;
     font-family: 'Urbanist', sans-serif;
     text-align: center;
+    /* páginas cortas: el mismo tono sigue debajo del footer hasta el borde de la ventana
+       (una sombra no crea scroll ni cambia el layout; solo se pinta fuera de la caja) */
+    box-shadow: 0 100vh 0 100vh rgba(0, 0, 0, var(--footer-tono));
+}
+
+/* tono + borde rasgado en UNA sola capa (sin costura entre borde y cuerpo):
+   la franja de arriba lleva la máscara irregular y el resto es sólido */
+.footer::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: calc(var(--footer-rasgado-alto) * -1);
+    z-index: -1;
+    background: rgba(0, 0, 0, var(--footer-tono));
+    pointer-events: none;
+    -webkit-mask:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 10' preserveAspectRatio='none'%3E%3Cpath d='M0 10V2Q2.9 2.26 5.7 1.44Q14.0 3.45 22.3 3.61Q30.8 3.80 39.2 3.14Q44.6 3.49 50 3.43Q53.5 3.56 57.1 2.47Q68.2 4.11 79.3 7.07Q89.2 4.12 99 2.91Q111.1 2.88 123.2 1.94Q129.5 4.26 135.8 5.99Q141.8 4.27 147.7 2.83Q159.5 4.44 171.3 5.87Q179.4 3.39 187.5 1.37Q191.1 1.66 194.6 1.98Q206.8 0.86 219.1 1.26Q224.9 0.91 230.7 2.3Q239.1 1.07 247.4 1.53Q254.9 2.04 262.5 3.14Q270.6 2.94 278.8 3.36Q285.8 1.88 292.8 1.6Q299.3 2.16 305.8 2.17Q317.6 4.64 329.3 8.6Q331.1 5.85 333 4.89Q338.2 2.04 343.4 1.18Q352.3 5.82 361.2 9.11Q373.1 7.41 385 4.23Q390.8 4.07 396.5 5.74Q397.6 4.17 398.6 1.53Q406.5 1.18 414.3 1.55Q419.6 2.67 425 4.18Q427.0 7.44 429 9.06Q441.2 9.62 453.4 9Q466.1 5.18 478.8 3.32Q484.1 6.31 489.3 7.32Q491.9 4.80 494.4 3.46Q497.7 6.57 501 9.1Q503.4 4.78 505.8 0.75Q517.4 1.65 529 4.42Q536.2 5.63 543.4 8.14Q550.3 7.84 557.3 6.52Q565.9 5.31 574.5 3.09Q580.9 2.19 587.2 2.29Q593.4 4.15 599.5 4.58Q611.2 3.62 622.9 1.4Q627.3 1.75 631.6 2.83Q644.0 2.01 656.5 1.35Q661.1 1.62 665.8 2.69Q673.9 1.88 682 2.05Q685.3 3.17 688.5 2.77Q698.8 2.90 709 1.54Q716.3 5.31 723.5 8.36Q735.6 5.84 747.8 3.32Q751.1 3.89 754.4 3Q766.3 4.73 778.3 5.18Q779.5 5.49 780.7 4.55Q793.2 5.38 805.7 5.17Q815.5 6.92 825.2 6.78Q832.4 5.62 839.6 3.7Q846.8 4.25 853.9 5.65Q866.6 7.81 879.4 9.13Q883.6 7.97 887.9 7.51Q891.6 6.08 895.4 3.19Q903.2 1.37 911 0.9Q917.1 3.41 923.3 4.53Q927.3 7.14 931.2 9.12Q941.8 7.20 952.4 4.02Q963.5 3.39 974.5 2.89Q981.5 3.33 988.6 2.58Q998.8 3.51 1009 3.13Q1020.9 2.93 1032.7 4.55Q1040.6 3.99 1048.5 4.5Q1052.3 3.71 1056.1 4.13Q1066.4 2.99 1076.8 3.75Q1082.2 2.54 1087.6 1.02Q1098.6 2.86 1109.6 3.45Q1117.0 3.40 1124.4 2.85Q1130.2 3.30 1135.9 2.34Q1140.8 2.67 1145.6 1.53Q1156.8 3.06 1168 3.33Q1172.2 3.22 1176.4 4.28Q1177.7 2.61 1178.9 0.69Q1190.8 3.04 1202.8 5.56Q1212.8 5.09 1222.8 5.08Q1226.0 4.10 1229.2 2.97Q1233.5 3.72 1237.7 3.46Q1246.2 3.62 1254.7 3.71Q1265.1 2.12 1275.4 1Q1277.6 4.20 1279.8 7.41Q1285.0 4.75 1290.3 3.12Q1295.7 2.37 1301.1 0.81Q1308.2 2.57 1315.2 3.24Q1319.3 2.51 1323.3 2.6Q1330.5 2.69 1337.8 3.76Q1349.8 2.79 1361.9 1.36Q1366.5 5.40 1371 9.24Q1374.6 8.40 1378.2 5.81Q1389.9 3.90 1401.6 1.71Q1404.9 1.91 1408.2 2.84Q1409.8 2.38 1411.4 1.51Q1412.5 4.73 1413.6 7.65Q1424.7 5.42 1435.8 2.64Q1437.9 2.46 1440 2V10Z'/%3E%3C/svg%3E") top left / 1440px var(--footer-rasgado-alto) repeat-x,
+        linear-gradient(#000 0 0) 0 calc(var(--footer-rasgado-alto) - 1px) / 100% 100% no-repeat;
+            mask:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 10' preserveAspectRatio='none'%3E%3Cpath d='M0 10V2Q2.9 2.26 5.7 1.44Q14.0 3.45 22.3 3.61Q30.8 3.80 39.2 3.14Q44.6 3.49 50 3.43Q53.5 3.56 57.1 2.47Q68.2 4.11 79.3 7.07Q89.2 4.12 99 2.91Q111.1 2.88 123.2 1.94Q129.5 4.26 135.8 5.99Q141.8 4.27 147.7 2.83Q159.5 4.44 171.3 5.87Q179.4 3.39 187.5 1.37Q191.1 1.66 194.6 1.98Q206.8 0.86 219.1 1.26Q224.9 0.91 230.7 2.3Q239.1 1.07 247.4 1.53Q254.9 2.04 262.5 3.14Q270.6 2.94 278.8 3.36Q285.8 1.88 292.8 1.6Q299.3 2.16 305.8 2.17Q317.6 4.64 329.3 8.6Q331.1 5.85 333 4.89Q338.2 2.04 343.4 1.18Q352.3 5.82 361.2 9.11Q373.1 7.41 385 4.23Q390.8 4.07 396.5 5.74Q397.6 4.17 398.6 1.53Q406.5 1.18 414.3 1.55Q419.6 2.67 425 4.18Q427.0 7.44 429 9.06Q441.2 9.62 453.4 9Q466.1 5.18 478.8 3.32Q484.1 6.31 489.3 7.32Q491.9 4.80 494.4 3.46Q497.7 6.57 501 9.1Q503.4 4.78 505.8 0.75Q517.4 1.65 529 4.42Q536.2 5.63 543.4 8.14Q550.3 7.84 557.3 6.52Q565.9 5.31 574.5 3.09Q580.9 2.19 587.2 2.29Q593.4 4.15 599.5 4.58Q611.2 3.62 622.9 1.4Q627.3 1.75 631.6 2.83Q644.0 2.01 656.5 1.35Q661.1 1.62 665.8 2.69Q673.9 1.88 682 2.05Q685.3 3.17 688.5 2.77Q698.8 2.90 709 1.54Q716.3 5.31 723.5 8.36Q735.6 5.84 747.8 3.32Q751.1 3.89 754.4 3Q766.3 4.73 778.3 5.18Q779.5 5.49 780.7 4.55Q793.2 5.38 805.7 5.17Q815.5 6.92 825.2 6.78Q832.4 5.62 839.6 3.7Q846.8 4.25 853.9 5.65Q866.6 7.81 879.4 9.13Q883.6 7.97 887.9 7.51Q891.6 6.08 895.4 3.19Q903.2 1.37 911 0.9Q917.1 3.41 923.3 4.53Q927.3 7.14 931.2 9.12Q941.8 7.20 952.4 4.02Q963.5 3.39 974.5 2.89Q981.5 3.33 988.6 2.58Q998.8 3.51 1009 3.13Q1020.9 2.93 1032.7 4.55Q1040.6 3.99 1048.5 4.5Q1052.3 3.71 1056.1 4.13Q1066.4 2.99 1076.8 3.75Q1082.2 2.54 1087.6 1.02Q1098.6 2.86 1109.6 3.45Q1117.0 3.40 1124.4 2.85Q1130.2 3.30 1135.9 2.34Q1140.8 2.67 1145.6 1.53Q1156.8 3.06 1168 3.33Q1172.2 3.22 1176.4 4.28Q1177.7 2.61 1178.9 0.69Q1190.8 3.04 1202.8 5.56Q1212.8 5.09 1222.8 5.08Q1226.0 4.10 1229.2 2.97Q1233.5 3.72 1237.7 3.46Q1246.2 3.62 1254.7 3.71Q1265.1 2.12 1275.4 1Q1277.6 4.20 1279.8 7.41Q1285.0 4.75 1290.3 3.12Q1295.7 2.37 1301.1 0.81Q1308.2 2.57 1315.2 3.24Q1319.3 2.51 1323.3 2.6Q1330.5 2.69 1337.8 3.76Q1349.8 2.79 1361.9 1.36Q1366.5 5.40 1371 9.24Q1374.6 8.40 1378.2 5.81Q1389.9 3.90 1401.6 1.71Q1404.9 1.91 1408.2 2.84Q1409.8 2.38 1411.4 1.51Q1412.5 4.73 1413.6 7.65Q1424.7 5.42 1435.8 2.64Q1437.9 2.46 1440 2V10Z'/%3E%3C/svg%3E") top left / 1440px var(--footer-rasgado-alto) repeat-x,
+        linear-gradient(#000 0 0) 0 calc(var(--footer-rasgado-alto) - 1px) / 100% 100% no-repeat;
 }
 
 @media (max-width: 850px) {
@@ -673,6 +729,32 @@ body.overlay-open {
     }
 }
 
+/* la home declara position: static en su <style>; relative no mueve nada y sostiene el borde rasgado */
+html body.page-index .footer { position: relative; }
+
+.footer .social-icons {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    justify-content: center !important;
+    margin: 0 !important;
+}
+
+@media (max-width: 768px) {
+    body.page-index .footer {
+        position: relative !important;   /* era static: relative no mueve nada y sostiene el borde rasgado */
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        min-height: 0 !important;
+        padding: 100px 0 5px !important;   /* aire arriba / abajo */
+        background: transparent !important;
+    }
+}
+
+/* .footer-horno: footer fijo de la página de pedido (hoy ninguna página lo usa) */
 .footer-horno {
     text-align: center;            /* Centra el texto */
     padding: 20px 0;               /* Espacio arriba y abajo */
@@ -680,14 +762,27 @@ body.overlay-open {
     font-size: 0.75em;
     color: white;                  /* Cambia según tu fondo */
     background-color: #E91E63; /* O un color si quieres */
-    
     position: fixed;               /* Fijo en la ventana */
     bottom: 0;                     /* Siempre abajo */
     left: 0;
     width: 100%;                   /* Que ocupe todo el ancho */
-    
     z-index: 1000;                 /* Por encima del contenido */
 }
+@media (max-width: 850px) {
+    .footer-horno {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        min-height: 15px !important;
+        padding: 39px 0 1px 0 !important;
+        background-color: #E91E63;
+        position: fixed !important;
+        bottom: 0 !important;
+        width: 100% !important;
+    }
+}
+/* ======================== fin del FOOTER ======================== */
 
 .page-sobreck{
   background-color: #E91E63;
@@ -881,21 +976,6 @@ body.overlay-open {
         padding-left: 40px;
         padding-right: 40px;
     }
-.footer-horno {
-        display: flex !important;
-        flex-direction: column !important; 
-        /* Alineamos todo al FINAL (abajo) del contenedor */
-        justify-content: flex-start !important; 
-        align-items: center !important;
-        
-        /* Reducimos la altura para que no sea "enorme" */
-        min-height: 15px !important; 
-        padding: 39px 0 1px 0 !important; /* Poco padding abajo para que el texto toque el fondo */
-        background-color: #E91E63;
-        position: fixed !important;
-        bottom: 0 !important;
-        width: 100% !important;
-    }
 
 }
 
@@ -915,7 +995,7 @@ body.overlay-open {
         padding: 0 10px;
     }
     .reservas-btn { 
-        font-size: 0.85em; 
+        font-size: 0.875rem;   /* 14px como mínimo: en minúscula no se lee más pequeño */
         margin-left: 0; 
     }
     
@@ -1021,7 +1101,7 @@ overflow: hidden;
 
 /* Menú más pequeño SIN alterar la posición */
 .menu a {
-    font-size: 0.65em;   /* más chico */
+    font-size: 0.875rem;   /* 14px como mínimo (antes 0.65em) */
     padding: 4px 6px;    /* más chico */
     /* NO toco margin-top NI nada de posición */
     margin-top: -40px;
@@ -1029,7 +1109,7 @@ overflow: hidden;
 
 /* Botón reservas más pequeño SIN moverlo */
 .reservas-btn {
-    font-size: 0.65em;
+    font-size: 0.875rem;   /* 14px como mínimo (antes 0.65em) */
     padding: 4px 8px;
 }
 
@@ -1172,7 +1252,7 @@ overflow: hidden;
 
 /* Menú más pequeño SIN alterar la posición */
 .menu a {
-    font-size: 0.85em;   /* más chico */
+    font-size: 0.875rem;   /* 14px como mínimo (antes 0.85em = 13,6px) */
     padding: 4px 6px;    /* más chico */
     /* NO toco margin-top NI nada de posición */
     margin-top: -40px;
@@ -1180,7 +1260,7 @@ overflow: hidden;
 
 /* Botón reservas más pequeño SIN moverlo */
 .reservas-btn {
-    font-size: 0.85em;
+    font-size: 0.875rem;   /* 14px como mínimo (antes 0.85em = 13,6px) */
     padding: 4px 8px;
 }
 
@@ -1240,7 +1320,7 @@ overflow: hidden;
       display: inline-flex;
       align-items: center;
       border: 1.5px solid #f9f9f9;
-      border-radius: 40px;
+      border-radius: var(--radio-boton, 6px);
       padding: 6px 18px;
       font-size: 1rem;
       font-weight: 700;
@@ -1686,7 +1766,7 @@ overflow: hidden;
       align-items: center;
       max-width: 420px;
       margin: 0 auto 60px;
-      border-radius: 40px;
+      border-radius: var(--radio-bloque, 12px);
       overflow: hidden;
       background: #f9f9f9;
       box-shadow: 0 8px 30px rgba(0,0,0,0.18);
@@ -2504,19 +2584,6 @@ overflow: hidden;
 }
 
 
-@media (max-width: 768px) {
-    body.page-index .footer {
-        position: static !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 12px !important;
-        min-height: 0 !important;
-        padding: 100px 0 5px !important;   /* aire arriba / abajo */
-        background: transparent !important;
-    }
-}
 /* menú overlay: texto más grande solo en móvil */
 @media (max-width: 768px) {
     body .overlay-content a {
@@ -2525,13 +2592,6 @@ overflow: hidden;
 }
 
 
-.footer .social-icons {
-    position: static !important;
-    inset: auto !important;
-    transform: none !important;
-    justify-content: center !important;
-    margin: 0 !important;
-}
 /* iconos de redes siempre opacos, en todas las páginas */
 .social-icons img {
     opacity: 1 !important;
@@ -2568,3 +2628,61 @@ overflow: hidden;
     }
 }
 
+
+
+/* ==========================================================================
+   OVERLAY DEL MENÚ (Índice) · fuente única de su aspecto, en todas las páginas.
+   Va al final y con "html body" para mandar sobre las reglas sueltas de arriba.
+   ========================================================================== */
+html body .overlay {
+    /* el tono del pie de página: el crema con un 5% más de oscuro */
+    background-color: #EBE7DE;
+}
+/* enlaces: tamaño contenido (en móvil, 13.5vw).
+   En ventanas bajas los cuatro no caben a ese tamaño entre la cabecera y el pie:
+   ahí baja lo justo (4,2 líneas en el alto libre, dejando 124px arriba y abajo) */
+html body .overlay-content a {
+    font-size: min(clamp(2.25rem, 5.2vw, 8.5rem), calc((100vh - 248px) / 4.2));
+    line-height: 0.9;
+    padding: 0 10px 0.14em;      /* abajo: lo justo para las colas (p, y) dentro del recorte del efecto */
+}
+/* en ordenador, un poco de aire entre enlaces (en móvil se ajusta abajo) */
+html body .overlay-content { gap: clamp(8px, 1.4vw, 24px); }
+/* pie del overlay: el estilo de "Packs" de servicios (Outfit 800, 0.8rem, azul).
+   Arriba "Base en Valencia esp", una línea cortada y debajo privacidad / aviso legal */
+html body .overlay-footer,
+html body .overlay-footer-right {
+    --of-base: clamp(16px, 4vh, 40px);
+    top: auto;
+    left: clamp(20px, 8vw, 140px);
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    color: #5B6C8F;
+    text-align: left;
+}
+html body .overlay-footer {
+    right: clamp(20px, 8vw, 140px);
+    width: auto;                 /* entre los dos márgenes (una regla vieja de móvil le daba 100%) */
+    bottom: calc(var(--of-base) + 1.3em + 12px);
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid #5B6C8F;
+    /* línea cortada, como los separadores de las páginas: trazos de 6px con 4px de aire */
+    border-image: repeating-linear-gradient(90deg, #5B6C8F 0 6px, transparent 6px 10px) 0 0 1 0 / 0 0 1.5px 0;
+}
+html body .overlay-footer-right {
+    right: auto;
+    width: auto;
+    bottom: var(--of-base);
+}
+html body .overlay-footer-right a {
+    font: inherit;
+    color: inherit;
+}
+@media (max-width: 768px) {
+    html body .overlay-content a { font-size: min(13.5vw, calc((100vh - 248px) / 4.2)); }
+    /* en móvil, un poco más de aire entre las opciones */
+    html body .overlay-content { gap: clamp(10px, 4vw, 26px); }
+}

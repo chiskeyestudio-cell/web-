@@ -1,0 +1,556 @@
+/* ============================================================
+   PROYECTOS · /proyectos/
+   Todo con scope body.page-proyectos para no tocar otras páginas.
+   Misma base que /servicios/: papel crema de arriba abajo, header y
+   footer del sitio en rosa. Galería de tickets (forma del ticket de la home): imagen a sangre 1:1,
+   etiqueta de comanda arriba y talón de papel abajo.
+   ============================================================ */
+
+/* ── TOKENS (los mismos de servicios.css) ── */
+body.page-proyectos {
+  --azul: #5B6C8F;
+  --azul-oscuro: #4A5A7A;
+  --rosa: #E91E63;
+  --melocoton: #F8A07B;
+  --crema: #F7F3EA;
+  --crema-claro: #FBF8F2;
+  --papel: #EEE9DD;
+  --linea: rgba(91, 108, 143, 0.28);
+  --linea-suave: rgba(91, 108, 143, 0.16);
+  --sombra: 0 18px 40px -14px rgba(46, 56, 80, 0.45);
+  --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .25 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* convierte una imagen a #E91E63 (logo e iconos del footer) */
+  --a-rosa: brightness(0) saturate(100%) invert(22%) sepia(92%) saturate(4870%) hue-rotate(331deg) brightness(93%) contrast(95%);
+
+  /* página pareja: el mismo papel crema de arriba abajo (header, contenido y footer) */
+  background-color: var(--crema);
+  background-image: var(--grano);
+  color: var(--azul);
+}
+
+/* header sobre crema: logo y [ MENU ] en rosa (Reservas ya es rosa) — igual que servicios */
+body.page-proyectos .logo img { filter: var(--a-rosa); }
+body.page-proyectos .menu a { color: var(--rosa); }
+/* footer sobre crema: iconos y © en rosa (el !important gana al filtro inline que pone main.js) */
+body.page-proyectos .footer { color: var(--rosa); }
+body.page-proyectos .footer .social-icons img { filter: var(--a-rosa) !important; }
+
+body.page-proyectos .pr-main *,
+body.page-proyectos .pr-main *::before,
+body.page-proyectos .pr-main *::after { box-sizing: border-box; }
+
+/* ── CONTENEDOR ── */
+body.page-proyectos .pr-main {
+  font-family: 'Urbanist', sans-serif;
+  color: var(--azul);
+}
+body.page-proyectos .pr-contenido {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: calc(var(--contenido-inicio, 48px) * 0.75) clamp(16px, 5vw, 56px) clamp(32px, 5vw, 56px);   /* arriba: 75% de --contenido-inicio, como servicios y los proyectos */
+}
+
+/* ── CABECERA (mismo estilo que "MENÚ BRANDING") ── */
+body.page-proyectos .pr-titulo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.6rem, 6.2vw, 6rem);
+  line-height: 0.9;
+  color: var(--rosa);
+  margin: -0.08em 0 0 -0.05em;   /* arriba: el interlineado bajo deja 0,08em sobre las letras; izquierda: la tinta alinea con el texto */
+  overflow-wrap: break-word;
+}
+body.page-proyectos .pr-intro {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.5;
+  max-width: 54ch;
+  margin: 18px 0 0;
+}
+
+/* cabecera de bloque (como "PACKS" en servicios) */
+body.page-proyectos .pr-bloque-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: clamp(36px, 5vw, 52px) 0 0;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid var(--azul);
+  /* línea cortada: trazos de 6px con 4px de aire */
+  border-image: repeating-linear-gradient(90deg, var(--azul) 0 6px, transparent 6px 10px) 0 0 1 0 / 0 0 1.5px 0;
+}
+body.page-proyectos .pr-bloque-titulo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  margin: 0;
+}
+/* ============================================================
+   GALERÍA
+   ============================================================ */
+body.page-proyectos .pr-galeria {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(22px, 3vw, 40px); /* aire para que la sombra respire */
+  margin-top: clamp(24px, 3vw, 36px);
+}
+/* interruptor: data-vacias="ocultar" en la galería oculta todas las vacías */
+body.page-proyectos .pr-galeria[data-vacias="ocultar"] .ticket--vacio { display: none; }
+
+/* ============================================================
+   TICKET: tarjeta con la forma del ticket de la home (.comanda__papel)
+   - .ticket (enlace exterior): giro, sombra (drop-shadow sigue los dientes)
+     y :focus-visible. Sin máscara, así el outline del foco se ve completo.
+   - .ticket-papel (interior): esquinas cuadradas + borde inferior dentado
+     con máscara de medida fija (dientes de 15 × 6 px, como en la home).
+   ============================================================ */
+body.page-proyectos {
+  --ticket-papel: #f9f9f9;                      /* el papel del ticket de la home */
+  --ticket-punteado: rgba(91, 108, 143, 0.33);  /* #5B6C8F55 de la home */
+  --diente-ancho: 15px;
+  --diente-alto: 6px;
+  --ticket-giro: 1deg;
+}
+
+body.page-proyectos .ticket {
+  position: relative;
+  display: block;
+  min-width: 0;
+  color: var(--azul);
+  text-decoration: none;
+  rotate: calc(var(--ticket-giro) * -1);        /* impar: −1° */
+  filter: drop-shadow(0 12px 14px rgba(46, 56, 80, 0.2));
+  transition: rotate 0.35s var(--ease), scale 0.35s var(--ease);
+}
+body.page-proyectos .ticket:nth-child(even) { rotate: var(--ticket-giro); }   /* par: +1° */
+body.page-proyectos a.ticket { cursor: pointer; }
+body.page-proyectos a.ticket:focus-visible {
+  outline: 3px solid var(--rosa);
+  outline-offset: 5px;
+}
+
+body.page-proyectos .ticket-papel {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--ticket-papel);
+  /* cuerpo recto + franja inferior en zigzag (mismo diente que la home) */
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--diente-alto)) no-repeat,
+    conic-gradient(from -51.34deg at 50% 100%, #000 102.68deg, #0000 0) bottom / var(--diente-ancho) var(--diente-alto) repeat-x;
+          mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--diente-alto)) no-repeat,
+    conic-gradient(from -51.34deg at 50% 100%, #000 102.68deg, #0000 0) bottom / var(--diente-ancho) var(--diente-alto) repeat-x;
+}
+
+/* imagen a sangre: sin marco, sin padding */
+body.page-proyectos .ticket-img {
+  position: absolute;
+  inset: -1px;                 /* 1px de más por lado: que no asome el papel por el redondeo */
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  object-fit: cover;
+  object-position: var(--foco, 50% 50%);
+  transition: transform 1.4s var(--ease);
+}
+
+/* ── ETIQUETA SUPERIOR: papel pegado a la esquina, siempre visible ── */
+body.page-proyectos .ticket-etiqueta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  max-width: calc(100% - 24px);
+  padding: 9px 14px 10px;
+  background: var(--ticket-papel);
+  color: var(--azul);
+}
+body.page-proyectos .ticket-num {
+  display: block;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  border-bottom: 1.5px dashed var(--ticket-punteado);
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 800;
+  font-size: 0.64rem;
+  color: var(--rosa);           /* etiqueta del proyecto en el rosa de la web */
+}
+body.page-proyectos .ticket-nombre {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1.1;
+  color: var(--azul);
+}
+
+/* ── TALÓN INFERIOR: papel crema con punteados, como el ticket de la home ──
+   Solo la mini descripción y "ver plato". Base (táctil / sin hover): siempre visible. */
+body.page-proyectos .ticket-talon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 8px 16px calc(var(--diente-alto) + 7px);
+  background: var(--ticket-papel);
+  border-top: 1.5px dashed var(--ticket-punteado);
+  color: var(--azul);
+}
+body.page-proyectos .ticket-desc {
+  margin: 0;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 0.84rem;
+  line-height: 1.26;
+  color: var(--azul);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+body.page-proyectos .ticket-cta {
+  display: block;
+  margin-top: 7px;
+  padding-top: 6px;
+  border-top: 1.5px dashed var(--ticket-punteado);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.66rem;
+  color: var(--rosa);
+}
+
+/* ── TICKETS VACÍOS: papel crema con renglones punteados, sin nada más ── */
+body.page-proyectos .ticket--vacio .ticket-papel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15%;
+  padding: 0 14%;
+}
+body.page-proyectos .ticket-renglon {
+  display: block;
+  height: 0;
+  border-top: 1.5px dashed var(--ticket-punteado);
+}
+body.page-proyectos .ticket-renglon:nth-child(2) { width: 70%; }
+
+/* ── PRÓXIMAMENTE: la ficha vacía escrita como una comanda (mismo papel y punteados).
+   Rótulos como .ticket-num (Urbanist 800, rosa) y datos como .ticket-nombre (Outfit 800, azul),
+   y un sello "Próximamente" en rosa, girado como un sello de tinta. ── */
+body.page-proyectos .ticket--proximo .ticket-papel {
+  justify-content: center;
+  gap: 0;
+  padding: 0 12%;
+}
+body.page-proyectos .ticket-proximo-campos { margin: 0 0 14%; }
+body.page-proyectos .ticket-proximo-campo {
+  padding: 10px 0 9px;
+  border-bottom: 1.5px dashed var(--ticket-punteado);
+}
+body.page-proyectos .ticket-proximo-campo dt {
+  margin: 0 0 3px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 800;
+  font-size: 0.64rem;
+  color: var(--rosa);
+}
+body.page-proyectos .ticket-proximo-campo dd {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1.15;
+  color: var(--azul);
+}
+body.page-proyectos .ticket--proximo .ticket-renglon { margin-bottom: 9%; }
+body.page-proyectos .ticket--proximo .ticket-renglon:nth-of-type(2) { width: 60%; }
+body.page-proyectos .ticket-proximo-sello {
+  align-self: flex-end;
+  margin-top: 2%;
+  padding: 6px 12px;
+  border: 1.5px solid var(--rosa);
+  border-radius: var(--radio-boton, 6px);
+  color: var(--rosa);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  rotate: -6deg;
+}
+body.page-proyectos .ticket-renglon:nth-child(4) { width: 45%; }
+
+/* ── LOS TICKETS "SE IMPRIMEN" (solo si el JS lo activa; ver /entrada.js) ──
+   caen ~20px desde arriba con fundido y se asientan en su giro de reposo.
+   Usa translate/opacity, así no pisa el giro (rotate) ni el hover (scale).
+   El escalonado (80 ms) lo pone proyectos.js con transition-delay. */
+body.page-proyectos .pr-galeria.pr-anim .ticket {
+  opacity: 0;
+  translate: 0 -20px;
+  transition: opacity 0.5s ease, translate 0.5s var(--ease), rotate 0.35s var(--ease), scale 0.35s var(--ease);
+}
+body.page-proyectos .pr-galeria.pr-anim .ticket.visible,
+html.pr-visibles body.page-proyectos .pr-galeria.pr-anim .ticket {   /* red de seguridad del <head> (1,5 s) */
+  opacity: 1;
+  translate: none;
+}
+
+/* ============================================================
+   ESCRITORIO CON RATÓN: se endereza y crece apenas, como el ticket de la home;
+   el talón sube desde abajo con hover o foco de teclado.
+   (texto real: se oculta con opacity/transform, nunca con display:none)
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  body.page-proyectos a.ticket:hover,
+  body.page-proyectos a.ticket:focus-visible {
+    rotate: 0deg;
+    scale: 1.02;
+  }
+  body.page-proyectos a.ticket .ticket-talon {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.5s var(--ease), opacity 0.35s ease;
+  }
+  body.page-proyectos a.ticket:hover .ticket-talon,
+  body.page-proyectos a.ticket:focus-visible .ticket-talon {
+    opacity: 1;
+    transform: none;
+  }
+  body.page-proyectos a.ticket:hover .ticket-img,
+  body.page-proyectos a.ticket:focus-visible .ticket-img { transform: scale(1.05); }
+}
+
+/* táctil: giro más suave y sin cambio al tocar */
+@media (hover: none) {
+  body.page-proyectos { --ticket-giro: 0.6deg; }
+}
+
+/* ============================================================
+   RESPONSIVE: 3 columnas → 2 (tablet) → 1 (móvil)
+   ============================================================ */
+@media (max-width: 1023px) {
+  body.page-proyectos .pr-galeria { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 639px) {
+  body.page-proyectos .pr-galeria { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── MOVIMIENTO REDUCIDO ── */
+@media (prefers-reduced-motion: reduce) {
+  body.page-proyectos .pr-galeria.pr-anim .ticket { opacity: 1; translate: none; }
+  body.page-proyectos .ticket,
+  body.page-proyectos .ticket-img,
+  body.page-proyectos .ticket-talon { transition: none !important; }
+  body.page-proyectos a.ticket:hover .ticket-img,
+  body.page-proyectos a.ticket:focus-visible .ticket-img { transform: none; }
+}
+
+/* ============================================================
+   FILTRO POR CATEGORÍA (lo arma proyectos.js; sin JS queda oculto)
+   La cápsula de menús de /servicios/ (.cr-capsula / .cr-tab) en todos los tamaños,
+   con scroll horizontal y las mismas flechas.
+   ============================================================ */
+body.page-proyectos .pr-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+body.page-proyectos .pr-filtro[hidden],
+body.page-proyectos .pr-filtro-vacio[hidden],
+body.page-proyectos .pr-galeria .ticket[hidden] { display: none !important; }
+/* con JS (html.pr-js, lo pone el <head>): el hueco del filtro existe desde el primer pintado,
+   invisible hasta que proyectos.js crea las opciones y quita hidden */
+html.pr-js body.page-proyectos .pr-filtro[hidden] { display: flex !important; visibility: hidden; }
+html.pr-js body.page-proyectos .pr-filtro-opciones:empty { min-height: 44px; }
+
+body.page-proyectos .pr-filtro {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  margin-top: clamp(24px, 3.5vw, 36px);
+}
+
+/* ── comunes a los dos formatos ── */
+body.page-proyectos .pr-filtro-capsula {
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+body.page-proyectos .pr-filtro-opciones {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+}
+body.page-proyectos .pr-filtro-opciones::-webkit-scrollbar { display: none; }
+body.page-proyectos .pr-filtro-opcion {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;              /* alto fijo (44px) aunque la fuente tarde en llegar: sin saltos de la rejilla */
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+body.page-proyectos .pr-filtro-sello {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--melocoton);
+  transition: color 0.2s ease, transform 0.35s var(--ease);
+}
+body.page-proyectos .pr-filtro-opcion[aria-pressed="true"] .pr-filtro-sello {
+  color: var(--rosa);
+  transform: rotate(30deg);
+}
+
+/* flechas (mismo dibujo y latido que las de /servicios/; solo se ven si hay opciones fuera de vista) */
+body.page-proyectos .pr-filtro-flecha {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 54px;
+  display: none;
+  align-items: center;
+  border: 0;
+  padding: 0 10px;
+  color: var(--crema-claro);
+  cursor: pointer;
+}
+body.page-proyectos .pr-filtro-flecha--der {
+  right: 0;
+  justify-content: flex-end;
+  background: linear-gradient(to left, var(--flecha-fondo, var(--azul)) 45%, transparent);
+}
+body.page-proyectos .pr-filtro-flecha--izq {
+  left: 0;
+  justify-content: flex-start;
+  background: linear-gradient(to right, var(--flecha-fondo, var(--azul)) 45%, transparent);
+}
+body.page-proyectos .pr-filtro-capsula.puede-der .pr-filtro-flecha--der,
+body.page-proyectos .pr-filtro-capsula.puede-izq .pr-filtro-flecha--izq { display: flex; }
+body.page-proyectos .pr-filtro-flecha svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body.page-proyectos .pr-filtro-flecha--der svg { animation: prFlechaDer 1.3s ease-in-out infinite; }
+body.page-proyectos .pr-filtro-flecha--izq svg { animation: prFlechaIzq 1.3s ease-in-out infinite; }
+@keyframes prFlechaDer { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+@keyframes prFlechaIzq { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } }
+
+/* ── LA CÁPSULA (todos los tamaños): valores de .cr-capsula / .cr-tab de /servicios/ ── */
+body.page-proyectos .pr-filtro-capsula {
+  background: var(--azul);
+  border-radius: var(--radio-bloque, 12px);
+  padding: 6px;
+  box-shadow: 0 0 0 3px var(--crema-claro), var(--sombra);
+}
+body.page-proyectos .pr-filtro-opciones { border-radius: calc(var(--radio-bloque, 12px) - 6px); }
+
+/* la barra ocupa todo el ancho del contenido (alineada con la línea de "Comanda lista") */
+body.page-proyectos .pr-filtro-capsula {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+}
+/* pista: las opciones y sus flechas */
+body.page-proyectos .pr-filtro-pista {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: calc(var(--radio-bloque, 12px) - 6px);
+}
+/* rótulo "Filtrar": aviso discreto al inicio de la barra, separado por una línea fina */
+body.page-proyectos .pr-filtro-rotulo {
+  flex: 0 0 auto;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding: 0 18px 0 14px;
+  margin-right: 6px;
+  border-right: 1px solid rgba(251, 248, 242, 0.28);
+  color: var(--crema-claro);
+  opacity: 0.75;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  user-select: none;
+}
+@media (min-width: 769px) {
+  /* escritorio: las opciones se reparten el espacio que queda */
+  body.page-proyectos .pr-filtro-opcion { flex: 1 0 auto; justify-content: center; }
+}
+@media (max-width: 768px) {
+  /* móvil: como estaba (sin rótulo, todo el espacio para las opciones) */
+  body.page-proyectos .pr-filtro-rotulo { display: none; }
+}
+body.page-proyectos .pr-filtro-opcion {
+  border-radius: calc(var(--radio-bloque, 12px) - 6px);
+  color: var(--crema-claro);
+  font-size: 0.9rem;
+  padding: 11px 20px;
+}
+body.page-proyectos .pr-filtro-opcion:hover { background: rgba(255, 255, 255, 0.12); }
+body.page-proyectos .pr-filtro-opcion[aria-pressed="true"] {
+  background: var(--crema-claro);
+  color: var(--azul);
+}
+body.page-proyectos .pr-filtro-opcion:focus-visible { outline: 2px solid var(--melocoton); outline-offset: 1px; }
+@media (max-width: 768px) {
+  body.page-proyectos .pr-filtro-opcion { font-size: 0.85rem; padding: 10px 16px; }
+}
+
+/* mensaje cuando ninguna tarjeta coincide: una línea, como la nota de precios de la carta */
+body.page-proyectos .pr-filtro-vacio {
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  font-size: 1rem;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* fundido corto al cambiar de filtro (sin movimiento: solo opacidad de la rejilla) */
+@keyframes pr-filtro-fundido { from { opacity: 0.35; } to { opacity: 1; } }
+body.page-proyectos .pr-galeria.pr-filtrando { animation: pr-filtro-fundido 200ms ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.page-proyectos .pr-galeria.pr-filtrando { animation: none; }
+  body.page-proyectos .pr-filtro-opcion,
+  body.page-proyectos .pr-filtro-sello,
+  body.page-proyectos .pr-filtro-capsula { transition: none !important; }
+  body.page-proyectos .pr-filtro-flecha svg { animation: none; }
+}

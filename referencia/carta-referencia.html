@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Carta Creativa — Menú de Servicios de Diseño</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FAF9F6',
+                        warmCream: '#F5F1E8',
+                        raspberry: '#E6195E',
+                        raspberryDark: '#C4124E',
+                        slateNavy: '#4A5A78',
+                        slateDeep: '#2C374B',
+                        mutedBlue: '#8A96AC',
+                        capsuleDark: '#1E2430',
+                    },
+                    fontFamily: {
+                        condensed: ['"Oswald"', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAF9F6;
+            color: #4A5A78;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ocultar scrollbar horizontal en la cápsula en pantallas pequeñas */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Escala tipográfica condensada gigante estilo cartel (Referencia Imagen 2) */
+        .poster-section-title {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.94;
+            letter-spacing: -0.015em;
+            font-size: clamp(3.1rem, 7vw, 5.6rem);
+        }
+
+        .poster-pack-title {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.92;
+            letter-spacing: -0.01em;
+            font-size: clamp(2.85rem, 5.6vw, 4.65rem);
+        }
+
+        /* Líneas horizontales ultra limpias sin cajas ni bordes laterales */
+        .poster-band {
+            border-bottom: 1px solid rgba(74, 90, 120, 0.24);
+            transition: background-color 0.25s ease;
+        }
+        .poster-band:first-child {
+            border-top: 1px solid rgba(74, 90, 120, 0.24);
+        }
+
+        .dish-row {
+            border-bottom: 1px solid rgba(74, 90, 120, 0.14);
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-menu-swap {
+            animation: fadeSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="selection:bg-raspberry selection:text-white pb-24">
+
+    <!-- 1. FRANJA SUPERIOR EN ROSA FRAMBUESA + CÁPSULA OSCURA MONTADA EN LA TRANSICIÓN (Referencia Imagen 1) -->
+    <header class="relative">
+        <!-- Bloque superior de color sólido frambuesa (#E6195E) -->
+        <div class="bg-raspberry text-paper pt-6 pb-16 sm:pb-20 px-5 sm:px-10">
+            <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+                <!-- Marca editorial minimalista -->
+                <div class="flex items-center gap-3">
+                    <span class="w-2.5 h-2.5 rounded-full bg-paper"></span>
+                    <span class="font-condensed text-xl sm:text-2xl font-bold tracking-wider uppercase text-paper">
+                        LA CARTA CREATIVA
+                    </span>
+                    <span class="hidden md:inline-block font-mono text-[11px] uppercase tracking-widest text-paper/80 pl-2">
+                        / ESTUDIO DE DISEÑO
+                    </span>
+                </div>
+
+                <!-- Botón discreto superior para abrir Tu Comanda -->
+                <button onclick="toggleComandaDrawer(true)"
+                    class="inline-flex items-center gap-2.5 bg-paper/15 hover:bg-paper hover:text-raspberry text-paper px-4 py-2 rounded-full text-xs font-extrabold tracking-[0.12em] uppercase transition-all duration-200">
+                    <span>TU COMANDA</span>
+                    <span id="header-cart-count" class="bg-paper text-raspberry font-mono text-xs font-bold px-2 py-0.5 rounded-full">
+                        0
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- CÁPSULA FLOTANTE OSCURA (#1E2430) MONTADA EXACTAMENTE SOBRE EL BORDE INFERIOR -->
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 -mt-9 sm:-mt-10 relative z-20">
+            <nav aria-label="Categorías de la carta"
+                class="bg-capsuleDark rounded-full p-2 sm:p-2.5 shadow-[0_18px_40px_-12px_rgba(30,36,48,0.38)] overflow-x-auto no-scrollbar">
+                <div id="capsule-nav-items" class="flex items-center justify-between gap-1.5 sm:gap-2 min-w-max mx-auto">
+                    <!-- Se renderiza dinámicamente con los sellos dentados de 12 puntas -->
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2. CONTENIDO PRINCIPAL DE LA CARTA (SIN CAJAS NI CONTORNOS EXTERIORES) -->
+    <main id="menu-root" class="max-w-6xl mx-auto px-5 sm:px-10 pt-12 sm:pt-16 animate-menu-swap">
+        
+        <!-- Encabezado gigante condensado de la sección activa -->
+        <section class="mb-12 sm:mb-14">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <span id="section-kicker" class="font-mono text-xs uppercase tracking-[0.18em] text-mutedBlue block mb-2">
+                        01 · CARTA DE IDENTIDAD
+                    </span>
+                    <h1 id="section-main-title" class="poster-section-title text-raspberry">
+                        MENÚ BRANDING
+                    </h1>
+                </div>
+                <p id="section-subtitle" class="text-base sm:text-lg text-slateNavy/90 font-medium max-w-md md:text-right leading-snug">
+                    Tres opciones según tu hambre o arma tu menú plato por plato.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PACKS: BANDAS TIPOGRÁFICAS CONDENSADAS DE ANCHO COMPLETO (Referencia Imagen 2) -->
+        <section aria-labelledby="packs-heading" class="mb-16 sm:mb-20">
+            <div class="flex items-center justify-between mb-4">
+                <h2 id="packs-heading" class="font-mono text-xs font-bold uppercase tracking-[0.22em] text-slateNavy">
+                    PACKS DEGUSTACIÓN
+                </h2>
+                <span class="font-mono text-xs text-mutedBlue">
+                    AHORRA COMBINANDO PLATOS
+                </span>
+            </div>
+
+            <!-- Contenedor de las 3 bandas apiladas (COMPLETO / ESENCIAL / BÁSICO) -->
+            <div id="packs-bands-container" class="w-full">
+                <!-- Se genera dinámicamente -->
+            </div>
+        </section>
+
+        <!-- SECCIÓN PLATOS INDIVIDUALES: LISTA EDITORIAL LIMPIA SIN CAJAS -->
+        <section aria-labelledby="dishes-heading">
+            <div class="flex items-center justify-between pb-3 border-b border-slateNavy/25 mb-2">
+                <h2 id="dishes-heading" class="font-mono text-xs font-bold uppercase tracking-[0.22em] text-slateNavy">
+                    PLATOS INDIVIDUALES
+                </h2>
+                <span id="dishes-count-label" class="font-mono text-xs text-mutedBlue">
+                    07 PLATOS EN CARTA
+                </span>
+            </div>
+
+            <!-- Lista de platos individuales -->
+            <div id="dishes-list-container" class="w-full">
+                <!-- Se genera dinámicamente -->
+            </div>
+
+            <!-- Nota editorial al pie -->
+            <p class="mt-8 text-xs italic text-mutedBlue">
+                Los precios se muestran sin IVA. La impresión y producción física (packaging o papelería) se cotizan aparte según tirada y acabados.
+            </p>
+        </section>
+    </main>
+
+    <!-- 3. PÍLDORA FLOTANTE INFERIOR DERECHA (ACCESO RÁPIDO A TU COMANDA) -->
+    <div class="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-30">
+        <button onclick="toggleComandaDrawer(true)"
+            class="group bg-capsuleDark hover:bg-raspberry text-paper rounded-full pl-5 pr-2.5 py-2.5 shadow-[0_14px_34px_rgba(30,36,48,0.28)] flex items-center gap-3.5 transition-all duration-300">
+            <div class="text-left">
+                <span class="block text-[10px] font-mono uppercase tracking-[0.16em] text-paper/70 group-hover:text-paper/90">
+                    TU COMANDA
+                </span>
+                <span id="floating-total-text" class="font-mono text-sm font-bold text-paper">
+                    0 platos · 0 €
+                </span>
+            </div>
+            <span id="floating-badge" class="w-9 h-9 rounded-full bg-raspberry group-hover:bg-paper group-hover:text-raspberry text-paper font-mono text-xs font-bold flex items-center justify-center transition-colors">
+                0
+            </span>
+        </button>
+    </div>
+
+    <!-- 4. CAJÓN LATERAL DESLIZABLE: "TU COMANDA" (PAPEL CREMA LIMPIO SIN RECUADROS) -->
+    <div id="drawer-backdrop" onclick="toggleComandaDrawer(false)"
+        class="fixed inset-0 z-40 bg-capsuleDark/45 backdrop-blur-xs hidden transition-opacity"></div>
+
+    <aside id="comanda-drawer" aria-label="Tu comanda"
+        class="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-paper shadow-[-24px_0_60px_rgba(30,36,48,0.2)] transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+        
+        <!-- Cabecera Drawer -->
+        <div class="px-7 pt-7 pb-5 border-b border-slateNavy/15 flex items-start justify-between">
+            <div>
+                <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-mutedBlue block mb-1">
+                    PEDIDO EN CURSO
+                </span>
+                <h2 class="font-condensed text-4xl font-bold uppercase tracking-tight text-raspberry">
+                    TU COMANDA
+                </h2>
+            </div>
+            <button onclick="toggleComandaDrawer(false)" aria-label="Cerrar comanda"
+                class="w-9 h-9 rounded-full flex items-center justify-center text-slateNavy hover:bg-warmCream hover:text-raspberry transition-colors">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Lista de ítems seleccionados -->
+        <div id="drawer-items-list" class="flex-1 overflow-y-auto px-7 py-6 space-y-5">
+            <!-- Dinámico -->
+        </div>
+
+        <!-- Pie de totales y acciones -->
+        <div class="px-7 py-6 bg-warmCream border-t border-slateNavy/15">
+            <div class="flex items-center justify-between text-xs mb-4">
+                <label class="inline-flex items-center gap-2 cursor-pointer select-none font-semibold text-slateNavy">
+                    <input type="checkbox" id="iva-checkbox" onchange="renderComanda()" class="accent-raspberry w-4 h-4 rounded">
+                    <span>Incluir IVA (+21%)</span>
+                </label>
+                <button onclick="clearComanda()" class="font-mono text-[11px] uppercase tracking-wider text-mutedBlue hover:text-raspberry transition-colors">
+                    Vaciar
+                </button>
+            </div>
+
+            <div class="space-y-1.5 mb-5">
+                <div class="flex justify-between text-xs text-slateNavy/80">
+                    <span>Subtotal base</span>
+                    <span id="drawer-subtotal" class="font-mono font-bold">0 €</span>
+                </div>
+                <div id="drawer-iva-row" class="hidden justify-between text-xs text-mutedBlue">
+                    <span>IVA (21%)</span>
+                    <span id="drawer-iva-val" class="font-mono">0 €</span>
+                </div>
+                <div class="flex items-baseline justify-between pt-2.5 border-t border-slateNavy/15">
+                    <span class="font-mono text-xs font-bold uppercase tracking-[0.15em] text-slateNavy">TOTAL</span>
+                    <span id="drawer-total" class="font-condensed text-4xl font-bold text-raspberry">0 €</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2.5">
+                <button onclick="openCopyModal()"
+                    class="col-span-1 py-3.5 px-3 rounded-full bg-paper text-slateNavy hover:text-raspberry font-bold text-xs tracking-wider uppercase transition-colors">
+                    COPIAR
+                </button>
+                <button onclick="openBookingModal()"
+                    class="col-span-2 py-3.5 px-5 rounded-full bg-raspberry hover:bg-raspberryDark text-paper font-extrabold text-xs tracking-[0.14em] uppercase transition-colors">
+                    RESERVAR MESA
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 5. MODAL DE RESERVA DE MESA (SIN CAJAS RÍGIDAS) -->
+    <div id="booking-modal" onclick="closeBookingModal()"
+        class="fixed inset-0 z-50 bg-capsuleDark/55 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div onclick="event.stopPropagation()" class="bg-paper rounded-3xl max-w-lg w-full p-7 sm:p-9 shadow-2xl relative animate-menu-swap max-h-[92vh] overflow-y-auto">
+            <button onclick="closeBookingModal()" aria-label="Cerrar"
+                class="absolute top-6 right-6 w-9 h-9 rounded-full text-slateNavy hover:bg-warmCream hover:text-raspberry flex items-center justify-center transition-colors">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+
+            <div id="booking-form-view">
+                <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-raspberry block mb-1">
+                    CONFIRMAR PROYECTO
+                </span>
+                <h3 class="font-condensed text-4xl font-bold uppercase text-slateNavy mb-2">
+                    RESERVAR MESA
+                </h3>
+                <p class="text-sm text-slateNavy/80 mb-6">
+                    Déjanos tus datos y te enviaremos la propuesta detallada con fechas disponibles en menos de 24h.
+                </p>
+
+                <!-- Resumen abierto sobre fondo crema suave -->
+                <div class="bg-warmCream rounded-2xl p-4 mb-6">
+                    <div class="flex justify-between items-center font-mono text-xs font-bold text-slateNavy mb-2">
+                        <span>SELECCIÓN ACTUAL</span>
+                        <span id="modal-total-badge" class="text-raspberry">0 €</span>
+                    </div>
+                    <div id="modal-items-summary" class="text-xs text-slateNavy/85 space-y-1 max-h-28 overflow-y-auto"></div>
+                </div>
+
+                <form onsubmit="submitBooking(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block font-mono text-[11px] uppercase tracking-wider text-slateNavy mb-1">Nombre *</label>
+                            <input type="text" required placeholder="Tu nombre"
+                                class="w-full bg-warmCream rounded-xl px-4 py-3 text-sm text-slateNavy placeholder:text-mutedBlue focus:outline-none focus:ring-2 focus:ring-raspberry">
+                        </div>
+                        <div>
+                            <label class="block font-mono text-[11px] uppercase tracking-wider text-slateNavy mb-1">Marca / Proyecto</label>
+                            <input type="text" placeholder="Nombre de tu marca"
+                                class="w-full bg-warmCream rounded-xl px-4 py-3 text-sm text-slateNavy placeholder:text-mutedBlue focus:outline-none focus:ring-2 focus:ring-raspberry">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-mono text-[11px] uppercase tracking-wider text-slateNavy mb-1">Email *</label>
+                        <input type="email" required placeholder="hola@tumarca.com"
+                            class="w-full bg-warmCream rounded-xl px-4 py-3 text-sm text-slateNavy placeholder:text-mutedBlue focus:outline-none focus:ring-2 focus:ring-raspberry">
+                    </div>
+
+                    <div>
+                        <label class="block font-mono text-[11px] uppercase tracking-wider text-slateNavy mb-1">Notas o plazos ideales</label>
+                        <textarea rows="3" placeholder="Cuéntanos un poco sobre tu proyecto..."
+                            class="w-full bg-warmCream rounded-xl px-4 py-3 text-sm text-slateNavy placeholder:text-mutedBlue focus:outline-none focus:ring-2 focus:ring-raspberry resize-none"></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-4 rounded-full bg-raspberry hover:bg-raspberryDark text-paper font-extrabold text-xs tracking-[0.16em] uppercase transition-colors">
+                        ENVIAR COMANDA Y RESERVAR
+                    </button>
+                </form>
+            </div>
+
+            <div id="booking-success-view" class="hidden text-center py-8">
+                <div class="w-14 h-14 rounded-full bg-raspberry text-paper flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="font-mono text-xs uppercase tracking-[0.2em] text-raspberry">COMANDA EN COCINA</span>
+                <h3 class="font-condensed text-4xl font-bold uppercase text-slateNavy mt-1 mb-3">
+                    ¡MESA RESERVADA!
+                </h3>
+                <p class="text-sm text-slateNavy/80 max-w-sm mx-auto mb-7 leading-relaxed">
+                    Hemos recibido tu selección correctamente. Nos pondremos en contacto contigo muy pronto para arrancar.
+                </p>
+                <button onclick="finishBookingFlow()"
+                    class="px-8 py-3.5 rounded-full bg-capsuleDark hover:bg-raspberry text-paper text-xs font-extrabold tracking-[0.14em] uppercase transition-colors">
+                    VOLVER A LA CARTA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. MODAL DE PRESUPUESTO COPIABLE -->
+    <div id="copy-modal" onclick="closeCopyModal()"
+        class="fixed inset-0 z-50 bg-capsuleDark/55 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div onclick="event.stopPropagation()" class="bg-paper rounded-3xl max-w-md w-full p-7 shadow-2xl animate-menu-swap">
+            <div class="flex items-center justify-between mb-4">
+                <span class="font-mono text-xs font-bold uppercase tracking-[0.16em] text-raspberry">RESUMEN DE COMANDA</span>
+                <button onclick="closeCopyModal()" class="text-xs font-bold text-mutedBlue hover:text-raspberry">Cerrar</button>
+            </div>
+            <pre id="copy-preview-text" class="bg-warmCream rounded-2xl p-4 font-mono text-xs text-slateNavy whitespace-pre-wrap leading-relaxed mb-5 max-h-64 overflow-y-auto"></pre>
+            <button onclick="executeClipboardCopy()" id="copy-action-btn"
+                class="w-full py-3.5 rounded-full bg-raspberry hover:bg-raspberryDark text-paper text-xs font-extrabold tracking-[0.14em] uppercase transition-colors">
+                COPIAR AL PORTAPAPELES
+            </button>
+        </div>
+    </div>
+
+    <!-- TOAST FLOTANTE -->
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 -translate-y-3 transition-all duration-300">
+        <div class="bg-capsuleDark text-paper text-xs font-bold px-5 py-2.5 rounded-full shadow-xl flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-raspberry"></span>
+            <span id="toast-message">Añadido a tu comanda</span>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // DATOS COMPLETOS DE LAS 6 CATEGORÍAS (CON PACKS COMPLETO / ESENCIAL / BÁSICO)
+        // =========================================================================
+        const MENU_DATA = [
+            {
+                key: 'branding',
+                label: 'Branding',
+                kicker: '01 · IDENTIDAD & ESTRATEGIA',
+                title: 'MENÚ BRANDING',
+                subtitle: 'Tres opciones según tu hambre o arma tu menú plato por plato.',
+                badgeColor: '#E6195E', // Frambuesa vibrante
+                packs: [
+                    {
+                        id: 'br-completo',
+                        name: 'COMPLETO',
+                        price: 1550,
+                        originalPrice: 2200,
+                        savings: 650,
+                        description: 'Naming, logotipo y versiones, paleta, sistema tipográfico, manual completo, plantillas para redes, papelería, grafismos, merch y mockups. La marca redonda, lista para abrir.',
+                        highlights: ['Naming + Registro', 'Logo & Versiones', 'Manual Completo', 'Kit Redes + Papelería + Mockups']
+                    },
+                    {
+                        id: 'br-esencial',
+                        name: 'ESENCIAL',
+                        price: 850,
+                        originalPrice: 1070,
+                        savings: 220,
+                        description: 'Logotipo y versiones, paleta, sistema tipográfico, manual simple y plantillas para redes. Imagen sólida y lista para salir a vender.',
+                        highlights: ['Logotipo + Versiones', 'Paleta y Tipografía', 'Manual Simple', 'Plantillas Redes']
+                    },
+                    {
+                        id: 'br-basico',
+                        name: 'BÁSICO',
+                        price: 420,
+                        originalPrice: 540,
+                        savings: 120,
+                        description: 'Logotipo y versiones, paleta y sistema tipográfico. La base limpia de una marca.',
+                        highlights: ['Logotipo Principal + Reducido', 'Paleta Cromática', 'Sistema Tipográfico']
+                    }
+                ],
+                dishes: [
+                    { id: 'br-d1', name: 'Naming', desc: 'Nombre con criterio: nicho, opciones y chequeo de que esté libre.', price: 190 },
+                    { id: 'br-d2', name: 'Logotipo', desc: 'Marca principal + versiones (horizontal, reducida, negativo) y archivos listos.', price: 340 },
+                    { id: 'br-d3', name: 'Paleta de color', desc: 'Colores de marca con códigos para pantalla e impresión.', price: 100 },
+                    { id: 'br-d4', name: 'Sistema tipográfico', desc: 'Tipografías de marca y cómo se usan (títulos, texto, jerarquías).', price: 100 },
+                    { id: 'br-d5', name: 'Grafismos y patrón', desc: 'Elementos gráficos y patrón de apoyo para dar aire a la marca.', price: 140 },
+                    { id: 'br-d6', name: 'Manual simple', desc: 'Mini guía de uso: logo, color y tipografía en lo básico.', price: 250 },
+                    { id: 'br-d7', name: 'Manual completo', desc: 'Guía extensa: usos correctos e incorrectos, aplicaciones y sistema.', price: 560 }
+                ]
+            },
+            {
+                key: 'webapp',
+                label: 'Web / App',
+                kicker: '02 · EXPERIENCIAS DIGITALES',
+                title: 'MENÚ WEB / APP',
+                subtitle: 'Diseño UX/UI editorial y desarrollo ágil preparado para convertir.',
+                badgeColor: '#38BDF8', // Azul cielo
+                packs: [
+                    {
+                        id: 'wa-completo',
+                        name: 'COMPLETO',
+                        price: 2400,
+                        originalPrice: 3100,
+                        savings: 700,
+                        description: 'Arquitectura UX, diseño UI a medida (hasta 8 páginas), desarrollo responsive, micro-interacciones, SEO técnico y formación de autogestión.',
+                        highlights: ['Hasta 8 Páginas', 'Diseño Figma a Medida', 'Desarrollo Responsive', 'SEO Técnico + Formación']
+                    },
+                    {
+                        id: 'wa-esencial',
+                        name: 'ESENCIAL',
+                        price: 1350,
+                        originalPrice: 1700,
+                        savings: 350,
+                        description: 'Sitio web corporativo de hasta 4 secciones, diseño limpio adaptado a móvil, formularios conectados y velocidad optimizada.',
+                        highlights: ['Hasta 4 Secciones', '100% Adaptado a Móvil', 'Formularios y Analítica']
+                    },
+                    {
+                        id: 'wa-basico',
+                        name: 'BÁSICO',
+                        price: 680,
+                        originalPrice: 850,
+                        savings: 170,
+                        description: 'Landing page única de alto impacto para lanzamiento de producto o servicio. Directa al grano y lista en 10 días.',
+                        highlights: ['Página Única One-Page', 'Copy & Jerarquía Visual', 'Publicación Rápida']
+                    }
+                ],
+                dishes: [
+                    { id: 'wa-d1', name: 'Arquitectura y wireframes', desc: 'Mapa de navegación y estructura de contenidos enfocada en claridad.', price: 320 },
+                    { id: 'wa-d2', name: 'Diseño UI por pantalla', desc: 'Diseño visual de alta fidelidad con sistema de componentes en Figma.', price: 240 },
+                    { id: 'wa-d3', name: 'Prototipo interactivo App', desc: 'Flujo navegable completo para iOS/Android listo para testear.', price: 590 },
+                    { id: 'wa-d4', name: 'Optimización SEO y velocidad', desc: 'Core Web Vitals, metadatos, estructura semántica y compresión.', price: 280 },
+                    { id: 'wa-d5', name: 'Sistema de diseño (Design System)', desc: 'Librería escalable de botones, tipografías, colores y estados.', price: 450 }
+                ]
+            },
+            {
+                key: 'ecommerce',
+                label: 'Ecommerce',
+                kicker: '03 · TIENDAS QUE VENDEN',
+                title: 'MENÚ ECOMMERCE',
+                subtitle: 'Tiendas online con estética cuidada y proceso de compra sin fricciones.',
+                badgeColor: '#F59E0B', // Ámbar cálido
+                packs: [
+                    {
+                        id: 'ec-completo',
+                        name: 'COMPLETO',
+                        price: 2850,
+                        originalPrice: 3600,
+                        savings: 750,
+                        description: 'Tienda completa en Shopify o WooCommerce, diseño editorial personalizado, pasarelas de pago, envíos, emails transaccionales y hasta 30 productos.',
+                        highlights: ['Shopify / WooCommerce', 'Hasta 30 Productos', 'Pagos + Envíos + Emails', 'Sesión de Formación']
+                    },
+                    {
+                        id: 'ec-esencial',
+                        name: 'ESENCIAL',
+                        price: 1650,
+                        originalPrice: 2050,
+                        savings: 400,
+                        description: 'Ideal para marcas con catálogo curado (hasta 10 referencias). Ficha de producto persuasiva y checkout optimizado.',
+                        highlights: ['Catálogo hasta 10 Productos', 'Ficha de Producto Cuidada', 'Checkout Optimizado']
+                    },
+                    {
+                        id: 'ec-basico',
+                        name: 'BÁSICO',
+                        price: 980,
+                        originalPrice: 1250,
+                        savings: 270,
+                        description: 'Renovación visual y mejora de conversión sobre tu tienda actual sin perder historial ni posicionamiento.',
+                        highlights: ['Restyling Visual', 'Mejora UX Móvil', 'Optimización de Conversión']
+                    }
+                ],
+                dishes: [
+                    { id: 'ec-d1', name: 'Diseño de ficha de producto', desc: 'Jerarquía clara de variantes, guía de tallas y argumentos de compra.', price: 260 },
+                    { id: 'ec-d2', name: 'Integración pagos y envíos', desc: 'Configuración de Stripe, Apple Pay, Bizum, PayPal y zonas de envío.', price: 220 },
+                    { id: 'ec-d3', name: 'Pack emails transaccionales', desc: '5 plantillas con la estética de tu marca (pedido, envío, carrito).', price: 190 },
+                    { id: 'ec-d4', name: 'Carga y curaduría de catálogo', desc: 'Subida estructurada de hasta 25 productos con variantes y SEO.', price: 240 }
+                ]
+            },
+            {
+                key: 'packaging',
+                label: 'Packaging',
+                kicker: '04 · OBJETOS & ENVASES',
+                title: 'MENÚ PACKAGING',
+                subtitle: 'Envases que destacan en estantería y enamoran al abrirlos.',
+                badgeColor: '#10B981', // Verde menta
+                packs: [
+                    {
+                        id: 'pk-completo',
+                        name: 'COMPLETO',
+                        price: 1690,
+                        originalPrice: 2150,
+                        savings: 460,
+                        description: 'Concepto creativo, diseño de hasta 4 referencias de producto, artes finales de imprenta, asesoría de papeles y renders 3D de estudio.',
+                        highlights: ['Hasta 4 Referencias', 'Artes Finales PDF/X', 'Asesoría de Acabados', 'Mockups 4K']
+                    },
+                    {
+                        id: 'pk-esencial',
+                        name: 'ESENCIAL',
+                        price: 920,
+                        originalPrice: 1180,
+                        savings: 260,
+                        description: 'Experiencia unboxing completa: caja de envío exterior, papel de seda estampado, tarjetón de bienvenida y adhesivo de cierre.',
+                        highlights: ['Caja Exterior', 'Papel de Seda', 'Tarjetón + Adhesivo']
+                    },
+                    {
+                        id: 'pk-basico',
+                        name: 'BÁSICO',
+                        price: 540,
+                        originalPrice: 680,
+                        savings: 140,
+                        description: 'Diseño integral de un envase o etiqueta principal con plano troquelado y preparación técnica lista para imprenta.',
+                        highlights: ['1 Envase o Etiqueta', 'Plano Troquelado', 'Arte Final Imprenta']
+                    }
+                ],
+                dishes: [
+                    { id: 'pk-d1', name: 'Etiqueta frontal y trasera', desc: 'Composición editorial, tabla nutricional, ingredientes y código de barras.', price: 290 },
+                    { id: 'pk-d2', name: 'Estuche o caja plegable', desc: 'Diseño sobre troquel con especificaciones de stamping o golpe seco.', price: 380 },
+                    { id: 'pk-d3', name: 'Set de mockups fotorrealistas', desc: '3 vistas de estudio de tu envase con iluminación editorial.', price: 170 },
+                    { id: 'pk-d4', name: 'Tarjetón + adhesivo unboxing', desc: 'Piezas de cierre y agradecimiento listas para producción.', price: 150 }
+                ]
+            },
+            {
+                key: 'redes',
+                label: 'Redes',
+                kicker: '05 · DIRECCIÓN DE ARTE SOCIAL',
+                title: 'MENÚ REDES',
+                subtitle: 'Un sistema visual coherente para publicar con ritmo y sin estrés.',
+                badgeColor: '#A855F7', // Lila vibrante
+                packs: [
+                    {
+                        id: 'rd-completo',
+                        name: 'COMPLETO',
+                        price: 790,
+                        originalPrice: 1020,
+                        savings: 230,
+                        description: 'Dirección de arte del feed, 18 plantillas editables en Canva/Figma, portadas de destacados y guía de tono visual.',
+                        highlights: ['18 Plantillas Editables', 'Dirección de Arte Feed', 'Portadas Destacados', 'Guía de Estilo Social']
+                    },
+                    {
+                        id: 'rd-esencial',
+                        name: 'ESENCIAL',
+                        price: 480,
+                        originalPrice: 600,
+                        savings: 120,
+                        description: '9 piezas diseñadas a medida (posts + carruseles + stories) para anunciar tu nueva marca o lanzamiento.',
+                        highlights: ['9 Piezas a Medida', 'Carruseles + Stories', 'Archivos Editables']
+                    },
+                    {
+                        id: 'rd-basico',
+                        name: 'BÁSICO',
+                        price: 310,
+                        originalPrice: 390,
+                        savings: 80,
+                        description: '9 plantillas versátiles de uso diario para mantener coherencia visual en minutos.',
+                        highlights: ['9 Plantillas Base', 'Canva o Figma', 'Fácil de Adaptar']
+                    }
+                ],
+                dishes: [
+                    { id: 'rd-d1', name: 'Carrusel editorial (7 slides)', desc: 'Narrativa visual fluida diseñada para retener lectura y guardados.', price: 140 },
+                    { id: 'rd-d2', name: 'Iconos de historias destacadas', desc: 'Set de 8 portadas minimalistas alineadas con tu identidad.', price: 95 },
+                    { id: 'rd-d3', name: 'Auditoría visual de perfil', desc: 'Diagnóstico completo de biografía, cuadrícula y plan de mejora.', price: 120 },
+                    { id: 'rd-d4', name: 'Kit de stickers y GIFs de marca', desc: '6 recursos gráficos transparentes para dar vida a tus stories.', price: 130 }
+                ]
+            },
+            {
+                key: 'editorial',
+                label: 'Editorial',
+                kicker: '06 · PUBLICACIONES & PAPEL',
+                title: 'MENÚ EDITORIAL',
+                subtitle: 'Catálogos, cartas y piezas impresas con retícula clásica y buen gusto.',
+                badgeColor: '#FB7185', // Coral suave
+                packs: [
+                    {
+                        id: 'ed-completo',
+                        name: 'COMPLETO',
+                        price: 1290,
+                        originalPrice: 1650,
+                        savings: 360,
+                        description: 'Concepto editorial, diseño de retícula, maquetación de hasta 32 páginas, retoque de color y arte final de imprenta + versión digital.',
+                        highlights: ['Hasta 32 Páginas', 'Retícula Editorial', 'Arte Final Imprenta', 'PDF Interactivo']
+                    },
+                    {
+                        id: 'ed-esencial',
+                        name: 'ESENCIAL',
+                        price: 640,
+                        originalPrice: 800,
+                        savings: 160,
+                        description: 'Dossier comercial, lookbook o media kit de hasta 12 páginas con navegación limpia y jerarquía impecable.',
+                        highlights: ['Hasta 12 Páginas', 'Dossier o Lookbook', 'Editable InDesign']
+                    },
+                    {
+                        id: 'ed-basico',
+                        name: 'BÁSICO',
+                        price: 450,
+                        originalPrice: 560,
+                        savings: 110,
+                        description: 'Diseño editorial de carta gastronómica o catálogo breve (hasta 6 páginas) listo para imprenta y QR.',
+                        highlights: ['Hasta 6 Páginas', 'Imprenta + Versión QR', 'Asesoría de Papel']
+                    }
+                ],
+                dishes: [
+                    { id: 'ed-d1', name: 'Set papelería corporativa', desc: 'Tarjeta de visita, tarjetón de agradecimiento, sobre y hoja membretada.', price: 210 },
+                    { id: 'ed-d2', name: 'Invitación o tarjetón evento', desc: 'Pieza impresa a doble cara con asesoría de papeles especiales.', price: 160 },
+                    { id: 'ed-d3', name: 'Infografía o mapa ilustrado', desc: 'Síntesis visual de procesos, datos o plano de ubicación.', price: 230 },
+                    { id: 'ed-d4', name: 'Presentación corporativa (15 slides)', desc: 'Plantilla maestra en Pitch, Keynote o Google Slides.', price: 320 }
+                ]
+            }
+        ];
+
+        // =========================================================================
+        // ESTADO DE LA APLICACIÓN
+        // =========================================================================
+        let activeCategoryKey = 'branding';
+        let expandedPackId = null;
+        let comanda = []; // { id, name, price, qty, categoryLabel, kind }
+
+        function formatCurrency(num) {
+            return num.toLocaleString('es-ES') + ' €';
+        }
+
+        // SVG del sello/estrella dentada de 12 puntas (Referencia Imagen 1)
+        function createStarburstSVG(hexColor) {
+            return `
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="${hexColor}" aria-hidden="true">
+                    <path d="M12 1L14.4 4.1L18.2 3.1L19.1 6.9L22.7 8.4L21.5 12L22.7 15.6L19.1 17.1L18.2 20.9L14.4 19.9L12 23L9.6 19.9L5.8 20.9L4.9 17.1L1.3 15.6L2.5 12L1.3 8.4L4.9 6.9L5.8 3.1L9.6 4.1L12 1Z"/>
+                </svg>
+            `;
+        }
+
+        // =========================================================================
+        // RENDERIZADO DE LA CÁPSULA SUPERIOR FLOTANTE
+        // =========================================================================
+        function renderCapsuleNav() {
+            const container = document.getElementById('capsule-nav-items');
+            container.innerHTML = MENU_DATA.map(cat => {
+                const isActive = cat.key === activeCategoryKey;
+                return `
+                    <button onclick="switchCategory('${cat.key}')"
+                        aria-pressed="${isActive}"
+                        class="flex items-center gap-2.5 px-4 sm:px-6 py-2.5 sm:py-3 rounded-[22px] text-xs sm:text-sm font-extrabold tracking-tight transition-all duration-200 cursor-pointer ${
+                            isActive
+                            ? 'bg-white text-capsuleDark shadow-sm scale-[1.01]'
+                            : 'text-white/95 hover:text-white hover:bg-white/10'
+                        }">
+                        ${createStarburstSVG(cat.badgeColor)}
+                        <span>${cat.label}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function switchCategory(key) {
+            activeCategoryKey = key;
+            expandedPackId = null;
+            renderCapsuleNav();
+            renderActiveMenu();
+        }
+
+        // =========================================================================
+        // RENDERIZADO DEL CONTENIDO DE CADA CATEGORÍA (PACKS + PLATOS SIN CAJAS)
+        // =========================================================================
+        function renderActiveMenu() {
+            const cat = MENU_DATA.find(c => c.key === activeCategoryKey);
+            if (!cat) return;
+
+            const root = document.getElementById('menu-root');
+            root.classList.remove('animate-menu-swap');
+            void root.offsetWidth;
+            root.classList.add('animate-menu-swap');
+
+            // Encabezado condensado gigante
+            document.getElementById('section-kicker').textContent = cat.kicker;
+            document.getElementById('section-main-title').textContent = cat.title;
+            document.getElementById('section-subtitle').textContent = cat.subtitle;
+
+            // Bandas de Packs (COMPLETO / ESENCIAL / BÁSICO) estilo cartel tipográfico Imagen 2
+            const packsContainer = document.getElementById('packs-bands-container');
+            packsContainer.innerHTML = cat.packs.map(pack => {
+                const inCart = comanda.find(i => i.id === pack.id);
+                const isExpanded = expandedPackId === pack.id;
+
+                return `
+                    <div class="poster-band group py-7 sm:py-9 px-1 sm:px-2">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            
+                            <!-- Izquierda: Título gigante condensado + Descripción limpia -->
+                            <div onclick="togglePackDetails('${pack.id}')" class="flex-1 cursor-pointer">
+                                <div class="flex items-baseline gap-3 mb-2.5">
+                                    <h3 class="poster-pack-title text-slateNavy group-hover:text-raspberry transition-colors duration-200">
+                                        ${pack.name}
+                                    </h3>
+                                    <span class="font-mono text-[11px] uppercase tracking-widest text-mutedBlue group-hover:text-raspberry transition-colors">
+                                        ${isExpanded ? '− desglose' : '+ ver desglose'}
+                                    </span>
+                                </div>
+                                <p class="text-sm sm:text-[15px] text-slateNavy/85 max-w-2xl leading-relaxed">
+                                    ${pack.description}
+                                </p>
+
+                                <!-- Desglose desplegable sin cajas (solo etiquetas inline suaves) -->
+                                ${isExpanded ? `
+                                    <div class="mt-4 pt-3 border-t border-slateNavy/10 flex flex-wrap gap-x-5 gap-y-1.5">
+                                        ${pack.highlights.map(h => `
+                                            <span class="font-mono text-xs text-raspberry font-bold">
+                                                ✦ ${h}
+                                            </span>
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+
+                            <!-- Derecha: Precio grande + Ahorro + Botón Pill limpio -->
+                            <div class="flex flex-row lg:flex-col items-center lg:items-end justify-between gap-4 shrink-0 pt-2 lg:pt-0">
+                                <div class="lg:text-right">
+                                    <div class="font-condensed text-3xl sm:text-4xl font-bold text-raspberry leading-none">
+                                        ${formatCurrency(pack.price)}
+                                    </div>
+                                    <div class="font-mono text-[11px] mt-1.5">
+                                        <span class="line-through text-mutedBlue">Plato por plato ${formatCurrency(pack.originalPrice)}</span>
+                                        <span class="text-mutedBlue mx-1">·</span>
+                                        <span class="font-bold text-raspberry">Ahorras ${formatCurrency(pack.savings)}</span>
+                                    </div>
+                                </div>
+
+                                ${inCart ? `
+                                    <div class="inline-flex items-center gap-3 bg-raspberry text-paper rounded-full px-4 py-2 font-mono text-xs font-bold">
+                                        <button onclick="changeQty('${pack.id}', -1)" aria-label="Restar" class="hover:opacity-75 px-1">−</button>
+                                        <span>${inCart.qty}</span>
+                                        <button onclick="changeQty('${pack.id}', 1)" aria-label="Sumar" class="hover:opacity-75 px-1">+</button>
+                                    </div>
+                                ` : `
+                                    <button onclick="addToComanda('${pack.id}', '${pack.name}', ${pack.price}, '${cat.label}', 'Pack')"
+                                        class="px-6 py-2.5 rounded-full bg-raspberry hover:bg-raspberryDark text-paper font-extrabold text-xs tracking-[0.14em] uppercase transition-all duration-200 shadow-xs">
+                                        AGREGAR
+                                    </button>
+                                `}
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Lista de Platos Individuales (sin cajas, solo divisor 1px sutil)
+            document.getElementById('dishes-count-label').textContent = `${String(cat.dishes.length).padStart(2, '0')} PLATOS EN CARTA`;
+            const dishesContainer = document.getElementById('dishes-list-container');
+            dishesContainer.innerHTML = cat.dishes.map(dish => {
+                const inCart = comanda.find(i => i.id === dish.id);
+                return `
+                    <div class="dish-row py-5 sm:py-6 flex items-center justify-between gap-4 group">
+                        <div class="flex-1 pr-3">
+                            <h3 class="text-base sm:text-lg font-extrabold text-slateNavy group-hover:text-raspberry transition-colors">
+                                ${dish.name}
+                            </h3>
+                            <p class="text-xs sm:text-sm text-mutedBlue mt-0.5 leading-relaxed max-w-2xl">
+                                ${dish.desc}
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-4 sm:gap-6 shrink-0">
+                            <span class="font-mono text-base sm:text-lg font-bold text-raspberry">
+                                ${formatCurrency(dish.price)}
+                            </span>
+
+                            ${inCart ? `
+                                <div class="inline-flex items-center gap-2.5 bg-raspberry text-paper rounded-full px-3 py-1.5 font-mono text-xs font-bold">
+                                    <button onclick="changeQty('${dish.id}', -1)" aria-label="Restar" class="hover:opacity-75">−</button>
+                                    <span>${inCart.qty}</span>
+                                    <button onclick="changeQty('${dish.id}', 1)" aria-label="Sumar" class="hover:opacity-75">+</button>
+                                </div>
+                            ` : `
+                                <button onclick="addToComanda('${dish.id}', '${dish.name}', ${dish.price}, '${cat.label}', 'Plato')"
+                                    aria-label="Agregar ${dish.name}"
+                                    class="w-10 h-10 rounded-full bg-warmCream text-raspberry hover:bg-raspberry hover:text-paper flex items-center justify-center transition-all duration-200">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function togglePackDetails(packId) {
+            expandedPackId = expandedPackId === packId ? null : packId;
+            renderActiveMenu();
+        }
+
+        // =========================================================================
+        // GESTIÓN DE LA COMANDA
+        // =========================================================================
+        function addToComanda(id, name, price, categoryLabel, kind) {
+            const existing = comanda.find(i => i.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                comanda.push({ id, name, price, qty: 1, categoryLabel, kind });
+            }
+            renderComanda();
+            renderActiveMenu();
+            showToast(`"${name}" añadido a tu comanda`);
+        }
+
+        function changeQty(id, delta) {
+            const idx = comanda.findIndex(i => i.id === id);
+            if (idx === -1) return;
+            comanda[idx].qty += delta;
+            if (comanda[idx].qty <= 0) {
+                comanda.splice(idx, 1);
+            }
+            renderComanda();
+            renderActiveMenu();
+        }
+
+        function clearComanda() {
+            comanda = [];
+            renderComanda();
+            renderActiveMenu();
+            showToast('Comanda vaciada');
+        }
+
+        function getTotals() {
+            const subtotal = comanda.reduce((sum, i) => sum + i.price * i.qty, 0);
+            const includeIva = document.getElementById('iva-checkbox')?.checked || false;
+            const iva = includeIva ? Math.round(subtotal * 0.21) : 0;
+            const total = subtotal + iva;
+            const totalQty = comanda.reduce((sum, i) => sum + i.qty, 0);
+            return { subtotal, iva, total, totalQty, includeIva };
+        }
+
+        function renderComanda() {
+            const { subtotal, iva, total, totalQty, includeIva } = getTotals();
+
+            // Contadores en header y píldora flotante
+            document.getElementById('header-cart-count').textContent = totalQty;
+            document.getElementById('floating-badge').textContent = totalQty;
+            const platoWord = totalQty === 1 ? 'plato' : 'platos';
+            document.getElementById('floating-total-text').textContent = `${totalQty} ${platoWord} · ${formatCurrency(total)}`;
+
+            // Contenido del cajón lateral
+            const listEl = document.getElementById('drawer-items-list');
+            if (comanda.length === 0) {
+                listEl.innerHTML = `
+                    <div class="py-14 text-center">
+                        <p class="font-condensed text-2xl uppercase text-slateNavy/70 mb-2">
+                            TU COMANDA ESTÁ VACÍA
+                        </p>
+                        <p class="text-xs text-mutedBlue max-w-xs mx-auto leading-relaxed">
+                            Agrega un Pack completo o selecciona platos individuales de cualquier categoría de la carta.
+                        </p>
+                    </div>
+                `;
+            } else {
+                listEl.innerHTML = comanda.map(item => `
+                    <div class="pb-4 border-b border-slateNavy/12 flex items-start justify-between gap-4">
+                        <div class="flex-1 min-w-0">
+                            <span class="font-mono text-[10px] uppercase tracking-widest text-mutedBlue block">
+                                ${item.categoryLabel} · ${item.kind}
+                            </span>
+                            <h4 class="text-sm font-extrabold text-slateNavy mt-0.5">${item.name}</h4>
+                            <span class="font-mono text-sm font-bold text-raspberry">${formatCurrency(item.price * item.qty)}</span>
+                        </div>
+
+                        <div class="inline-flex items-center gap-2.5 bg-warmCream rounded-full px-3 py-1.5 font-mono text-xs font-bold text-slateNavy shrink-0">
+                            <button onclick="changeQty('${item.id}', -1)" class="text-raspberry hover:opacity-70">−</button>
+                            <span>${item.qty}</span>
+                            <button onclick="changeQty('${item.id}', 1)" class="text-raspberry hover:opacity-70">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('drawer-subtotal').textContent = formatCurrency(subtotal);
+            const ivaRow = document.getElementById('drawer-iva-row');
+            if (includeIva) {
+                ivaRow.classList.remove('hidden');
+                ivaRow.classList.add('flex');
+                document.getElementById('drawer-iva-val').textContent = formatCurrency(iva);
+            } else {
+                ivaRow.classList.add('hidden');
+                ivaRow.classList.remove('flex');
+            }
+            document.getElementById('drawer-total').textContent = formatCurrency(total);
+        }
+
+        // =========================================================================
+        // DRAWER Y MODALES
+        // =========================================================================
+        function toggleComandaDrawer(open) {
+            const drawer = document.getElementById('comanda-drawer');
+            const backdrop = document.getElementById('drawer-backdrop');
+            if (open) {
+                backdrop.classList.remove('hidden');
+                requestAnimationFrame(() => drawer.classList.remove('translate-x-full'));
+            } else {
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => backdrop.classList.add('hidden'), 280);
+            }
+        }
+
+        function openBookingModal() {
+            toggleComandaDrawer(false);
+            const { total, totalQty } = getTotals();
+
+            document.getElementById('booking-form-view').classList.remove('hidden');
+            document.getElementById('booking-success-view').classList.add('hidden');
+            document.getElementById('modal-total-badge').textContent = formatCurrency(total);
+
+            const summaryEl = document.getElementById('modal-items-summary');
+            if (totalQty === 0) {
+                summaryEl.innerHTML = `<p class="italic text-mutedBlue">Consulta general sin platos preseleccionados.</p>`;
+            } else {
+                summaryEl.innerHTML = comanda.map(i => `
+                    <div class="flex justify-between">
+                        <span><strong class="text-raspberry">${i.qty}×</strong> ${i.name} (${i.categoryLabel})</span>
+                        <span class="font-mono font-bold">${formatCurrency(i.price * i.qty)}</span>
+                    </div>
+                `).join('');
+            }
+
+            const modal = document.getElementById('booking-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function submitBooking(e) {
+            e.preventDefault();
+            document.getElementById('booking-form-view').classList.add('hidden');
+            document.getElementById('booking-success-view').classList.remove('hidden');
+        }
+
+        function finishBookingFlow() {
+            comanda = [];
+            renderComanda();
+            renderActiveMenu();
+            closeBookingModal();
+        }
+
+        function openCopyModal() {
+            const { subtotal, iva, total, includeIva } = getTotals();
+            const textLines = [
+                `LA CARTA CREATIVA — RESUMEN DE COMANDA`,
+                `----------------------------------------`,
+                ...(comanda.length
+                    ? comanda.map(i => `• ${i.qty}x ${i.name} (${i.categoryLabel}) — ${formatCurrency(i.price * i.qty)}`)
+                    : ['(Aún no has seleccionado platos)']),
+                `----------------------------------------`,
+                `Base imponible: ${formatCurrency(subtotal)}`,
+                ...(includeIva ? [`IVA (21%): ${formatCurrency(iva)}`] : []),
+                `TOTAL ESTIMADO: ${formatCurrency(total)}`
+            ];
+
+            document.getElementById('copy-preview-text').textContent = textLines.join('\n');
+            const modal = document.getElementById('copy-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCopyModal() {
+            const modal = document.getElementById('copy-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function executeClipboardCopy() {
+            const text = document.getElementById('copy-preview-text').textContent;
+            const helper = document.createElement('textarea');
+            helper.value = text;
+            document.body.appendChild(helper);
+            helper.select();
+            document.execCommand('copy');
+            document.body.removeChild(helper);
+
+            const btn = document.getElementById('copy-action-btn');
+            btn.textContent = '¡COPIADO!';
+            setTimeout(() => { btn.textContent = 'COPIAR AL PORTAPAPELES'; }, 1800);
+        }
+
+        let toastTimer;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('opacity-0', '-translate-y-3');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-3');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 2200);
+        }
+
+        // Inicialización
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCapsuleNav();
+            renderActiveMenu();
+            renderComanda();
+        });
+    </script>
+</body>
+</html>

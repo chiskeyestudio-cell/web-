@@ -1,0 +1,463 @@
+/* ============================================================
+   SERVICIOS · INICIO (solo /servicios/)
+   1) Las dos tarjetas que sustituyen a los platos individuales:
+      papel de comanda (#EEE9DD + grano), renglones azules finos y
+      borde inferior dentado (el diente de las tarjetas de proyectos).
+   2) La comanda para negocios nuevos: misma hoja que la comanda de
+      Reservas (/reserva/reserva.css), copiada a clases propias.
+   Todo cuelga de body.page-servicios o de .servicios-inicio-capa.
+   ============================================================ */
+
+/* ── 1) TARJETAS ───────────────────────────────────────────── */
+body.page-servicios .servicios-inicio-tarjetas {
+  --si-diente-ancho: 15px;
+  --si-diente-alto: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 3.5vw, 44px);
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: stretch;
+}
+
+/* el exterior lleva giro y sombra (drop-shadow sigue los dientes);
+   el interior lleva la máscara, así el foco del botón no se recorta */
+body.page-servicios .servicios-inicio-tarjeta {
+  display: flex;
+  min-width: 0;
+  margin: 0;
+  rotate: 0.6deg;
+  filter: drop-shadow(0 12px 16px rgba(46, 56, 80, 0.22));   /* que no se pierda en el crema del fondo */
+}
+body.page-servicios .servicios-inicio-tarjeta--destacada {
+  rotate: -1deg;
+  filter: drop-shadow(0 18px 22px rgba(46, 56, 80, 0.32));
+}
+
+body.page-servicios .servicios-inicio-tarjeta-papel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(22px, 3vw, 32px) clamp(20px, 3vw, 32px) calc(clamp(24px, 3vw, 32px) + var(--si-diente-alto));
+  background-color: var(--papel);
+  background-image: var(--grano);
+  color: var(--azul);
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--si-diente-alto)) no-repeat,
+    conic-gradient(from -51.34deg at 50% 100%, #000 102.68deg, #0000 0) bottom / var(--si-diente-ancho) var(--si-diente-alto) repeat-x;
+          mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--si-diente-alto)) no-repeat,
+    conic-gradient(from -51.34deg at 50% 100%, #000 102.68deg, #0000 0) bottom / var(--si-diente-ancho) var(--si-diente-alto) repeat-x;
+}
+
+/* etiqueta: la pastilla azul del folio */
+body.page-servicios .servicios-inicio-etiqueta {
+  display: inline-block;
+  padding: 5px 12px;
+  background-color: var(--azul);
+  background-image: var(--grano);
+  color: var(--crema-claro);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+/* renglones azules finos: uno bajo el título, otro sobre el botón */
+body.page-servicios .servicios-inicio-tarjeta-titulo {
+  align-self: stretch;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  line-height: 1.12;
+  color: var(--azul);
+  margin: 16px 0 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--linea);
+}
+/* las dos iguales: papel crema, misma tipografía, título rosa,
+   etiqueta y botón azules rellenos (se distinguen solo por el giro y la sombra) */
+body.page-servicios .servicios-inicio-tarjeta .servicios-inicio-tarjeta-titulo { color: var(--rosa); }
+
+body.page-servicios .servicios-inicio-tarjeta-texto {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--azul);
+  margin: 12px 0 22px;           /* aire mínimo antes del botón */
+  max-width: 46ch;
+}
+
+body.page-servicios .servicios-inicio-boton {
+  margin-top: auto;              /* los dos botones a la misma altura */
+  min-height: 44px;
+  padding: 0 24px;
+  border: 1.5px solid var(--azul);
+  border-radius: var(--radio-boton, 6px);
+  background: transparent;
+  color: var(--azul);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+body.page-servicios .servicios-inicio-boton:hover { background: var(--azul); color: var(--crema-claro); }
+body.page-servicios .servicios-inicio-boton--lleno {
+  background: var(--azul);
+  color: var(--crema-claro);
+}
+body.page-servicios .servicios-inicio-boton--lleno:hover { background: var(--azul-oscuro); border-color: var(--azul-oscuro); }
+body.page-servicios .servicios-inicio-boton:focus-visible {
+  outline: 2px solid var(--rosa);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  body.page-servicios .servicios-inicio-tarjetas { grid-template-columns: 1fr; }
+  body.page-servicios .servicios-inicio-tarjeta { rotate: 0.4deg; }
+  body.page-servicios .servicios-inicio-tarjeta--destacada { rotate: -0.6deg; }
+  body.page-servicios .servicios-inicio-boton { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.page-servicios .servicios-inicio-boton { transition: none; }
+}
+
+
+/* ── 2) LA COMANDA PARA NEGOCIOS NUEVOS ────────────────────── */
+.servicios-inicio-capa {
+  --azul: #5B6C8F;
+  --rosa: #E91E63;
+  --crema-claro: #FBF8F2;
+  --papel: #EEE9DD;
+  --linea: rgba(91, 108, 143, 0.28);
+  --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .25 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: fixed;
+  inset: 0;
+  z-index: 95000;                 /* sobre el header (91000), como la comanda de Reservas */
+  text-align: left;
+}
+.servicios-inicio-capa[hidden],
+.servicios-inicio-capa [hidden] { display: none !important; }
+.servicios-inicio-capa *,
+.servicios-inicio-capa *::before,
+.servicios-inicio-capa *::after { box-sizing: border-box; }
+
+/* scroll de fondo bloqueado con clase propia */
+html.servicios-inicio-abierta,
+html.servicios-inicio-abierta body { overflow: hidden !important; }
+
+.servicios-inicio-capa :focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
+.servicios-inicio-capa .servicios-inicio-papel:focus,
+.servicios-inicio-capa .servicios-inicio-papel:focus-visible { outline: none; }
+
+.servicios-inicio-fondo {
+  position: absolute;
+  inset: 0;
+  background: rgba(58, 69, 94, 0.62);
+  animation: siFondo 0.25s ease both;
+}
+@keyframes siFondo { from { opacity: 0; } to { opacity: 1; } }
+.servicios-inicio-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 14px 24px;
+}
+.servicios-inicio-papel {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: auto 0;
+  padding: 18px 26px;
+  background-color: var(--papel);
+  background-image: var(--grano);
+  color: var(--azul);
+  font-family: 'Urbanist', sans-serif;
+  line-height: normal;
+  box-shadow: 14px 16px 0 -4px rgba(30, 36, 48, 0.18), 0 30px 60px -20px rgba(30, 36, 48, 0.5);
+  transform: rotate(-1.5deg);
+  animation: siPapel 0.45s var(--ease) both;
+  outline: none;
+}
+@keyframes siPapel {
+  from { opacity: 0; transform: translateY(28px) rotate(-3deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(-1.5deg); }
+}
+
+.servicios-inicio-barra { position: absolute; top: 4px; right: 4px; }
+.servicios-inicio-cerrar {
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--azul);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.servicios-inicio-cerrar:hover { background: rgba(91, 108, 143, 0.12); color: var(--rosa); }
+.servicios-inicio-cerrar svg {
+  width: 18px; height: 18px;
+  stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; fill: none;
+}
+
+/* cabecera extra: la etiqueta sobre el título */
+body.page-servicios .servicios-inicio-capa .servicios-inicio-etiqueta--comanda {
+  display: inline-block;
+  align-self: flex-start;
+  margin: 2px 0 10px;
+  padding: 4px 10px;
+  border: 1px solid var(--azul);
+  background: transparent;
+  color: var(--azul);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+.servicios-inicio-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding-right: 30px;
+}
+.servicios-inicio-titulo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 2.4rem;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--rosa);
+  margin: 0;
+  text-transform: none;
+}
+.servicios-inicio-folio {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding: 4px 10px;
+  background-color: var(--azul);
+  background-image: var(--grano);
+  color: var(--crema-claro);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+.servicios-inicio-respuesta {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 6px 0 0;
+  color: var(--azul);
+}
+
+/* campos con líneas azules: etiqueta y línea en la misma fila */
+.servicios-inicio-form { margin: 0; }
+.servicios-inicio-trampa {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.servicios-inicio-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 10px;
+  border-top: 1px solid var(--azul);
+  border-left: 1px solid var(--azul);
+}
+.servicios-inicio-campo {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  border-right: 1px solid var(--azul);
+  border-bottom: 1px solid var(--azul);
+  min-width: 0;
+}
+.servicios-inicio-campo--ancho { grid-column: 1 / -1; }
+.servicios-inicio-campo label {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0 8px;
+  border-right: 1px solid var(--linea);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  color: var(--azul);
+  text-transform: none;
+  letter-spacing: normal;
+}
+.servicios-inicio-req { color: var(--rosa); }
+.servicios-inicio-campo input,
+.servicios-inicio-campo select,
+.servicios-inicio-campo textarea {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 7px 8px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--azul);
+  outline: none;
+}
+.servicios-inicio-campo select { cursor: pointer; }
+.servicios-inicio-campo textarea { min-height: 84px; line-height: 1.4; resize: vertical; }
+.servicios-inicio-campo--concepto label { align-items: flex-start; padding-top: 8px; }
+.servicios-inicio-campo input::placeholder,
+.servicios-inicio-campo textarea::placeholder {
+  color: var(--azul);
+  opacity: 0.55;
+  font-style: italic;
+  font-weight: 500;
+}
+.servicios-inicio-campo:focus-within { background: rgba(255, 255, 255, 0.45); }
+.servicios-inicio-campo:focus-within label { color: var(--rosa); }
+
+.servicios-inicio-error {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  border: 1.5px dashed var(--rosa);
+  color: var(--rosa);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.servicios-inicio-acciones { margin-top: 14px; }
+.servicios-inicio-enviar {
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  border: 0;
+  border-radius: var(--radio-boton, 6px);
+  background: var(--rosa);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+.servicios-inicio-enviar:hover:not(:disabled) { background: var(--azul); }
+.servicios-inicio-enviar:disabled { opacity: 0.6; cursor: progress; }
+
+/* gracias */
+.servicios-inicio-gracias { text-align: center; padding: 24px 0 8px; }
+.servicios-inicio-gracias-img { width: 140px; max-width: 50%; height: auto; }
+.servicios-inicio-gracias-titulo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  line-height: 1;
+  color: var(--rosa);
+  margin: 14px 0 12px;
+  outline: none;
+}
+.servicios-inicio-gracias p {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  max-width: 34ch;
+  margin: 0 auto;
+  color: var(--azul);
+}
+.servicios-inicio-gracias .servicios-inicio-respuesta { margin-top: 8px; font-size: 0.85rem; }
+.servicios-inicio-volver {
+  margin-top: 24px;
+  height: 48px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: var(--radio-boton, 6px);
+  background: var(--azul);
+  color: var(--crema-claro);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.servicios-inicio-volver:hover { background: var(--rosa); }
+
+/* móvil: pantalla completa, sin inclinación, con scroll interno */
+@media (max-width: 640px) {
+  .servicios-inicio-scroll { padding: 0; display: block; }
+  .servicios-inicio-papel {
+    max-width: none;
+    min-height: 100%;
+    margin: 0;
+    transform: none;
+    box-shadow: none;
+    padding: 0 16px calc(16px + env(safe-area-inset-bottom, 0px));
+    animation-name: siPapelMovil;
+    display: flex;
+    flex-direction: column;
+  }
+  @keyframes siPapelMovil {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .servicios-inicio-barra {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 -16px;
+    padding: 8px 8px 0;
+    background-color: var(--papel);
+    background-image: var(--grano);
+  }
+  .servicios-inicio-cerrar svg { width: 20px; height: 20px; }
+  body.page-servicios .servicios-inicio-capa .servicios-inicio-etiqueta--comanda { margin-top: 0; }
+  .servicios-inicio-cabecera { padding-right: 0; }
+  .servicios-inicio-titulo { font-size: clamp(2rem, 9vw, 2.7rem); }
+
+  .servicios-inicio-campos { grid-template-columns: 1fr; }
+  .servicios-inicio-campo { grid-template-columns: 7.6rem minmax(0, 1fr); }
+  .servicios-inicio-campo label { white-space: normal; padding: 6px 8px; font-size: 0.85rem; }
+  .servicios-inicio-campo input,
+  .servicios-inicio-campo select,
+  .servicios-inicio-campo textarea { font-size: 1rem; }   /* 16px: evita el zoom de iOS */
+
+  /* el alto que sobra lo toma Concepto; el botón queda abajo con el mismo aire */
+  .servicios-inicio-vista-form:not([hidden]),
+  .servicios-inicio-form { flex: 1 0 auto; display: flex; flex-direction: column; }
+  .servicios-inicio-campos { flex: 1 0 auto; grid-template-rows: repeat(5, auto) 1fr; }
+  .servicios-inicio-campo--concepto textarea { height: 100%; }
+  .servicios-inicio-acciones { padding-top: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .servicios-inicio-fondo,
+  .servicios-inicio-papel { animation: none !important; }
+  .servicios-inicio-capa * { transition: none !important; }
+  .servicios-inicio-papel { transform: none; }
+}

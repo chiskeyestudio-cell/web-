@@ -1,0 +1,461 @@
+/* ============================================================
+   PEDIDO · /tupedido/
+   Todo con scope body.page-pedido para no tocar otras páginas.
+   Misma base que /servicios/ y /proyectos/: papel crema de arriba abajo,
+   header y footer del sitio en rosa.
+   ============================================================ */
+
+/* ── TOKENS (los mismos de servicios.css y proyectos.css) ── */
+body.page-pedido {
+  --azul: #5B6C8F;
+  --azul-oscuro: #4A5A7A;       /* texto pequeño sobre papel: ≥ 4,5:1 */
+  --rosa: #E91E63;
+  --crema: #F7F3EA;
+  --crema-claro: #FBF8F2;
+  --papel-ticket: #f9f9f9;      /* papel de la ranura */
+  --papel: #EEE9DD;             /* papel de la comanda: el mismo de La comanda de /servicios/ */
+  --linea: rgba(91, 108, 143, 0.28);
+  --punteado: rgba(91, 108, 143, 0.33);
+  --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .25 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* convierte una imagen a #E91E63 (logo e iconos del footer) */
+  --a-rosa: brightness(0) saturate(100%) invert(22%) sepia(92%) saturate(4870%) hue-rotate(331deg) brightness(93%) contrast(95%);
+
+  /* página pareja: el mismo papel crema de arriba abajo (header, contenido y footer) */
+  background-color: var(--crema);
+  background-image: var(--grano);
+  color: var(--azul);
+}
+
+/* header sobre crema: logo y [ MENU ] en rosa (Reservas ya es rosa) — igual que servicios */
+body.page-pedido .logo img { filter: var(--a-rosa); }
+body.page-pedido .menu a { color: var(--rosa); }
+/* footer sobre crema: iconos y © en rosa (el !important gana al filtro inline que pone main.js) */
+body.page-pedido .footer { color: var(--rosa); }
+body.page-pedido .footer .social-icons img { filter: var(--a-rosa) !important; }
+
+/* página corta: el body en columna y el pie baja al fondo de la ventana (su margin-top: auto
+   de styles.css), así el crema llena el hueco en vez del tono del pie. */
+body.page-pedido {
+  display: flex;
+  flex-direction: column;
+  /* lvh: el alto de la pantalla con la barra del navegador móvil escondida. Es fijo:
+     al hacer scroll no cambia, así el pie no salta (dvh sí cambiaba y lo hacía brincar;
+     svh dejaba bajo el pie una franja de su color al esconderse la barra) */
+  min-height: 100vh;
+  min-height: 100lvh;
+}
+
+body.page-pedido [hidden] { display: none !important; }
+
+body.page-pedido .pedido-main *,
+body.page-pedido .pedido-main *::before,
+body.page-pedido .pedido-main *::after { box-sizing: border-box; }
+
+body.page-pedido .pedido-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── CONTENEDOR (el mismo de /proyectos/) ── */
+body.page-pedido .pedido-main {
+  font-family: 'Urbanist', sans-serif;
+  color: var(--azul);
+}
+body.page-pedido .pedido-contenido {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: calc(var(--contenido-inicio, 48px) * 0.75) clamp(16px, 5vw, 56px) clamp(32px, 5vw, 56px);   /* arriba: 75% de --contenido-inicio, como las demás páginas */
+}
+
+/* ── CABECERA: mismos valores que "Salido de cocina" (.pr-titulo / .pr-intro) ── */
+body.page-pedido .pedido-titulo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.6rem, 6.2vw, 6rem);
+  line-height: 0.9;
+  color: var(--rosa);
+  margin: -0.08em 0 0 -0.05em;   /* arriba: el interlineado bajo deja 0,08em sobre las letras; izquierda: la tinta alinea con el texto */
+  overflow-wrap: break-word;
+}
+body.page-pedido .pedido-intro {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.5;
+  max-width: 54ch;
+  margin: 18px 0 0;
+  color: var(--azul);
+}
+
+/* aviso del modo demo (dentro de la página, nunca fijo) */
+body.page-pedido .pedido-demo {
+  display: inline-block;
+  margin: 18px 0 0;
+  padding: 6px 12px;
+  border: 1.5px dashed var(--rosa);
+  border-radius: var(--radio-boton, 6px);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--azul-oscuro);
+}
+
+/* cabecera de bloque (como "Packs" en servicios, a 14px) */
+body.page-pedido .pedido-bloque-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid var(--azul);
+  /* línea cortada: trazos de 6px con 4px de aire */
+  border-image: repeating-linear-gradient(90deg, var(--azul) 0 6px, transparent 6px 10px) 0 0 1 0 / 0 0 1.5px 0;
+}
+body.page-pedido .pedido-bloque-titulo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.875rem;
+  color: var(--azul-oscuro);
+  margin: 0;
+}
+
+/* ============================================================
+   EL BUSCADOR: la "ranura" de la comanda
+   ============================================================ */
+body.page-pedido .pedido-buscador {
+  max-width: 640px;
+  margin: clamp(32px, 4.5vw, 52px) 0 0;
+}
+body.page-pedido .pedido-ranura {
+  display: flex;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 4px;
+  border: 1.5px solid var(--azul);
+  border-radius: var(--radio-bloque, 12px);
+  background-color: var(--papel-ticket);
+  background-image: var(--grano);
+}
+body.page-pedido .pedido-ranura:focus-within {
+  outline: 3px solid var(--rosa);
+  outline-offset: 3px;
+}
+body.page-pedido .pedido-campo {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+  color: var(--azul-oscuro);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+}
+body.page-pedido .pedido-campo::placeholder { color: var(--azul); opacity: 1; }
+body.page-pedido .pedido-campo:focus { outline: none; }   /* el foco lo marca la ranura entera */
+body.page-pedido .pedido-campo[aria-invalid="true"] { color: var(--rosa); }
+
+/* botón rosa con texto blanco: Outfit 800 a 1,2rem (texto grande, 4,4:1 ≥ 3:1) */
+body.page-pedido .pedido-boton {
+  flex-shrink: 0;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: var(--radio-boton, 6px);
+  background: var(--rosa);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+body.page-pedido .pedido-boton:disabled { cursor: progress; }
+body.page-pedido .pedido-boton:focus-visible {
+  outline: 3px solid var(--azul-oscuro);
+  outline-offset: 2px;
+}
+
+/* formato inválido: bajo el campo, en azul oscuro con filete rosa (el rosa no llega a 4,5:1 en texto pequeño) */
+body.page-pedido .pedido-error {
+  margin: 12px 0 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--rosa);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--azul-oscuro);
+}
+
+/* ============================================================
+   EL RESULTADO
+   ============================================================ */
+/* sin hueco por defecto: el espacio se abre hacia abajo solo cuando hay resultado
+   (0fr → 1fr anima el alto real del contenido, sea cual sea) */
+body.page-pedido .pedido-resultado {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 450ms cubic-bezier(.22, 1, .36, 1);
+  /* un solo fundido corto del contenido al aparecer (/entrada.css) */
+  --fade-duracion: 300ms;
+  --fade-desplazamiento: 8px;
+}
+body.page-pedido .pedido-resultado.is-abierto { grid-template-rows: 1fr; }
+body.page-pedido .pedido-resultado-interior {
+  min-height: 0;
+  overflow: hidden;                     /* recorta mientras se abre… */
+}
+body.page-pedido .pedido-resultado.is-abierto .pedido-resultado-interior {
+  padding-top: clamp(32px, 4.5vw, 52px);
+}
+/* …y ya abierto deja ver el giro y la sombra de la comanda */
+body.page-pedido .pedido-resultado.is-listo .pedido-resultado-interior { overflow: visible; }
+@media (prefers-reduced-motion: reduce) {
+  body.page-pedido .pedido-resultado { transition: none; }
+}
+body.page-pedido .pedido-resultado :focus { outline: none; }
+body.page-pedido .pedido-resultado :focus-visible {
+  outline: 3px solid var(--rosa);
+  outline-offset: 3px;
+}
+
+/* escritorio: comanda a la izquierda, recorrido a la derecha */
+body.page-pedido .pedido-plato {
+  display: grid;
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+}
+
+/* ── LA COMANDA: mismos valores que .proyecto-comanda, en el papel de la comanda de servicios ── */
+body.page-pedido .pedido-comanda {
+  padding: 14px 18px 16px;
+  background-color: var(--papel);
+  background-image: var(--grano);
+  color: var(--azul);
+  font-family: 'Urbanist', sans-serif;
+  box-shadow: 14px 16px 0 -4px rgba(30, 36, 48, 0.18), 0 30px 60px -20px rgba(30, 36, 48, 0.5);
+  transform: rotate(-1.5deg);
+}
+body.page-pedido .pedido-comanda-cabecera {
+  display: flex;
+  flex-wrap: wrap;                 /* un folio largo (CK-001-el-hogar-7K4M) baja bajo el título */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px 12px;
+}
+body.page-pedido .pedido-comanda-titulo {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 1.75rem;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--rosa);
+}
+body.page-pedido .pedido-comanda-folio {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  margin-top: 4px;
+  padding: 4px 10px;
+  background-color: var(--azul);
+  background-image: var(--grano);
+  color: var(--crema-claro);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+}
+
+/* campos con líneas azules */
+/* una sola rejilla: la columna de etiquetas toma el ancho de la más larga */
+body.page-pedido .pedido-comanda-campos {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  margin: 12px 0 0;
+  border-top: 1px solid var(--azul);
+  border-left: 1px solid var(--azul);
+}
+body.page-pedido .pedido-comanda-campos--nota { margin-top: 10px; }
+body.page-pedido .pedido-comanda-campo { display: contents; }
+body.page-pedido .pedido-comanda-campo dd {
+  border-right: 1px solid var(--azul);
+  border-bottom: 1px solid var(--azul);
+}
+body.page-pedido .pedido-comanda-campo dt {
+  display: flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-right: 1px solid var(--linea);
+  border-bottom: 1px solid var(--azul);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--azul-oscuro);
+}
+body.page-pedido .pedido-comanda-campo dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 7px 10px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--azul-oscuro);
+}
+/* "Pedido" con varios elementos: una fila por elemento */
+body.page-pedido .pedido-comanda-campo dd:has(.pedido-comanda-lista) { padding: 0; }
+body.page-pedido .pedido-comanda-lista { margin: 0; padding: 0; list-style: none; }
+body.page-pedido .pedido-comanda-lista li { padding: 7px 10px; }
+body.page-pedido .pedido-comanda-lista li + li { border-top: 1px solid var(--linea); }
+
+/* "Quedan N días": derivado de la entrega estimada */
+body.page-pedido .pedido-comanda-plazo {
+  margin: 10px 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--azul-oscuro);
+}
+
+/* renglones vacíos rayados al final */
+body.page-pedido .pedido-comanda-renglones {
+  display: block;
+  margin-top: 10px;
+  border-top: 1px solid var(--azul);
+}
+body.page-pedido .pedido-comanda-renglones span {
+  display: block;
+  height: 30px;
+  border: 1px solid var(--azul);
+  border-top: 0;
+}
+
+/* ── EL RECORRIDO: 4 estados unidos por una línea punteada ── */
+body.page-pedido .pedido-pasos {
+  --circulo: 32px;
+  --pad-x: 12px;
+  --pad-y: 10px;
+  position: relative;
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+}
+/* la línea: del centro del primer círculo al del último */
+body.page-pedido .pedido-pasos::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--pad-y) + var(--circulo) / 2);
+  bottom: calc(var(--pad-y) + var(--circulo) / 2);
+  left: calc(var(--pad-x) + var(--circulo) / 2 - 0.75px);
+  border-left: 1.5px dashed var(--punteado);
+}
+body.page-pedido .pedido-paso {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--circulo) minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: var(--pad-y) var(--pad-x);
+  border-radius: var(--radio-boton, 6px);
+}
+body.page-pedido .pedido-paso + .pedido-paso { margin-top: 14px; }
+body.page-pedido .pedido-paso-circulo {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--circulo);
+  height: var(--circulo);
+  border: 1.5px solid var(--azul);
+  border-radius: 50%;
+  background: var(--crema);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+body.page-pedido .pedido-paso-texto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+body.page-pedido .pedido-paso-nombre {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--azul-oscuro);
+}
+/* completado: círculo azul con ✓ */
+body.page-pedido .pedido-paso--completado .pedido-paso-circulo {
+  background: var(--azul);
+  border-color: var(--azul);
+  color: #fff;
+}
+/* activo: círculo rosa, fila destacada y etiqueta "Ahora" */
+body.page-pedido .pedido-paso--activo {
+  background: var(--crema-claro);
+  box-shadow: inset 0 0 0 1.5px var(--rosa);
+}
+body.page-pedido .pedido-paso--activo .pedido-paso-circulo {
+  background: var(--rosa);
+  border-color: var(--rosa);
+}
+body.page-pedido .pedido-paso-ahora {
+  padding: 3px 8px;
+  border-radius: var(--radio-boton, 6px);
+  background: var(--azul-oscuro);
+  color: var(--crema-claro);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+/* pendiente: círculo de contorno, texto atenuado con color (azul, ≥ 4,5:1), no con opacidad */
+body.page-pedido .pedido-paso--pendiente .pedido-paso-nombre {
+  font-weight: 600;
+  color: var(--azul);
+}
+
+/* servido: Outfit 800 a 1,2rem (texto grande: el rosa sobre crema da 3,9:1 ≥ 3:1) */
+body.page-pedido .pedido-servido {
+  margin: 18px 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--rosa);
+}
+
+/* ── AVISOS: no encontrado, límite y sin conexión (mismo diseño) ── */
+body.page-pedido .pedido-aviso { max-width: 640px; }
+body.page-pedido .pedido-aviso-texto {
+  margin: 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--rosa);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--azul-oscuro);
+}
+body.page-pedido .pedido-aviso .pedido-boton { margin-top: 16px; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+/* ≤768: una columna, recorrido debajo de la comanda; comanda sin giro */
+@media (max-width: 768px) {
+  body.page-pedido .pedido-plato { grid-template-columns: minmax(0, 1fr); }
+  body.page-pedido .pedido-comanda { transform: none; max-width: 480px; }
+}
+/* móvil: el botón pasa debajo del campo, así el código completo (CK-001-proyecto-AB12) se lee entero */
+@media (max-width: 480px) {
+  body.page-pedido .pedido-ranura { flex-direction: column; }
+  body.page-pedido .pedido-boton { width: 100%; }
+}

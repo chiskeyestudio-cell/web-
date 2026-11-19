@@ -1,0 +1,76 @@
+/* ============================================================
+   PIE CON CONTACTO · servicios, proyectos, izate, el hogar, oliv.ia
+   Solo se enlaza en esas páginas. Iconos y © siguen centrados; a la
+   izquierda, el correo a la altura de las redes y el teléfono a la del ©,
+   con las mismas filas (subgrid), el mismo espacio y el mismo margen inferior.
+   ============================================================ */
+
+.footer:has(.pie-contacto) {
+  --pie-pad: clamp(16px, 5vw, 56px);            /* el mismo margen lateral del contenido */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 24px;
+  /* el contacto se alinea con el borde izquierdo del contenido (máx. 1180px) */
+  padding-inline: max(var(--pie-pad), calc((100% - 1180px) / 2 + var(--pie-pad)));
+}
+.footer:has(.pie-contacto) > .social-icons { grid-column: 2; grid-row: 1; }
+.footer:has(.pie-contacto) > span { grid-column: 2; grid-row: 2; }
+
+/* el contacto comparte las dos filas de la columna central */
+.pie-contacto {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  display: grid;
+  grid-template-rows: subgrid;
+  align-items: center;
+  justify-items: start;
+  font-style: normal;
+}
+.pie-contacto a {
+  position: relative;            /* referencia de la línea cortada */
+  font: inherit;                 /* misma letra y tamaño que "cocina digital creativa ©2026" */
+  font-weight: 700;              /* en negrita */
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pie-contacto a:hover,
+.pie-contacto a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.pie-contacto a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* línea fina cortada entre el correo y el teléfono (mismo tipo que el recuadro
+   "¿Prefieres contarnos tu proyecto?", pero de 1px y trazos más cortos) */
+.pie-contacto a:first-child::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + 15px);         /* a mitad de camino hacia el teléfono (la fila de abajo está 30px más abajo) */
+  height: 1px;
+  background: repeating-linear-gradient(90deg, currentColor 0 4px, transparent 4px 7px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* móvil: una columna centrada; correo arriba y teléfono abajo, sobre las redes */
+@media (max-width: 768px) {
+  .footer:has(.pie-contacto) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+  }
+  .footer:has(.pie-contacto) > .social-icons { grid-column: 1; grid-row: 2; }
+  .footer:has(.pie-contacto) > span { grid-column: 1; grid-row: 3; }
+  .pie-contacto {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;                   /* deja lugar a la línea cortada */
+    margin-bottom: 12px;         /* aire entre el teléfono y las redes */
+  }
+  .pie-contacto a { font-size: 0.75rem; }   /* un poco más grande que el © en móvil (0.65rem) */
+  .pie-contacto a:first-child::after { top: calc(100% + 6px); }
+}
