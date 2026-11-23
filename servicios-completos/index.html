@@ -22,8 +22,12 @@
 <!-- entrada: fundido común y gestos (se apagan con ENTRADA_ACTIVA en /entrada.js) -->
 <link rel="stylesheet" href="/entrada.css">
 <script src="/entrada.js"></script>
+<!-- Volver arriba (botón flotante) -->
+<link rel="stylesheet" href="/subir.css">
 </head>
 <body class="page-servicios" data-modo="completo">
+<!-- ancla de "Volver arriba": lo más alto de la página -->
+<span id="inicio" tabindex="-1"></span>
 <!-- HEADER: el del sitio, sin tocar (el color rosa lo pone servicios.css) -->
 <header class="navbar">
   <div class="logo">
@@ -190,8 +194,12 @@
     <span>cocina digital creativa ©2027</span>
 </footer>
 
+<!-- Volver arriba: botón flotante encima de la tarta (/subir.css, /subir.js; sin JS no se ve) -->
+<button type="button" class="subir-flecha" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+
 <script src="/main.js"></script>
 <script src="/servicios/servicios.js"></script>
 <script src="/tarta/tarta.js" defer></script>
+<script src="/subir.js" defer></script>
 </body>
 </html>

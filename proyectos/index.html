@@ -41,8 +41,12 @@
 <script>document.documentElement.classList.add("pr-js");</script>
 <!-- La comanda de Reservas (botón Reservas y "Escribirnos"): /reserva/ -->
 <link rel="stylesheet" href="/reserva/reserva.css">
+<!-- Volver arriba (botón flotante) -->
+<link rel="stylesheet" href="/subir.css">
 </head>
 <body class="page-proyectos">
+<!-- ancla de "Volver arriba": lo más alto de la página -->
+<span id="inicio" tabindex="-1"></span>
 <!-- HEADER: el del sitio, sin tocar (el color rosa lo pone proyectos.css, igual que en servicios) -->
 <header class="navbar">
   <div class="logo">
@@ -213,7 +217,7 @@
       <div class="ticket ticket--vacio ticket--proximo" data-cat="web">
         <div class="ticket-papel">
           <dl class="ticket-proximo-campos">
-            <div class="ticket-proximo-campo"><dt>Comensal</dt><dd>Restaurante Raíz</dd></div>
+            <div class="ticket-proximo-campo"><dt>Comensal</dt><dd>Restaurante Pan y Sal</dd></div>
             <div class="ticket-proximo-campo"><dt>Concepto</dt><dd>Web</dd></div>
           </dl>
           <span class="ticket-renglon" aria-hidden="true"></span><span class="ticket-renglon" aria-hidden="true"></span>
@@ -250,10 +254,14 @@
     <span>cocina digital creativa ©2027</span>
 </footer>
 
+<!-- Volver arriba: botón flotante encima de la tarta (/subir.css, /subir.js; sin JS no se ve) -->
+<button type="button" class="subir-flecha" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+
 
 <script src="/reserva/reserva.js"></script>
 <script src="/main.js"></script>
 <script src="/proyectos/proyectos.js"></script>
 <script src="/tarta/tarta.js" defer></script>
+<script src="/subir.js" defer></script>
 </body>
 </html>

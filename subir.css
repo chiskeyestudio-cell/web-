@@ -1,0 +1,118 @@
+/* ============================================================
+   VOLVER ARRIBA · botón flotante con flecha que releva a la tarta en el pie
+   (lo controla /subir.js; sin JS no se ve)
+   - Valores copiados de /tarta/tarta.css (sin tocarlo):
+       escritorio: --t-ancho 88px, --t-margen 24px
+       ≤ 600 px:   --t-ancho 64px, --t-margen 14px
+       alto de la tarta = ancho × 0,712 (imagen 264×188)
+   - Solo aparece al llegar al pie: la tarta se desvanece y la flecha aparece
+     en su sitio con un fundido cruzado (subir.js pone .is-visible y
+     .subir-tarta-cede); al salir del pie, vuelve la tarta. En la home (sin tarta) va en el mismo sitio que
+     en las demás páginas; allí el globo ya se aparta solo en el pie.
+   - Capas: encima de la caja de la tarta (6000) y bajo su panel (6002), el overlay del
+     menú (90000), la comanda (95000) y el modal global (999999).
+   - Círculo rosa: borde 2px y flecha 2,2. Sin fondo: rosa #E91E63 sobre el crema
+     3,93:1; en hover, relleno rosa y flecha blanca (blanco sobre rosa 4,35:1).
+   ============================================================ */
+:root {
+  --subir-lado: 30px;             /* círculo visible; el área táctil llega a 44px (::after) */
+  --subir-base-ancho: 88px;        /* = --t-ancho: la flecha se centra sobre la tarta */
+  --subir-margen: 24px;            /* = --t-margen */
+  --subir-tarta-alto: calc(88px * 0.712);
+}
+@media (max-width: 600px) {
+  :root {
+    --subir-margen: 14px;
+    --subir-base-ancho: 64px;
+    --subir-tarta-alto: calc(64px * 0.712);
+  }
+}
+
+/* el ancla de destino: sin tamaño ni hueco, también en bodies en flex */
+body > #inicio {
+  display: block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+body > #inicio:focus { outline: none; }   /* recibe el foco solo para que el siguiente Tab empiece arriba */
+
+.subir-flecha {
+  position: fixed;
+  right: calc(var(--subir-margen) + (var(--subir-base-ancho) - var(--subir-lado)) / 2);
+  /* en el sitio de la tarta (centrada en su caja): solo se ve en el pie, cuando la tarta cede */
+  bottom: calc(var(--subir-margen) + env(safe-area-inset-bottom, 0px)
+               + (var(--subir-tarta-alto) - var(--subir-lado)) / 2);
+  z-index: 6001;                   /* sobre la caja de la tarta/globo (6000), bajo su panel (6002) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--subir-lado);
+  height: var(--subir-lado);
+  margin: 0;
+  padding: 0;
+  border: 2px solid #E91E63;
+  border-radius: 50%;
+  background: transparent;        /* solo el contorno */
+  color: #E91E63;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  /* oculto de verdad: ni Tab ni lector de pantalla */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s linear 0.45s,
+              border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+/* área táctil de 44px alrededor del círculo de 30px */
+.subir-flecha::after {
+  content: '';
+  position: absolute;
+  inset: calc((44px - var(--subir-lado)) / -2 - 2px);   /* desde dentro del borde de 2px */
+  border-radius: 50%;
+}
+.subir-flecha.is-visible {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s, visibility 0s linear 0s,
+              border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+/* la tarta cede su sitio en el pie: se desvanece y baja un poco (no se toca /tarta/) */
+body .tarta:not(.tarta--globo) {
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s linear 0s;
+}
+body .tarta.subir-tarta-cede {
+  opacity: 0;
+  transform: translateY(10px) scale(0.92);
+  transform-origin: 50% 100%;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s linear 0.45s;
+}
+.subir-flecha svg {
+  display: block;
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (hover: hover) and (pointer: fine) {
+  /* hover: relleno rosa, sin aro blanco (el borde se funde con el relleno); flecha blanca */
+  .subir-flecha:hover { background: #E91E63; border-color: #E91E63; color: #fff; }
+}
+.subir-flecha:focus-visible {
+  outline: 2px solid #5B6C8F;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subir-flecha,
+  .subir-flecha.is-visible { transition: none; transform: none; }
+  body .tarta:not(.tarta--globo),
+  body .tarta.subir-tarta-cede { transition: none; transform: none; }
+}

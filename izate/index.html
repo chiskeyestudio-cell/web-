@@ -37,8 +37,12 @@
 <script src="/entrada.js"></script>
 <!-- La comanda de Reservas (botón Reservas y "Escribirnos"): /reserva/ -->
 <link rel="stylesheet" href="/reserva/reserva.css">
+<!-- Volver arriba (botón flotante) -->
+<link rel="stylesheet" href="/subir.css">
 </head>
 <body class="page-proyecto">
+<!-- ancla de "Volver arriba": lo más alto de la página -->
+<span id="inicio" tabindex="-1"></span>
 <!-- HEADER: el del sitio; en las páginas de proyecto el logo pasa a ser el nombre del proyecto -->
 <header class="navbar">
   <div class="logo">
@@ -82,20 +86,33 @@
 
     <!-- EL PROYECTO: el texto de la página, tal cual, sin título visible -->
     <div class="py-intro fade-entrada">
-      <p>Izate representa la respuesta definitiva a la creciente complejidad en los sectores técnico y legal. Este despacho híbrido opera en la intersección estratégica entre la arquitectura y el derecho, donde la precisión técnica se une al rigor jurídico para ofrecer soluciones transversales e integrales.</p>
-      <p>El despacho gestiona bajo un mismo techo los desafíos más críticos, eliminando las ineficiencias que surgen al contratar servicios por separado.</p>
+      <!-- FRANJA: la marca (decorativa salvo el nombre) + Ingredientes (etiqueta en línea). Va dentro del texto inicial
+           para que las píldoras de móvil (proyecto.js) sigan justo bajo la cinta -->
+      <div class="py-franja">
+        <div class="py-marca">
+          <svg class="py-marca-dibujo" viewBox="-1 -1 36 27" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path class="py-marca-fino" d="M0 0H34V21H0Z M21 0V21 M21 13H34 M26 13V21 M21 16H26 M24 13V16 M24 15H26 M25 15V16"/>
+            <path d="M0 21A21 21 0 0 1 21 0A13 13 0 0 1 34 13A8 8 0 0 1 26 21A5 5 0 0 1 21 16A3 3 0 0 1 24 13A2 2 0 0 1 26 15A1 1 0 0 1 25 16A1 1 0 0 1 24 15"/>
+            <path class="py-marca-fino" d="M0 24.5H34 M0 23.3V25.7 M21 23.3V25.7 M34 23.3V25.7"/>
+          </svg>
+          <svg class="py-marca-signo" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 0V10M0 5H10"/></svg>
+          <span class="py-marca-nombre">Izate</span>
+        </div>
+        <p class="py-ingredientes"><strong>Ingredientes</strong> Una empresa con un sentido estético formal y, al mismo tiempo, flexible, que se basa por completo en la sección áurea.</p>
+      </div>
+      <p>Izate Consulting 360 es una consultoría multidisciplinar que reúne asesoría legal, técnica y financiera bajo un mismo techo, para particulares y empresas. El reto: ordenar un abanico de servicios muy amplio en una web clara que transmitiera confianza y, a la vez, agilidad digital.</p>
     </div>
 
     <!-- FICHA: portada + comanda escrita (solo lectura, con los datos reales del proyecto) -->
     <section class="py-ficha" aria-label="Ficha del proyecto">
       <figure class="py-portada">
-        <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1200/v1777836504/izate_imagen_k0q4fu.png"
-              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_800/v1777836504/izate_imagen_k0q4fu.png 800w,
-                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1200/v1777836504/izate_imagen_k0q4fu.png 1200w,
-                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1800/v1777836504/izate_imagen_k0q4fu.png 1800w,
-                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2400/v1777836504/izate_imagen_k0q4fu.png 2400w"
-              sizes="(min-width: 901px) 760px, 100vw" style="--foco: 40% 50%" fetchpriority="high"
-              alt="Cartel con el logo de Izate en una fachada">
+        <img src="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1200/v1795426956/Oficina_moderna_con_logo_Izate_nifpxh.png"
+              srcset="https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_800/v1795426956/Oficina_moderna_con_logo_Izate_nifpxh.png 800w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1200/v1795426956/Oficina_moderna_con_logo_Izate_nifpxh.png 1200w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_1800/v1795426956/Oficina_moderna_con_logo_Izate_nifpxh.png 1800w,
+                      https://res.cloudinary.com/dxsip0hvb/image/upload/f_auto,q_auto,w_2400/v1795426956/Oficina_moderna_con_logo_Izate_nifpxh.png 2400w"
+              sizes="(min-width: 901px) 760px, 100vw" style="--foco: 62% 50%" fetchpriority="high"
+              alt="Dos personas pasan ante la cristalera de una oficina con el logo de Izate">
       </figure>
 
       <div class="proyecto-comanda" role="group" aria-labelledby="pc-titulo">
@@ -132,15 +149,14 @@
       <div class="py-bloque fade-entrada">
         <h2 class="py-rotulo">La preparación</h2>
         <h3 class="py-subtitulo">Izate AI Strategy</h3>
-        <p>Izate no solo resuelve problemas, sino que optimiza el camino hacia la solución mediante la integración de Inteligencia Artificial avanzada. La IA en izate no es un simple chat de soporte, sino el motor central de la operativa y el principal solucionador y facilitador de estrategias para el cliente.</p>
-        <p>El agente de IA de izate está diseñado para facilitar soluciones inmediatas, optimizar servicios y diseñar estrategias personalizadas.</p>
-        <p>En izate, la tecnología no sustituye el criterio humano, lo potencia. La firma se posiciona como el aliado estratégico que utiliza la IA para que el cliente gane tiempo, claridad y seguridad en cada decisión sobre su patrimonio o su obra.</p>
+        <p>Partimos de entender el negocio: muchas áreas distintas, reclamaciones, derecho civil, tasaciones, inmobiliaria, construcción, financiación, que debían leerse como un todo coherente. Estructuramos esos servicios en "áreas de impacto" fáciles de recorrer, definimos un lenguaje visual sobrio pero cercano, y diseñamos una navegación que lleva al usuario de la duda a la consulta sin fricción.</p>
       </div>
       <div class="py-bloque fade-entrada">
         <h2 class="py-rotulo">El resultado</h2>
         <blockquote class="py-cita">
-          <p>"La verdadera innovación de Izate no es solo lo que hacemos, sino cómo lo unificamos. Al eliminar las fronteras entre el plano y la norma, transformamos desafíos críticos en soluciones directas, fluidas y, sobre todo, integrales."</p>
+          <p>Una web que ordena la oferta de Izate y la hace entendible de un vistazo, con una interfaz de atención, sistema de fichas y documentos de marca que refuerzan su enfoque multidisciplinar. El resultado proyecta lo que son: un socio estratégico con transparencia en cada paso y procesos optimizados con herramientas digitales.</p>
         </blockquote>
+        <p class="py-web"><a href="https://izate.es" target="_blank" rel="noopener noreferrer" aria-label="izate.es (se abre en una pestaña nueva)">izate.es</a></p>
       </div>
     </section>
 
@@ -242,10 +258,14 @@
     <span>cocina digital creativa ©2027</span>
 </footer>
 
+<!-- Volver arriba: botón flotante encima de la tarta (/subir.css, /subir.js; sin JS no se ve) -->
+<button type="button" class="subir-flecha" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+
 
 <script src="/reserva/reserva.js"></script>
 <script src="/main.js"></script>
 <script src="/proyectos/proyecto.js"></script>
 <script src="/tarta/tarta.js" defer></script>
+<script src="/subir.js" defer></script>
 </body>
 </html>

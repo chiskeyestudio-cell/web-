@@ -336,6 +336,18 @@ body.page-proyecto .py-cita p {
   line-height: 1.4;
   color: var(--rosa);
 }
+/* la web del proyecto, bajo El resultado (si la hay): rosa, ≥ 18,66 px en negrita (contraste de texto grande) */
+body.page-proyecto .py-web {
+  margin: 16px 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+body.page-proyecto .py-web a {
+  color: var(--rosa);
+  text-decoration: none;
+}
 
 /* ============================================================
    5. LA MESA SERVIDA: grid bento que se compone solo según
@@ -736,4 +748,74 @@ body.page-proyecto .py-pildora {
   letter-spacing: 0.02em;
   line-height: 1.3;
   cursor: default;
+}
+
+/* ============================================================
+   FRANJA ENCIMA DEL TEXTO INICIAL: marca del proyecto (izquierda) +
+   "Ingredientes" (derecha). En móvil, apiladas.
+   Marca: dibujo de plano técnico + "+" (o el Chu Ku Rei) + nombre; trazo rosa,
+   sin relleno, mismo grosor en los tres (non-scaling-stroke). Decorativa salvo
+   el nombre. Sin hover, sin foco, sin animación propia.
+   Ingredientes: un solo párrafo con la etiqueta en línea (<strong>), todo en rosa.
+   Rosa sobre crema = 3,93:1 (a 16–17 px y peso 400 no llega al 4,5:1 de AA).
+   ============================================================ */
+body.page-proyecto .py-franja {
+  display: grid;
+  grid-template-columns: minmax(0, 34fr) minmax(0, 66fr);   /* Ingredientes arranca al 34 % y llega al margen derecho */
+  align-items: center;                                       /* centrado con la fila de la marca */
+  column-gap: 0;
+  row-gap: 16px;
+  padding-top: clamp(16px, 2.5vw, 32px);       /* más aire arriba (padding: no se funde con el margen de .py-intro) */
+  margin-bottom: clamp(44px, 5vw, 64px);       /* y abajo, hasta el texto inicial */
+}
+@media (max-width: 768px) {
+  body.page-proyecto .py-franja { grid-template-columns: minmax(0, 1fr); }
+}
+body.page-proyecto .py-marca {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.4vw, 16px);
+  color: var(--rosa);
+}
+body.page-proyecto .py-marca-dibujo {
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  height: clamp(56px, 6vw, 72px);
+  overflow: visible;
+}
+body.page-proyecto .py-marca-signo {
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  height: clamp(14px, 1.5vw, 18px);
+}
+body.page-proyecto .py-marca-simbolo {   /* Chu Ku Rei: la pincelada de /img/chu.svg, rellena */
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  height: clamp(40px, 4.4vw, 52px);
+}
+body.page-proyecto .py-marca-dibujo *,
+body.page-proyecto .py-marca-signo * { vector-effect: non-scaling-stroke; }
+body.page-proyecto .py-marca-fino { stroke-width: 0.75; opacity: 0.55; }
+body.page-proyecto .py-marca-nombre {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 2.2vw, 1.85rem);   /* 24–30 px: rosa */
+  line-height: 1;
+  color: var(--rosa);
+  white-space: nowrap;
+}
+body.page-proyecto .py-intro .py-ingredientes {
+  margin: 0;
+  font-family: 'Urbanist', sans-serif;
+  font-size: clamp(1rem, 1.4vw, 1.0625rem);   /* 16 px en móvil, 17 px desde ~1215 px (la intro: 16–18,4 px) */
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--rosa);
+}
+body.page-proyecto .py-ingredientes strong {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
 }

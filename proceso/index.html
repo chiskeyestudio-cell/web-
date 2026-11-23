@@ -37,8 +37,12 @@
 <script src="/entrada.js"></script>
 <!-- La comanda de Reservas (botón Reservas y "Escribirnos"): /reserva/ -->
 <link rel="stylesheet" href="/reserva/reserva.css">
+<!-- Volver arriba (botón flotante) -->
+<link rel="stylesheet" href="/subir.css">
 </head>
 <body class="page-proceso">
+<!-- ancla de "Volver arriba": lo más alto de la página -->
+<span id="inicio" tabindex="-1"></span>
 <!-- HEADER: el del sitio, igual que en servicios (el color rosa lo pone proceso.css) -->
 <header class="navbar">
   <div class="logo">
@@ -151,9 +155,13 @@
     <span>cocina digital creativa ©2027</span>
 </footer>
 
+<!-- Volver arriba: botón flotante encima de la tarta (/subir.css, /subir.js; sin JS no se ve) -->
+<button type="button" class="subir-flecha" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+
 <script src="/reserva/reserva.js"></script>
 <script src="/main.js"></script>
 <script src="/proceso/proceso.js"></script>
 <script src="/tarta/tarta.js" defer></script>
+<script src="/subir.js" defer></script>
 </body>
 </html>

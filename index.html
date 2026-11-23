@@ -115,8 +115,12 @@
       ]
     }
     </script>
+<!-- Volver arriba (botón flotante) -->
+<link rel="stylesheet" href="/subir.css">
 </head>
 <body class="page-index">
+<!-- ancla de "Volver arriba": lo más alto de la página -->
+<span id="inicio" tabindex="-1"></span>
 
     <header class="navbar">
         <div class="logo">
@@ -216,11 +220,15 @@
         <span>cocina digital creativa ©2027</span>
     </footer>
 
+<!-- Volver arriba: botón flotante encima de la tarta (/subir.css, /subir.js; sin JS no se ve) -->
+<button type="button" class="subir-flecha" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+
     <script src="/reserva/reserva.js"></script>
 <script src="/main.js"></script>
     <!-- la home: alto del header y tilt 3D de la tarta -->
     <script src="/inicio.js" defer></script>
     <!-- contacto rápido: en la home solo el globo, sin tarta flotante -->
     <script src="/tarta/tarta.js" defer data-tarta-modo="globo"></script>
+<script src="/subir.js" defer></script>
 </body>
 </html>
